@@ -6,7 +6,6 @@
   .shopee-linear-gradient-b {
     @apply bg-gradient-to-b from-[#f53d2d] to-[#ff6533];
   }
-
   .shopee-linear-gradient-t {
     @apply bg-gradient-to-t from-[#f53d2d] to-[#ff6533];
   }
@@ -17,6 +16,14 @@
   .shopee-linear-gradient-r {
     @apply bg-gradient-to-r from-[#f53d2d] to-[#ff6533];
   }
+
+  .triangle-up {
+    position: absolute;
+    top: -30px;
+    right: 10px;
+    border-width: 20px 30px;
+    border-color: transparent transparent white transparent;
+  }
 }
 
 @keyframes fadeIn {
@@ -25,5 +32,14 @@
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes headerNotify {
+  from {
+    scale: 0;
+  }
+  to {
+    scale: 1;
   }
 }
