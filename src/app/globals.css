@@ -4,17 +4,17 @@
 
 @layer components {
   .shopee-linear-gradient-b {
-    @apply bg-gradient-to-b from-[#f53d2d] to-[#ff6533];
+    @apply bg-gradient-to-b from-[#f53d2d] to-primary;
   }
   .shopee-linear-gradient-t {
-    @apply bg-gradient-to-t from-[#f53d2d] to-[#ff6533];
+    @apply bg-gradient-to-t from-[#f53d2d] to-primary;
   }
 
   .shopee-linear-gradient-l {
-    @apply bg-gradient-to-l from-[#f53d2d] to-[#ff6533];
+    @apply bg-gradient-to-l from-[#f53d2d] to-primary;
   }
   .shopee-linear-gradient-r {
-    @apply bg-gradient-to-r from-[#f53d2d] to-[#ff6533];
+    @apply bg-gradient-to-r from-[#f53d2d] to-primary;
   }
 
   .triangle-up {
@@ -23,6 +23,14 @@
     right: 10px;
     border-width: 20px 30px;
     border-color: transparent transparent white transparent;
+  }
+
+  .triangle-right {
+    position: absolute;
+    top: -30px;
+    right: 10px;
+    border-width: 20px 30px;
+    border-color: transparent red transparent transparent;
   }
 }
 
