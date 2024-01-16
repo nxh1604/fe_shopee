@@ -23,14 +23,7 @@
     right: 10px;
     border-width: 20px 30px;
     border-color: transparent transparent white transparent;
-  }
-
-  .triangle-right {
-    position: absolute;
-    top: -30px;
-    right: 10px;
-    border-width: 20px 30px;
-    border-color: transparent red transparent transparent;
+    cursor: pointer;
   }
 }
 
