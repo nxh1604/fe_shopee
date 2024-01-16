@@ -1,13 +1,9 @@
+import { FaChevronDown, FaFacebook, FaGlobe, FaInstagram, FaQuestionCircle, FaRegBell } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  FaChevronDown,
-  FaFacebook,
-  FaGlobe,
-  FaInstagram,
-  FaQuestionCircle,
-  FaRegBell,
-} from "react-icons/fa";
+
+import SignUp from "@/components/Header/Navbar//Signup";
+import Signin from "@/components/Header/Navbar/Signin";
 
 interface HeaderLink {
   title: string;
@@ -46,41 +42,16 @@ const notifyItems: NotifyItem[] = [
 
 const user = false;
 
-const DropdownWrapper = ({
-  className = "",
-  children,
-}: {
-  className?: string;
-  children: React.ReactNode;
-}) => {
+const DropdownWrapper = ({ className = "", children }: { className?: string; children: React.ReactNode }) => {
   return <div className={"relative" + ` ${className}`}>{children}</div>;
 };
 
-const DropdownHover = ({
-  className = "",
-  children,
-}: {
-  className?: string;
-  children: React.ReactNode;
-}) => {
+const DropdownHover = ({ className = "", children }: { className?: string; children: React.ReactNode }) => {
   return <div className={"peer" + ` ${className}`}>{children}</div>;
 };
 
-const DropdownContent = ({
-  children,
-  className = "",
-}: {
-  className?: string;
-  children: React.ReactNode;
-}) => {
-  return (
-    <div
-      className={
-        "hidden hover:block absolute peer-hover:block " + ` ${className}`
-      }>
-      {children}
-    </div>
-  );
+const DropdownContent = ({ children, className = "" }: { className?: string; children: React.ReactNode }) => {
+  return <div className={"hidden hover:block absolute peer-hover:block " + ` ${className}`}>{children}</div>;
 };
 
 const NavItem = (
@@ -93,10 +64,7 @@ const NavItem = (
   const { href, title, className = "" } = props;
 
   return (
-    <li
-      className={
-        "hover:opacity-80 border-l-2 pl-3 border-slate-300" + ` ${className}`
-      }>
+    <li className={"hover:opacity-80 border-l-2 pl-3 border-slate-300" + ` ${className}`}>
       <Link href={href}>{title}</Link>
     </li>
   );
@@ -115,50 +83,20 @@ const HeaderNavbar = (): JSX.Element => {
                 </DropdownHover>
                 <DropdownContent className="top-[90%] pt-3">
                   <div className="border-[1px] shadow w-[200px] space-y-2 animate-[fadeIn_0.2s] will-change-[opacity]">
-                    <Image
-                      src={"/img/qr_code.png"}
-                      width={200}
-                      height={200}
-                      alt=""
-                    />
+                    <Image src={"/img/qr_code.png"} width={200} height={200} alt="" />
                     <div className="px-[12px] flex flex-col gap-2 pb-2">
                       <div className="flex justify-between gap-2">
-                        <Image
-                          className="inline-block h-4 "
-                          src={"/img/google_play.png"}
-                          width={100}
-                          height={100}
-                          alt=""
-                        />
-                        <Image
-                          className="inline-block h-4"
-                          src={"/img/app_store.png"}
-                          width={100}
-                          height={100}
-                          alt=""
-                        />
+                        <Image className="inline-block h-4 " src={"/img/google_play.png"} width={100} height={100} alt="" />
+                        <Image className="inline-block h-4" src={"/img/app_store.png"} width={100} height={100} alt="" />
                       </div>
-                      <Image
-                        className=" h-4"
-                        src={"/img/app_gallery.png"}
-                        width={100}
-                        height={100}
-                        alt=""
-                      />
+                      <Image className=" h-4" src={"/img/app_gallery.png"} width={100} height={100} alt="" />
                     </div>
                   </div>
                 </DropdownContent>
               </DropdownWrapper>
             );
 
-          return (
-            <NavItem
-              key={link.title}
-              className="hover:opacity-80 first:border-none first:pl-0"
-              title={link.title}
-              href={link.link}
-            />
-          );
+          return <NavItem key={link.title} className="hover:opacity-80 first:border-none first:pl-0" title={link.title} href={link.link} />;
         })}
 
         <li className="flex gap-2 border-l-2 pl-3 border-slate-300 *:self-center">
@@ -190,22 +128,12 @@ const HeaderNavbar = (): JSX.Element => {
                     <ul className="">
                       {notifyItems.map((notify) => {
                         return (
-                          <li
-                            key={notify.title}
-                            className="hover:bg-slate-200 p-2">
+                          <li key={notify.title} className="hover:bg-slate-200 p-2">
                             <Link href="#" className="flex items-start gap-3">
-                              <Image
-                                className="w-12 pt-1"
-                                src={notify.src}
-                                alt="tree"
-                                width={100}
-                                height={100}
-                              />
+                              <Image className="w-12 pt-1" src={notify.src} alt="tree" width={100} height={100} />
                               <div className="flex-1 gap-1">
                                 <h4>{notify.title}</h4>
-                                <p className="text-xs text-gray-500">
-                                  {notify.description}
-                                </p>
+                                <p className="text-xs text-gray-500">{notify.description}</p>
                               </div>
                             </Link>
                           </li>
@@ -213,17 +141,13 @@ const HeaderNavbar = (): JSX.Element => {
                       })}
                     </ul>
                     <footer>
-                      <Link
-                        className="text-center block p-2 hover:bg-slate-200"
-                        href="#">
+                      <Link className="text-center block p-2 hover:bg-slate-200" href="#">
                         Xem tất cả
                       </Link>
                     </footer>
                   </>
                 ) : (
-                  <p className="w-full h-[100px] text-center leading-[100px]">
-                    Không có thông báo mới
-                  </p>
+                  <p className="w-full h-[100px] text-center leading-[100px]">Không có thông báo mới</p>
                 )}
               </div>
             )}
@@ -242,14 +166,10 @@ const HeaderNavbar = (): JSX.Element => {
                     <p>Đăng nhập để xem thông báo</p>
                   </div>
                   <div className="flex justify-between text-base bg-slate-100 ">
-                    <Link
-                      className="flex-1 py-3 text-center hover:bg-slate-300 hover:text-[#f53d2d]"
-                      href={"#"}>
+                    <Link className="flex-1 py-3 text-center hover:bg-slate-300 hover:text-[#f53d2d]" href={"#"}>
                       Đăng Ký
                     </Link>
-                    <Link
-                      className="flex-1 py-3 text-center  hover:bg-slate-300 hover:text-[#f53d2d]"
-                      href={"#"}>
+                    <Link className="flex-1 py-3 text-center  hover:bg-slate-300 hover:text-[#f53d2d]" href={"#"}>
                       Đăng Nhập
                     </Link>
                   </div>
@@ -263,17 +183,12 @@ const HeaderNavbar = (): JSX.Element => {
           <FaQuestionCircle className="w-4 h-4" /> Hỗ trợ
         </li>
         <li className="gap-1">
-          <FaGlobe className="w-4 h-4" /> Tiếng Việt{" "}
-          <FaChevronDown className="w-4 h-4" />
+          <FaGlobe className="w-4 h-4" /> Tiếng Việt <FaChevronDown className="w-4 h-4" />
         </li>
 
         <div className="gap-3 *:border-l-2 *:pl-3 *:border-slate-300 ">
-          <li className="hover:opacity-60 border-none ">
-            <Link href={"#"}>Đăng nhập</Link>
-          </li>
-          <li className="hover:opacity-60">
-            <Link href={"#"}>Đăng ký</Link>
-          </li>
+          <Signin />
+          <SignUp />
         </div>
       </ul>
     </nav>
