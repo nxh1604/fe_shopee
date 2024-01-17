@@ -4,10 +4,10 @@ import { AuthModalContext } from "@/context/AuthModalContext";
 import Link from "next/link";
 import { useContext } from "react";
 
-const SignUp = () => {
+const SignUp = ({ className }: { className?: string }) => {
   const { setTitle, handleOpen } = useContext(AuthModalContext);
   return (
-    <li className="hover:opacity-60">
+    <li className={"hover:opacity-80" + ` ${className}`}>
       <Link
         onClick={() => {
           setTitle("Đăng ký");

@@ -13,7 +13,7 @@ const TriangleUp = (
 ) => {
   const { className = "", color = "white" } = props;
 
-  return <div className={`absolute top-[-16px] right-[20px] ${triangleUpColor[color]} ${className}`}></div>;
+  return <div className={`absolute border-x-[16px] border-y-[8px] top-[-16px] right-[20px] ${triangleUpColor[color]} ${className}`}></div>;
 };
 
 export { TriangleUp };

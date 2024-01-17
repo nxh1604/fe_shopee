@@ -4,15 +4,18 @@ import Link from "next/link";
 
 import SignUp from "@/components/Header/Navbar//Signup";
 import Signin from "@/components/Header/Navbar/Signin";
-import Square from "@/components/Square";
 import { TriangleUp } from "@/components/Triangle";
+import HeaderDropdownNotify from "../DropdownNotifyContent";
+import { DropdownContent, DropdownHover, DropdownWrapper } from "../DropdownWhenHover";
+import DowloadAppItem from "./DowloadAppItem";
+import { NavItem, NavItemWithIcon } from "./NavbarUI";
 
-interface HeaderLink {
+interface IHeaderLink {
   title: string;
   link: string;
 }
 
-const links: HeaderLink[] = [
+const links: IHeaderLink[] = [
   {
     title: "Kênh người bán",
     link: "#",
@@ -27,185 +30,67 @@ const links: HeaderLink[] = [
   },
 ];
 
-interface NotifyItem {
-  src: string;
-  title: string;
-  description: string;
-}
-
-const notifyItems: NotifyItem[] = [
-  // {
-  //   src: "/img/tree-736885_1280.jpg",
-  //   title: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio, nulla!",
-  //   description:
-  //     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum mollitia illo nostrum, eum ea enim nisi minima tenetur quae incidunt?",
-  // },
-];
-
-const user = false;
-
-const DropdownWrapper = ({ className = "", children }: { className?: string; children: React.ReactNode }) => {
-  return <div className={"relative" + ` ${className}`}>{children}</div>;
-};
-
-const DropdownHover = ({ className = "", children }: { className?: string; children: React.ReactNode }) => {
-  return <div className={"peer" + ` ${className}`}>{children}</div>;
-};
-
-const DropdownContent = ({ children, className = "" }: { className?: string; children: React.ReactNode }) => {
-  return <div className={"hidden hover:block absolute peer-hover:block " + ` ${className}`}>{children}</div>;
-};
-
-const NavItem = (
-  props: React.PropsWithChildren<{
-    href: string;
-    title: string;
-    className?: string;
-  }>
-) => {
-  const { href, title, className = "" } = props;
-
-  return (
-    <li className={"hover:opacity-80 border-l-2 pl-3 border-slate-300" + ` ${className}`}>
-      <Link href={href}>{title}</Link>
-    </li>
-  );
-};
-
 const HeaderNavbar = (): JSX.Element => {
   return (
-    <nav className="*:flex *:gap-3 *:px-2 text-nowrap py-2 flex justify-between text-sm ">
-      <ul className="justify-start">
+    <nav className=" text-nowrap py-2 flex justify-between text-sm">
+      <ul className="justify-start flex items-center gap-3 px-2">
         {links.map((link) => {
-          if (link.title === "Tải ứng dụng")
-            return (
-              <DropdownWrapper key={link.title}>
-                <DropdownHover>
-                  <NavItem href={link.link} title={link.title} />
-                </DropdownHover>
-                <DropdownContent className="top-[90%] pt-3 z-10">
-                  <div className="border-[1px] shadow w-[200px] space-y-2 animate-[fadeIn_0.2s] will-change-[opacity]">
-                    <Image src={"/img/qr_code.png"} width={200} height={200} alt="" />
-                    <div className="px-[12px] flex flex-col gap-2 pb-2">
-                      <div className="flex justify-between gap-2">
-                        <Image className="inline-block h-4 " src={"/img/google_play.png"} width={100} height={100} alt="" />
-                        <Image className="inline-block h-4" src={"/img/app_store.png"} width={100} height={100} alt="" />
-                      </div>
-                      <Image className=" h-4" src={"/img/app_gallery.png"} width={100} height={100} alt="" />
-                    </div>
-                  </div>
-                </DropdownContent>
-              </DropdownWrapper>
-            );
+          if (link.title === "Tải ứng dụng") return <DowloadAppItem key={link.title} title={link.title} href={link.link} />;
 
-          return <NavItem key={link.title} className="hover:opacity-80 first:border-none first:pl-0" title={link.title} href={link.link} />;
+          return (
+            <NavItem key={link.title} className="border-l-2 pl-3 border-slate-300 first:border-none first:pl-0" href={link.link}>
+              {link.title}
+            </NavItem>
+          );
         })}
-
-        <li className="flex gap-2 border-l-2 pl-3 border-slate-300 *:self-center">
-          Kết nối{" "}
-          <Link href={"#"}>
-            <FaFacebook className="w-4 h-4 hover:opacity-80" />
-          </Link>{" "}
-          <Link href={"#"}>
-            <FaInstagram className="w-4 h-4 hover:opacity-80" />
-          </Link>
-        </li>
+        <div className="flex gap-2 border-l-2 pl-3 border-slate-300 items-center">
+          <span className="mr-1">Kết nối</span>
+          <NavItem href="#">
+            <abbr title="facebook">
+              <FaFacebook className="w-4 h-4" />
+            </abbr>
+          </NavItem>
+          <NavItem href="#">
+            <abbr title="instagram">
+              <FaInstagram className="w-4 h-4" />
+            </abbr>
+          </NavItem>
+        </div>
       </ul>
 
-      <ul className="*:flex *:items-center justify-end">
+      <ul className="justify-end flex gap-3 px-2">
         <DropdownWrapper>
           <DropdownHover>
-            <li className="hover:opacity-80 cursor-pointer ">
-              <FaRegBell className="inline-block w-4 h-4" /> Thông báo
-            </li>
+            <NavItemWithIcon href="#">
+              <FaRegBell className="w-4 h-4" /> Thông báo
+            </NavItemWithIcon>
           </DropdownHover>
-          <DropdownContent className="right-0 top-[90%] pt-3 z-10">
-            {user && (
-              <div className="shadow-xl bg-white relative text-black w-[400px] origin-[calc(100%-20px)_top] animate-[headerNotify_0.3s] will-change-[opacity,_scale] text-wrap text-justify">
-                <TriangleUp className="z-[100] border-x-[16px] border-y-[8px] " color="white" />
-
-                <header className="p-2 text-gray-500">
-                  <h3>Thông báo mới nhận</h3>
-                </header>
-                {notifyItems[0] ? (
-                  <>
-                    <ul className="">
-                      {notifyItems.map((notify) => {
-                        return (
-                          <li key={notify.title} className="hover:bg-slate-200 p-2">
-                            <Link href="#" className="flex items-start gap-3">
-                              <Image className="w-12 pt-1" src={notify.src} alt="tree" width={100} height={100} />
-                              <div className="flex-1 gap-1">
-                                <h4>{notify.title}</h4>
-                                <p className="text-xs text-gray-500">{notify.description}</p>
-                              </div>
-                            </Link>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                    <footer>
-                      <Link className="text-center block p-2 hover:bg-slate-200" href="#">
-                        Xem tất cả
-                      </Link>
-                    </footer>
-                  </>
-                ) : (
-                  <p className="w-full h-[100px] text-center leading-[100px]">Không có thông báo mới</p>
-                )}
-              </div>
-            )}
-            {!user && (
-              <div className="origin-[calc(100%-20px)_top] animate-[headerNotify_0.3s] hover:flex w-[350px] h-[350px] will-change-[opacity,_scale]">
-                <TriangleUp className="z-[100] border-x-[16px] border-y-[8px] " color="white" />
-                <div className="w-full h-full relative shadow flex flex-col text-black">
-                  <div className="flex-1 flex flex-col items-center justify-center bg-white">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      className="w-[100px] h-[100px] "
-                      src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/assets/99e561e3944805a023e87a81d4869600.png"
-                      width={400}
-                      height={400}
-                      alt=""
-                    />
-                    <p>Đăng nhập để xem thông báo</p>
-                  </div>
-                  <div className="flex justify-between text-base bg-slate-100 ">
-                    <Link className="flex-1 py-3 text-center hover:bg-slate-300 hover:text-[#f53d2d]" href={"#"}>
-                      Đăng Ký
-                    </Link>
-                    <Link className="flex-1 py-3 text-center  hover:bg-slate-300 hover:text-[#f53d2d]" href={"#"}>
-                      Đăng Nhập
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            )}
+          <DropdownContent className="right-0">
+            <HeaderDropdownNotify />
           </DropdownContent>
         </DropdownWrapper>
 
-        <li className="gap-1">
+        <NavItemWithIcon href="#">
           <FaQuestionCircle className="w-4 h-4" /> Hỗ trợ
-        </li>
+        </NavItemWithIcon>
         <DropdownWrapper>
           <DropdownHover>
-            <li className="hover:opacity-80 cursor-pointer flex items-center gap-1">
+            <NavItemWithIcon href="#">
               <FaGlobe className="w-4 h-4" /> Tiếng Việt <FaChevronDown className="w-4 h-4" />
-            </li>
+            </NavItemWithIcon>
           </DropdownHover>
-          <DropdownContent className="right-0 top-[90%] z-10 pt-3">
-            <ul className="origin-[calc(100%-20px)_top] text-sm text-black shadow  relative  animate-[headerNotify_0.3s] w-[180px] will-change-[opacity,_scale] bg-white">
+          <DropdownContent className="right-0">
+            <ul className="text-sm text-black shadow relative w-[180px] header-notify-animation bg-white">
               <TriangleUp className="z-[100] border-x-[16px] border-y-[8px] " color="white" />
-
               <li className="p-2 hover:bg-gray-300 relative z-1 hover:text-primary text-sm cursor-pointer">Tiếng Việt</li>
               <li className="p-2 hover:bg-gray-300 relative z-1 hover:text-primary text-sm cursor-pointer">English</li>
             </ul>
           </DropdownContent>
         </DropdownWrapper>
 
-        <div className="gap-3 *:border-l-2 *:pl-3 *:border-slate-300 ">
+        <div className="gap-3 flex">
           <Signin />
-          <SignUp />
+          <SignUp className="border-l-2 pl-3 border-slate-300" />
         </div>
       </ul>
     </nav>

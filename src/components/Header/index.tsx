@@ -1,6 +1,6 @@
 import { FaShoppingCart } from "react-icons/fa";
 import HeaderSearch from "./HeaderSearch";
-import ShopeeLogo from "./ShopeeLogo";
+import ShopeeLogo from "../ShopeeLogo";
 import HeaderNavbar from "./Navbar";
 import { TriangleUp } from "../Triangle";
 
@@ -13,6 +13,9 @@ const Header = (): JSX.Element => {
         <HeaderSearch />
         <div className="relative">
           <FaShoppingCart className="peer w-7 h-7 self-center fill-white hover:opacity-60 hover:cursor-pointer" />
+          <span className="absolute top-[-8px] text-primary border-2 border-red-500 py-[2px] text-xs px-1 leading-[12px] rounded-full bg-white right-[-12px]">
+            3
+          </span>
           <div className=" hidden animate-[headerNotify_0.3s] origin-[calc(100%-20px)_top] will-change-[opacity,_scale] peer-hover:block hover:block absolute top-[100%] pt-4 right-[-25px] w-[400px]">
             <div className="bg-white flex shadow-md flex-col items-center p-16 justify-center relative">
               <TriangleUp className="border-x-[16px] border-y-[8px]" color="white" />
