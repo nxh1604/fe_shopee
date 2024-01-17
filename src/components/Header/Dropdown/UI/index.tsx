@@ -14,9 +14,9 @@ const DropdownBox = ({
   return (
     <div
       className={
-        "shadow-xl bg-white relative text-black w-[400px] text-wrap text-justify" + ` ${isTriangle ? "header-notify-animation" : "fade-in-animation"}`
-      }
-    >
+        "shadow-xl bg-white relative text-black text-wrap text-justify rounded" +
+        ` ${isTriangle ? "header-notify-animation" : "fade-in-animation"}`
+      }>
       {isTriangle && <TriangleUp className={className} />}
 
       {children}

@@ -1,9 +1,13 @@
 import Link from "next/link";
-import { DropdownBoxHeader, DropdownBox } from "../DropdownUI";
+import { DropdownBoxHeader, DropdownBox } from "../UI";
 import Image from "next/image";
 
 const DropdownNotifyContent = () => {
-  return <DropdownBox isTriangle>{user ? <NotifyContent notifyList={notifyItems} /> : <NotifyNoUser />}</DropdownBox>;
+  return (
+    <DropdownBox isTriangle>
+      {user ? <NotifyContent notifyList={notifyItems} /> : <NotifyNoUser />}
+    </DropdownBox>
+  );
 };
 
 export default DropdownNotifyContent;
@@ -12,11 +16,11 @@ const NotifyContent = ({ notifyList }: { notifyList: IHeaderNotifyItem[] | undef
   if (!notifyList || !notifyList[0]) return <EmptyNotify />;
 
   return (
-    <>
+    <div className="w-[400px]">
       <DropdownBoxHeader title="Thông báo mới nhận" />
       <NotifyList notifyList={notifyList} />
       <NotifyFooter />
-    </>
+    </div>
   );
 };
 
@@ -28,7 +32,15 @@ const NotifyList = ({ notifyList }: { notifyList: IHeaderNotifyItem[] }) => {
   return (
     <ul>
       {notifyList.map((notify) => {
-        return <NotifyItem key={notify.title} src={notify.src} title={notify.title} isRead={notify.isRead} description={notify.description} />;
+        return (
+          <NotifyItem
+            key={notify.title}
+            src={notify.src}
+            title={notify.title}
+            isRead={notify.isRead}
+            description={notify.description}
+          />
+        );
       })}
     </ul>
   );
@@ -73,10 +85,14 @@ const NotifyNoUser = () => {
         <p>Đăng nhập để xem thông báo</p>
       </div>
       <div className="flex justify-between text-base bg-slate-100 ">
-        <Link className="flex-1 py-3 text-center hover:bg-slate-300 hover:text-[#f53d2d]" href={"#"}>
+        <Link
+          className="flex-1 py-3 text-center hover:bg-slate-300 hover:text-[#f53d2d]"
+          href={"#"}>
           Đăng Ký
         </Link>
-        <Link className="flex-1 py-3 text-center hover:bg-slate-300 hover:text-[#f53d2d]" href={"#"}>
+        <Link
+          className="flex-1 py-3 text-center hover:bg-slate-300 hover:text-[#f53d2d]"
+          href={"#"}>
           Đăng Nhập
         </Link>
       </div>

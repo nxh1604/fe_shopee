@@ -4,7 +4,7 @@ import { AuthModalContext } from "@/context/AuthModalContext";
 import Link from "next/link";
 import { useContext } from "react";
 
-const Signin = ({ className }: { className?: string }) => {
+const SigninItem = ({ className }: { className?: string }) => {
   const { setTitle, handleOpen } = useContext(AuthModalContext);
 
   return (
@@ -14,12 +14,11 @@ const Signin = ({ className }: { className?: string }) => {
           setTitle("Đăng nhập");
           handleOpen();
         }}
-        href={"#"}
-      >
+        href={"#"}>
         Đăng nhập
       </Link>
     </li>
   );
 };
 
-export default Signin;
+export default SigninItem;

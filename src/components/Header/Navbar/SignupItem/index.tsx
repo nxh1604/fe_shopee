@@ -4,7 +4,7 @@ import { AuthModalContext } from "@/context/AuthModalContext";
 import Link from "next/link";
 import { useContext } from "react";
 
-const SignUp = ({ className }: { className?: string }) => {
+const SignUpItem = ({ className }: { className?: string }) => {
   const { setTitle, handleOpen } = useContext(AuthModalContext);
   return (
     <li className={"hover:opacity-80" + ` ${className}`}>
@@ -13,12 +13,11 @@ const SignUp = ({ className }: { className?: string }) => {
           setTitle("Đăng ký");
           handleOpen();
         }}
-        href={"#"}
-      >
+        href={"#"}>
         Đăng ký
       </Link>
     </li>
   );
 };
 
-export default SignUp;
+export default SignUpItem;
