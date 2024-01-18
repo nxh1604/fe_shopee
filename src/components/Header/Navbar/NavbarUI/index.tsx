@@ -10,7 +10,9 @@ const NavItem = (
 
   return (
     <li className={"hover:opacity-80 cursor-pointer" + ` ${className}`}>
-      <Link href={href}>{children}</Link>
+      <Link className="text-nowrap" href={href}>
+        {children}
+      </Link>
     </li>
   );
 };

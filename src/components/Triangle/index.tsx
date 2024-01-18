@@ -1,4 +1,5 @@
 import { PropsWithChildren } from "react";
+import { twMerge } from "tailwind-merge";
 
 const triangleUpColor = {
   white: "border-[transparent_transparent_white_transparent]",
@@ -13,10 +14,7 @@ const TriangleUp = (
 ) => {
   const { className = "", color = "white" } = props;
 
-  return (
-    <div
-      className={`absolute border-x-[16px] border-y-[8px] top-[-16px] right-[20px] ${triangleUpColor[color]} ${className}`}></div>
-  );
+  return <div className={twMerge(`absolute border-x-[16px] border-y-[8px] top-[-16px] right-[20px] ${triangleUpColor[color]} ${className}`)}></div>;
 };
 
 export { TriangleUp };

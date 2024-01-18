@@ -1,13 +1,13 @@
 import Link from "next/link";
-import { DropdownBoxHeader, DropdownBox } from "../UI";
+import { DropdownBoxHeader, DropdownBox } from "../../Dropdown/UI";
 import Image from "next/image";
+import { IHeaderNotifyItem } from "./definitions";
+import notifyData from "./notifyData";
+
+const user = true;
 
 const DropdownNotifyContent = () => {
-  return (
-    <DropdownBox isTriangle>
-      {user ? <NotifyContent notifyList={notifyItems} /> : <NotifyNoUser />}
-    </DropdownBox>
-  );
+  return <DropdownBox isTriangle>{user ? <NotifyContent notifyList={notifyData} /> : <NotifyNoUser />}</DropdownBox>;
 };
 
 export default DropdownNotifyContent;
@@ -32,15 +32,7 @@ const NotifyList = ({ notifyList }: { notifyList: IHeaderNotifyItem[] }) => {
   return (
     <ul>
       {notifyList.map((notify) => {
-        return (
-          <NotifyItem
-            key={notify.title}
-            src={notify.src}
-            title={notify.title}
-            isRead={notify.isRead}
-            description={notify.description}
-          />
-        );
+        return <NotifyItem key={notify.title} src={notify.src} title={notify.title} isRead={notify.isRead} description={notify.description} />;
       })}
     </ul>
   );
@@ -85,57 +77,13 @@ const NotifyNoUser = () => {
         <p>Đăng nhập để xem thông báo</p>
       </div>
       <div className="flex justify-between text-base bg-slate-100 ">
-        <Link
-          className="flex-1 py-3 text-center hover:bg-slate-300 hover:text-[#f53d2d]"
-          href={"#"}>
+        <Link className="flex-1 py-3 text-center hover:bg-slate-300 hover:text-[#f53d2d]" href={"#"}>
           Đăng Ký
         </Link>
-        <Link
-          className="flex-1 py-3 text-center hover:bg-slate-300 hover:text-[#f53d2d]"
-          href={"#"}>
+        <Link className="flex-1 py-3 text-center hover:bg-slate-300 hover:text-[#f53d2d]" href={"#"}>
           Đăng Nhập
         </Link>
       </div>
     </div>
   );
 };
-
-interface IHeaderNotifyItem {
-  src: string;
-  title: string;
-  description: string;
-  isRead: boolean;
-}
-
-const notifyItems: IHeaderNotifyItem[] = [
-  {
-    src: "/img/tree-736885_1280.jpg",
-    title: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio, nulla!",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum mollitia illo nostrum, eum ea enim nisi minima tenetur quae incidunt?",
-    isRead: false,
-  },
-  {
-    src: "/img/tree-736885_1280.jpg",
-    title: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio, nulla!",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum mollitia illo nostrum, eum ea enim nisi minima tenetur quae incidunt?",
-    isRead: true,
-  },
-  {
-    src: "/img/tree-736885_1280.jpg",
-    title: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio, nulla!",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum mollitia illo nostrum, eum ea enim nisi minima tenetur quae incidunt?",
-    isRead: true,
-  },
-  {
-    src: "/img/tree-736885_1280.jpg",
-    title: "Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio, nulla!",
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum mollitia illo nostrum, eum ea enim nisi minima tenetur quae incidunt?",
-    isRead: false,
-  },
-];
-
-const user = true;
