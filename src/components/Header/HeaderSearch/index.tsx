@@ -1,4 +1,6 @@
 import { FaCheck, FaSearch } from "react-icons/fa";
+import SearchContent from "./SearchContent";
+import { DropdownContent, DropdownControl, DropdownWrapper } from "../Dropdown/WhenHover";
 
 const HeaderSearch = (props: React.PropsWithChildren<{ placeHolder?: string }>) => {
   const { placeHolder } = props;
@@ -12,35 +14,27 @@ const HeaderSearch = (props: React.PropsWithChildren<{ placeHolder?: string }>) 
           className="w-full peer p-2 text-base min-w-[300px]"
         />
         <div className="absolute hidden top-[calc(100%+10px)] peer-focus:flex fade-in-animation rounded flex-col gap-2 bg-white w-full shadow-md">
-          <header className="px-2 pt-3 text-gray-400">
-            <h3>Lịch sử tìm kiếm</h3>
-          </header>
-          <ul className="space-y-1">
-            <li className="cursor-pointer px-4 py-2 hover:bg-gray-300 hover:text-primary">
-              Tìm kiếm áo giáp
-            </li>
-            <li className="px-4 py-2 cursor-pointer hover:bg-gray-300 hover:text-prima">
-              Tìm kiếm mũ khối
-            </li>
-          </ul>
+          <SearchContent />
         </div>
       </div>
       <div className="h-8 w-[1px] bg-gray-300"></div>
-      <div className="self-stretch relative text-sm">
-        <p className="flex p-2 peer h-full text-nowrap items-center gap-3 pr-2 hover:bg-gray-300">
-          Trong shop <FaCheck className="fill-primary" />
-        </p>
-        <div className=" absolute hidden fade-in-animation top-[calc(100%)] pt-2 hover:flex peer-hover:flex flex-col gap-2 w-full shadow-md">
-          <ul className="space-y-1 rounded bg-white">
-            <li className="px-4 py-2 cursor-pointer hover:bg-gray-300 hover:text-primary">
+      <DropdownWrapper>
+        <DropdownControl>
+          <p className="flex p-2 h-full text-nowrap items-center gap-3 cursor-pointer hover:bg-gray-300">
+            Trong shop <FaCheck className="fill-primary" />
+          </p>
+        </DropdownControl>
+        <DropdownContent className="right-[-40px] left-0">
+          <ul className="space-y-1 w-full rounded overflow-hidden bg-white">
+            <li className="px-4 py-2 cursor-pointer hover:bg-hoverBgTextColor hover:text-primary">
               Tìm kiếm áo giáp
             </li>
-            <li className="px-4 py-2 cursor-pointer hover:bg-gray-300 hover:text-primary">
+            <li className="px-4 py-2 cursor-pointer hover:bg-hoverBgTextColor hover:text-primary">
               Tìm kiếm mũ khối
             </li>
           </ul>
-        </div>
-      </div>
+        </DropdownContent>
+      </DropdownWrapper>
       <button className="bg-[#ff6533] py-3 px-6 rounded-sm shopee-linear-gradient-l hover:opacity-80">
         <FaSearch className="fill-white " />
       </button>

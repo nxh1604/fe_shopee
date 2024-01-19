@@ -1,24 +1,21 @@
-import {
-  FaChevronDown,
-  FaFacebook,
-  FaGlobe,
-  FaInstagram,
-  FaQuestionCircle,
-  FaRegBell,
-} from "react-icons/fa";
+import { FaChevronDown, FaFacebook, FaGlobe, FaInstagram, FaQuestionCircle, FaRegBell } from "react-icons/fa";
 
 import SignUp from "@/components/Header/Navbar//SignupItem";
 import Signin from "@/components/Header/Navbar/SigninItem";
-import HeaderDropdownNotify from "../Dropdown/NotifyContent";
-import { DropdownContent, DropdownHover, DropdownWrapper } from "../Dropdown/WhenHover";
+import HeaderDropdownNotify from "./NotifyContent";
+import { DropdownContent, DropdownControl, DropdownWrapper } from "../Dropdown/WhenHover";
 import { NavItem, NavItemWithIcon } from "./NavbarUI";
-import DropdownLanguageContent from "../Dropdown/LanguageContent";
-import DropdownDowloadContent from "../Dropdown/DowloadContent";
+import DropdownLanguageContent from "./LanguageContent";
+import DropdownDowloadContent from "./DowloadContent";
+import notifyData from "./NotifyContent/notifyData";
+import User from "./User";
+
+export const user = true;
 
 const HeaderNavbar = (): JSX.Element => {
   return (
-    <nav className=" text-nowrap py-2 flex justify-between text-sm">
-      <ul className="justify-start flex items-center gap-3 px-2">
+    <nav className="py-2 flex justify-between ">
+      <ul className="justify-start flex items-center gap-3 px-2 min-w-fit ">
         <NavItem href={"#"}>Kênh người bán</NavItem>
 
         <NavItem className="border-l-2 pl-3 border-slate-300" href={"#"}>
@@ -26,11 +23,11 @@ const HeaderNavbar = (): JSX.Element => {
         </NavItem>
 
         <DropdownWrapper>
-          <DropdownHover>
+          <DropdownControl>
             <NavItem className="border-l-2 pl-3 border-slate-300" href={"#"}>
               Tải ứng dụng
             </NavItem>
-          </DropdownHover>
+          </DropdownControl>
           <DropdownContent className="right-[50%] translate-x-[50%]">
             <DropdownDowloadContent />
           </DropdownContent>
@@ -51,13 +48,18 @@ const HeaderNavbar = (): JSX.Element => {
         </div>
       </ul>
 
-      <ul className="justify-end flex gap-3 px-2">
+      <ul className="justify-end flex gap-3 px-2  min-w-fit">
         <DropdownWrapper>
-          <DropdownHover>
-            <NavItemWithIcon href="#">
-              <FaRegBell className="w-4 h-4" /> Thông báo
+          <DropdownControl>
+            <NavItemWithIcon className="relative" href="#">
+              <FaRegBell className="w-4 h-4 mr-1" /> Thông báo
+              {notifyData.filter((item) => item.isRead === false).length > 0 && (
+                <span className="absolute -top-2 text-primary border-2 border-red-500 py-[2px] text-xs px-1 leading-[12px] rounded-full bg-white left-[6px]">
+                  {notifyData.filter((item) => item.isRead === false).length}
+                </span>
+              )}
             </NavItemWithIcon>
-          </DropdownHover>
+          </DropdownControl>
           <DropdownContent className="right-0">
             <HeaderDropdownNotify />
           </DropdownContent>
@@ -67,20 +69,22 @@ const HeaderNavbar = (): JSX.Element => {
           <FaQuestionCircle className="w-4 h-4" /> Hỗ trợ
         </NavItemWithIcon>
         <DropdownWrapper>
-          <DropdownHover>
+          <DropdownControl>
             <NavItemWithIcon href="#">
               <FaGlobe className="w-4 h-4" /> Tiếng Việt <FaChevronDown className="w-4 h-4" />
             </NavItemWithIcon>
-          </DropdownHover>
+          </DropdownControl>
           <DropdownContent>
             <DropdownLanguageContent />
           </DropdownContent>
         </DropdownWrapper>
-
-        <div className="ml-3 gap-3 flex">
-          <Signin />
-          <SignUp className="border-l-2 pl-3 border-slate-300" />
-        </div>
+        {user && <User />}
+        {!user && (
+          <div className="ml-3 gap-3 flex">
+            <Signin />
+            <SignUp className="border-l-2 pl-3 border-slate-300" />
+          </div>
+        )}
       </ul>
     </nav>
   );
