@@ -1,8 +1,6 @@
-import { FaShoppingCart } from "react-icons/fa";
 import HeaderSearch from "./HeaderSearch";
 import ShopeeLogo from "../ShopeeLogo";
 import HeaderNavbar from "./Navbar";
-import { TriangleUp } from "../Triangle";
 import HeaderCart from "./HeaderCart";
 
 const Header = (): JSX.Element => {
