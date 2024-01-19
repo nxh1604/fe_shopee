@@ -9,7 +9,7 @@ const DropdownControl = ({ className = "", children }: { className?: string; chi
 };
 
 const DropdownContent = ({ children, className = "" }: { className?: string; children: React.ReactNode }) => {
-  return <div className={twMerge("hidden absolute top-[90%] pt-3 z-10 right-0 hover:block peer-hover:block", className)}>{children}</div>;
+  return <div className={twMerge("hidden absolute top-[90%] pt-3 z-10 right-0 hover:block peer-hover:block shadow-md", className)}>{children}</div>;
 };
 
 export { DropdownContent, DropdownWrapper, DropdownControl };

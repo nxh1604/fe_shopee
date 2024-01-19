@@ -1,11 +1,25 @@
+import { TriangleUp } from "@/components/Triangle";
 import { DropdownBox } from "../../Dropdown/UI";
+
+const languageOptions = [
+  {
+    language: "Tiếng Việt",
+  },
+  {
+    language: "English",
+  },
+];
 
 const DropdownLanguageContent = () => {
   return (
-    <DropdownBox isTriangle className="right-[32px]">
+    <DropdownBox isTriangle className="origin-[calc(100%-32px)_top] ">
+      <TriangleUp className="right-[32px]" />
       <ul className="w-[180px]">
-        <li className="p-2 hover:bg-gray-300 relative z-1 hover:text-primary cursor-pointer">Tiếng Việt</li>
-        <li className="p-2 hover:bg-gray-300 relative z-1 hover:text-primary cursor-pointer">English</li>
+        {languageOptions.map((option) => (
+          <li key={option.language} className="p-2 hover:bg-hoverBgTextColor relative z-1 hover:text-primary cursor-pointer">
+            {option.language}
+          </li>
+        ))}
       </ul>
     </DropdownBox>
   );

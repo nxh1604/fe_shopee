@@ -3,10 +3,12 @@ import { DropdownBox, DropdownBoxHeader } from "../../Dropdown/UI";
 import Button from "@/components/Button";
 import cartData from "../cartData";
 import { ICartItem } from "../definitions";
+import { TriangleUp } from "@/components/Triangle";
 
 const DropdownCartContent = () => {
   return (
-    <DropdownBox isTriangle className="right-[16px]">
+    <DropdownBox isTriangle className="origin-[calc(100%-16px)_top]">
+      <TriangleUp className="right-[16px]" />
       <div className="w-[400px]">{cartData.length > 0 ? <CartContent cartItems={cartData} /> : <EmptyCartContent />}</div>
     </DropdownBox>
   );
@@ -25,7 +27,7 @@ const CartContent = ({ cartItems }: { cartItems: ICartItem[] }) => {
         ))}
       </ul>
       <footer className={"flex p-2 items-center" + ` ${remainCartItems > 0 ? "justify-between" : "justify-end"}`}>
-        {remainCartItems > 0 && <p className="text-gray-500 ">{remainCartItems} thêm vào giỏ hàng</p>}
+        {remainCartItems > 0 && <p className="text-textColor ">{remainCartItems} thêm vào giỏ hàng</p>}
         <Button variant="primary" className="p-2">
           Xem giỏ hàng
         </Button>

@@ -1,5 +1,14 @@
 import { DropdownBox, DropdownBoxHeader } from "../../Dropdown/UI";
 
+const inShopOptions = [
+  {
+    option: "Tìm kiếm áo giáp",
+  },
+  {
+    option: "Tìm kiếm mũ khối",
+  },
+];
+
 const SearchContent = () => {
   return (
     <DropdownBox>
@@ -12,8 +21,13 @@ const SearchContent = () => {
 const HitorySearch = () => {
   return (
     <ul className="space-y-1">
-      <li className="cursor-pointer px-4 py-2 hover:bg-gray-300 hover:text-primary">Tìm kiếm áo giáp</li>
-      <li className="px-4 py-2 cursor-pointer hover:bg-gray-300 hover:text-prima">Tìm kiếm mũ khối</li>
+      {inShopOptions.map((option) => {
+        return (
+          <li className="cursor-pointer px-4 py-2 hover:bg-hoverBgTextColor hover:text-primary" key={option.option}>
+            {option.option}
+          </li>
+        );
+      })}
     </ul>
   );
 };

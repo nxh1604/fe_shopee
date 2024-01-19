@@ -8,6 +8,9 @@ import { NavItem, NavItemWithIcon } from "./NavbarUI";
 import DropdownLanguageContent from "./LanguageContent";
 import DropdownDowloadContent from "./DowloadContent";
 import notifyData from "./NotifyContent/notifyData";
+import User from "./User";
+
+export const user = true;
 
 const HeaderNavbar = (): JSX.Element => {
   return (
@@ -75,11 +78,13 @@ const HeaderNavbar = (): JSX.Element => {
             <DropdownLanguageContent />
           </DropdownContent>
         </DropdownWrapper>
-
-        <div className="ml-3 gap-3 flex">
-          <Signin />
-          <SignUp className="border-l-2 pl-3 border-slate-300" />
-        </div>
+        {user && <User />}
+        {!user && (
+          <div className="ml-3 gap-3 flex">
+            <Signin />
+            <SignUp className="border-l-2 pl-3 border-slate-300" />
+          </div>
+        )}
       </ul>
     </nav>
   );

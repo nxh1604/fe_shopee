@@ -3,20 +3,6 @@
 @tailwind utilities;
 
 @layer components {
-  .shopee-linear-gradient-b {
-    @apply bg-gradient-to-b from-[#f53d2d] to-primary;
-  }
-  .shopee-linear-gradient-t {
-    @apply bg-gradient-to-t from-[#f53d2d] to-primary;
-  }
-
-  .shopee-linear-gradient-l {
-    @apply bg-gradient-to-l from-[#f53d2d] to-primary;
-  }
-  .shopee-linear-gradient-r {
-    @apply bg-gradient-to-r from-[#f53d2d] to-primary;
-  }
-
   .triangle-up {
     position: absolute;
     top: -30px;
@@ -27,7 +13,7 @@
   }
 
   .header-notify-animation {
-    @apply origin-[calc(100%-20px)_top] animate-[headerNotify_0.3s] will-change-[opacity,_scale];
+    @apply animate-[headerNotify_0.3s] will-change-[opacity,_scale];
   }
 
   .fade-in-animation {

@@ -3,11 +3,16 @@ import { DropdownBoxHeader, DropdownBox } from "../../Dropdown/UI";
 import Image from "next/image";
 import { IHeaderNotifyItem } from "./definitions";
 import notifyData from "./notifyData";
-
-const user = true;
+import { user } from "..";
+import { TriangleUp } from "@/components/Triangle";
 
 const DropdownNotifyContent = () => {
-  return <DropdownBox isTriangle>{user ? <NotifyContent notifyList={notifyData} /> : <NotifyNoUser />}</DropdownBox>;
+  return (
+    <DropdownBox isTriangle className="origin-[calc(100%-30px)_top]">
+      <TriangleUp className="right-[30px]" />
+      {user ? <NotifyContent notifyList={notifyData} /> : <NotifyNoUser />}
+    </DropdownBox>
+  );
 };
 
 export default DropdownNotifyContent;
