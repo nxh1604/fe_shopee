@@ -9,7 +9,7 @@ const HeaderSearch = (props: React.PropsWithChildren<{ placeHolder?: string }>) 
     <div className="flex-1 flex rounded-sm gap-1 text-black items-center bg-white p-1">
       <div className="flex-1 relative ">
         <input placeholder={placeHolder ? placeHolder : "Tìm kiếm"} type="text" className="w-full peer p-2 text-base min-w-[300px]" />
-        <div className="absolute hidden top-[calc(100%+10px)] peer-focus:flex fade-in-animation rounded flex-col gap-2 bg-white w-full shadow-md">
+        <div className="absolute hidden z-[1] top-[calc(100%+10px)] peer-focus:flex fade-in-animation rounded flex-col gap-2 bg-white w-full shadow-md">
           <SearchContent />
         </div>
       </div>
@@ -20,8 +20,8 @@ const HeaderSearch = (props: React.PropsWithChildren<{ placeHolder?: string }>) 
             Trong shop <FaCheck className="fill-primary" />
           </p>
         </DropdownControl>
-        <DropdownContent className="right-[-40px] left-0">
-          <ul className="space-y-1 w-full rounded overflow-hidden bg-white">
+        <DropdownContent className="right-[-40px] left-0 z-[1]">
+          <ul className="space-y-1 w-full rounded overflow-hidden bg-white ">
             <li className="px-4 py-2 cursor-pointer hover:bg-hoverBgTextColor hover:text-primary">Tìm kiếm áo giáp</li>
             <li className="px-4 py-2 cursor-pointer hover:bg-hoverBgTextColor hover:text-primary">Tìm kiếm mũ khối</li>
           </ul>
