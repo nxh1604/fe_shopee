@@ -2,15 +2,15 @@ import { FaChevronDown, FaFacebook, FaGlobe, FaInstagram, FaQuestionCircle, FaRe
 
 import SignUp from "@/components/Header/Navbar//SignupItem";
 import Signin from "@/components/Header/Navbar/SigninItem";
-import HeaderDropdownNotify from "./NotifyContent";
-import { DropdownContent, DropdownControl, DropdownWrapper } from "../Dropdown/WhenHover";
-import { NavItem, NavItemWithIcon } from "./NavbarUI";
-import DropdownLanguageContent from "./LanguageContent";
-import DropdownDowloadContent from "./DowloadContent";
-import notifyData from "./NotifyContent/notifyData";
-import User from "./User";
+import HeaderDropdownNotify from "@/components/Header/Navbar/NotifyContent";
+import { DropdownContent, DropdownControl, DropdownWrapper } from "@/components/Header/Dropdown/WhenHover";
+import { NavItem, NavItemWithIcon } from "@/components/Header/Navbar/NavbarUI";
+import DropdownLanguageContent from "@/components/Header/Navbar/LanguageContent";
+import DropdownDowloadContent from "@/components/Header/Navbar/DowloadContent";
+import User from "@/components/Header/Navbar/User";
 
-export const user = false;
+import user from "@/lib/data/userData";
+import notifyData from "@/lib/data/notifyData";
 
 const HeaderNavbar = (): JSX.Element => {
   return (

@@ -3,7 +3,7 @@ import { PropsWithChildren } from "react";
 import AuthFormHeader from "./AuthFormHeader";
 import SigninFormCotent from "@/components/AuthForm/SigninFormContent";
 import SignupFormCotent from "@/components/AuthForm/SIgnupFormContent";
-import AuthFormFooter from "./AuthFormFooter";
+import AuthFormFooter from "@/components/AuthForm/AuthFormFooter";
 
 const AuthForm = ({ title }: { title: "Đăng nhập" | "Đăng ký" }) => {
   return (

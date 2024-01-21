@@ -1,6 +1,7 @@
 import { FaCheck, FaSearch } from "react-icons/fa";
-import SearchContent from "./SearchContent";
-import { DropdownContent, DropdownControl, DropdownWrapper } from "../Dropdown/WhenHover";
+
+import SearchContent from "@/components/Header/HeaderSearch/SearchContent";
+import { DropdownContent, DropdownControl, DropdownWrapper } from "@/components/Header/Dropdown/WhenHover";
 
 const HeaderSearch = (props: React.PropsWithChildren<{ placeHolder?: string }>) => {
   const { placeHolder } = props;

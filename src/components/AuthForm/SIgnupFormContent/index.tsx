@@ -1,5 +1,5 @@
-import ButtonFormSubmit from "../ButtonFormSubmit";
-import InputForm from "../InputForm";
+import ButtonFormSubmit from "@/components/AuthForm/ButtonFormSubmit";
+import InputForm from "@/components/AuthForm/InputForm";
 
 const SignupFormCotent = () => {
   return (

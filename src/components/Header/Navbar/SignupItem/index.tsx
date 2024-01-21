@@ -1,8 +1,9 @@
 "use client";
 
-import { AuthModalContext } from "@/context/AuthModalContext";
 import Link from "next/link";
 import { useContext } from "react";
+
+import { AuthModalContext } from "@/context/AuthModalContext";
 
 const SignUpItem = ({ className }: { className?: string }) => {
   const { setTitle, handleOpen } = useContext(AuthModalContext);
@@ -13,7 +14,8 @@ const SignUpItem = ({ className }: { className?: string }) => {
           setTitle("Đăng ký");
           handleOpen();
         }}
-        href={"#"}>
+        href={"#"}
+      >
         Đăng ký
       </Link>
     </li>

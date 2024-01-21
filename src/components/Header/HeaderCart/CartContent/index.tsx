@@ -1,15 +1,20 @@
 import { formatCurrency } from "@/lib/utilies";
-import { DropdownBox, DropdownBoxHeader } from "../../Dropdown/UI";
+import { DropdownBox, DropdownBoxHeader } from "@/components/Header/Dropdown/UI";
 import Button from "@/components/Button";
-import cartData from "../cartData";
-import { ICartItem } from "../definitions";
 import { TriangleUp } from "@/components/Triangle";
+import user from "@/lib/data/userData";
+import cartData from "@/lib/data/cartData";
+import { ICartItem } from "@/lib/definitions";
 
 const DropdownCartContent = () => {
   return (
     <DropdownBox isTriangle className="origin-[calc(100%-16px)_top]">
       <TriangleUp className="right-[16px]" />
-      <div className="w-[400px]">{cartData.length > 0 ? <CartContent cartItems={cartData} /> : <EmptyCartContent />}</div>
+      {user ? (
+        <div className="w-[400px]">{cartData.length > 0 ? <CartContent cartItems={cartData} /> : <EmptyCartContent />}</div>
+      ) : (
+        <EmptyCartContent />
+      )}
     </DropdownBox>
   );
 };

@@ -1,4 +1,4 @@
-import { DropdownBox, DropdownBoxHeader } from "../../Dropdown/UI";
+import { DropdownBox, DropdownBoxHeader } from "@/components/Header/Dropdown/UI";
 
 const inShopOptions = [
   {

@@ -1,5 +1,5 @@
 import { TriangleUp } from "@/components/Triangle";
-import { DropdownBox } from "../../Dropdown/UI";
+import { DropdownBox } from "@/components/Header/Dropdown/UI";
 
 const languageOptions = [
   {

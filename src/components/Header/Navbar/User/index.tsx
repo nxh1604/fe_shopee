@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { DropdownContent, DropdownControl, DropdownWrapper } from "../../Dropdown/WhenHover";
-import { DropdownBox } from "../../Dropdown/UI";
+import { DropdownContent, DropdownControl, DropdownWrapper } from "@/components/Header/Dropdown/WhenHover";
+import { DropdownBox } from "@/components/Header/Dropdown/UI";
 import { TriangleUp } from "@/components/Triangle";
 
 const userAvatarOptions = [

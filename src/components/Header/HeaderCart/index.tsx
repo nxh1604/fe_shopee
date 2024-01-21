@@ -1,14 +1,16 @@
 import { FaShoppingCart } from "react-icons/fa";
-import { DropdownContent, DropdownControl, DropdownWrapper } from "../Dropdown/WhenHover";
-import DropdownCartContent from "./CartContent";
-import cartData from "./cartData";
+
+import { DropdownContent, DropdownControl, DropdownWrapper } from "@/components/Header/Dropdown/WhenHover";
+import DropdownCartContent from "@/components/Header/HeaderCart/CartContent";
+import user from "@/lib/data/userData";
+import cartData from "@/lib/data/cartData";
 
 const HeaderCart = () => {
   return (
     <DropdownWrapper>
       <DropdownControl>
         <FaShoppingCart className="w-7 h-7 self-center fill-white hover:opacity-60 hover:cursor-pointer" />
-        {cartData.length > 0 && (
+        {user && cartData.length > 0 && (
           <span className="absolute top-[-8px] text-primary border-2 border-red-500 py-[2px] text-xs px-1 leading-[12px] rounded-full bg-white right-[-12px]">
             {cartData.length}
           </span>

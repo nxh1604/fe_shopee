@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { DropdownBoxHeader, DropdownBox } from "../../Dropdown/UI";
 import Image from "next/image";
-import { IHeaderNotifyItem } from "./definitions";
-import notifyData from "./notifyData";
-import { user } from "..";
+
+import { DropdownBoxHeader, DropdownBox } from "@/components/Header/Dropdown/UI";
 import { TriangleUp } from "@/components/Triangle";
+import user from "@/lib/data/userData";
+import notifyData from "@/lib/data/notifyData";
+import { IHeaderNotifyItem } from "@/lib/definitions";
 
 const DropdownNotifyContent = () => {
   return (
@@ -30,7 +31,7 @@ const NotifyContent = ({ notifyList }: { notifyList: IHeaderNotifyItem[] | undef
 };
 
 const EmptyNotify = () => {
-  return <p className="w-full h-[100px] text-center leading-[100px]">Không có thông báo mới</p>;
+  return <p className="w-[400px] h-[100px] text-center leading-[100px]">Không có thông báo mới</p>;
 };
 
 const NotifyList = ({ notifyList }: { notifyList: IHeaderNotifyItem[] }) => {

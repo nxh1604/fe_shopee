@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { DropdownBox } from "../../Dropdown/UI";
+
+import { DropdownBox } from "@/components/Header/Dropdown/UI";
 
 const DropdownDowloadContent = () => {
   return (

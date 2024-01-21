@@ -1,4 +1,4 @@
-import { IHeaderNotifyItem } from "../definitions";
+import { IHeaderNotifyItem } from "@/lib/definitions";
 
 const notifyData: IHeaderNotifyItem[] = [
   {
