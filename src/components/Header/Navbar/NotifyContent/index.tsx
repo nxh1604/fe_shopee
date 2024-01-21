@@ -69,7 +69,7 @@ const NotifyFooter = () => {
 
 const NotifyNoUser = () => {
   return (
-    <div className="w-full h-full relative shadow flex flex-col text-black">
+    <div className="w-[400px] h-[300px] relative shadow flex flex-col text-black">
       <div className="flex-1 flex flex-col items-center justify-center bg-white">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
