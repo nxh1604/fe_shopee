@@ -14,7 +14,7 @@ const DropdownLanguageContent = () => {
   return (
     <DropdownBox isTriangle className="origin-[calc(100%-32px)_top] ">
       <TriangleUp className="right-[32px]" />
-      <ul className="w-[180px]">
+      <ul className="w-[180px] rounded overflow-hidden">
         {languageOptions.map((option) => (
           <li key={option.language} className="p-2 hover:bg-hoverBgTextColor relative z-1 hover:text-primary cursor-pointer">
             {option.language}

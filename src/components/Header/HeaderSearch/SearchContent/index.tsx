@@ -20,7 +20,7 @@ const SearchContent = () => {
 
 const HitorySearch = () => {
   return (
-    <ul className="space-y-1">
+    <ul className="space-y-1 rounded overflow-hidden">
       {inShopOptions.map((option) => {
         return (
           <li className="cursor-pointer px-4 py-2 hover:bg-hoverBgTextColor hover:text-primary" key={option.option}>

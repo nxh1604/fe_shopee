@@ -21,7 +21,7 @@ const NotifyContent = ({ notifyList }: { notifyList: IHeaderNotifyItem[] | undef
   if (!notifyList || !notifyList[0]) return <EmptyNotify />;
 
   return (
-    <div className="w-[400px]">
+    <div className="w-[400px]  rounded-[2px]">
       <DropdownBoxHeader title="Thông báo mới nhận" />
       <NotifyList notifyList={notifyList} />
       <NotifyFooter />
@@ -69,8 +69,8 @@ const NotifyFooter = () => {
 
 const NotifyNoUser = () => {
   return (
-    <div className="w-[400px] h-[300px] relative shadow flex flex-col text-black">
-      <div className="flex-1 flex flex-col items-center justify-center bg-white">
+    <div className="w-[400px] h-[300px] rounded-[2px] relative shadow flex flex-col text-black">
+      <div className="flex-1 flex flex-col items-center rounded-t-[2px] justify-center bg-white">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           className="w-[100px] h-[100px] "
@@ -81,8 +81,8 @@ const NotifyNoUser = () => {
         />
         <p>Đăng nhập để xem thông báo</p>
       </div>
-      <div className="flex justify-between text-base bg-slate-100 ">
-        <Link className="flex-1 py-3 text-center hover:bg-slate-300 hover:text-[#f53d2d]" href={"#"}>
+      <div className="flex justify-between overflow-hidden rounded-b-[2px] text-base bg-slate-100 ">
+        <Link className="flex-1 py-3 text-center  hover:bg-slate-300 hover:text-[#f53d2d]" href={"#"}>
           Đăng Ký
         </Link>
         <Link className="flex-1 py-3 text-center hover:bg-slate-300 hover:text-[#f53d2d]" href={"#"}>

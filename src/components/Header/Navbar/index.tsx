@@ -1,11 +1,4 @@
-import {
-  FaChevronDown,
-  FaFacebook,
-  FaGlobe,
-  FaInstagram,
-  FaQuestionCircle,
-  FaRegBell,
-} from "react-icons/fa";
+import { FaChevronDown, FaFacebook, FaGlobe, FaInstagram, FaQuestionCircle, FaRegBell } from "react-icons/fa";
 
 import SignUp from "@/components/Header/Navbar//SignupItem";
 import Signin from "@/components/Header/Navbar/SigninItem";
@@ -35,7 +28,7 @@ const HeaderNavbar = (): JSX.Element => {
               Tải ứng dụng
             </NavItem>
           </DropdownControl>
-          <DropdownContent className="left-0">
+          <DropdownContent className="left-0 right-[none]">
             <DropdownDowloadContent />
           </DropdownContent>
         </DropdownWrapper>
