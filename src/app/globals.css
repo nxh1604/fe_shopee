@@ -17,7 +17,7 @@
   }
 
   .fade-in-animation {
-    @apply animate-[fadeIn_0.2s] will-change-[opacity];
+    @apply animate-[fadeIn_0.2s] ease-linear will-change-[opacity];
   }
 }
 

@@ -70,9 +70,9 @@ const SigninFooter = () => {
           setTitle("Đăng nhập");
           handleOpen();
         }}
+        scroll={false}
         className="text-primary"
-        href={"#"}
-      >
+        href={"#"}>
         Đăng nhập
       </Link>
     </footer>
@@ -90,9 +90,9 @@ const SignupFooter = () => {
           setTitle("Đăng ký");
           handleOpen();
         }}
+        scroll={false}
         className="text-primary"
-        href={"#"}
-      >
+        href={"#"}>
         Đăng ký
       </Link>
     </footer>

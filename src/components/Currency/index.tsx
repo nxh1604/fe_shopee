@@ -5,7 +5,7 @@ const Currency = ({ price }: { price: number }) => {
 
   return (
     <span className="first-letter:text-[4px]">
-      <span className="text-[10px] relative -top-[2px]">đ</span>
+      <span className="text-[10px] relative -top-[2px] underline ">đ</span>
       {currencyFormat}
     </span>
   );

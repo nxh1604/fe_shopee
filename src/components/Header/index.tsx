@@ -9,7 +9,7 @@ const Header = (): JSX.Element => {
     <header className="*:max-w-[1200px] *:w-full *:min-w-fit *:mx-auto bg-gradient-shopee-b pb-5 text-white text-sm">
       <HeaderNavbar />
       <div className="flex justify-between pt-4 pb-2 px-2 items-end gap-5">
-        <Link href={"#"}>
+        <Link aria-label="home" href={"#"}>
           <ShopeeLogo className="fill-white w-[162px]" />
         </Link>
         <HeaderSearch />

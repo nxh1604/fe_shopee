@@ -12,7 +12,7 @@ const ModalOverlay = ({ children, isOpen, handleClose }: ModalOverlayProps) => {
       onClick={handleClose}
       className={`${
         !isOpen && "hidden"
-      } absolute top-0 bottom-0 right-0 left-0 bg-black/30 flex items-center justify-center`}>
+      } fixed bottom-0 top-0 left-0 right-0 bg-black/30 flex items-center justify-center z-50`}>
       {children}
     </div>
   );
@@ -25,7 +25,7 @@ interface ModalCotentProps extends PropsWithChildren {
 const ModalContent = ({ children, handleClose }: ModalCotentProps) => {
   return (
     <div
-      className="relative animate-[ModalAnimate_0.2s] will-change-[opacity]"
+      className="relative animate-[ModalAnimate_0.2s] will-change-[opacity] "
       onClick={(e) => e.stopPropagation()}>
       <VscClose
         onClick={handleClose}

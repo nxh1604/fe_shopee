@@ -35,7 +35,9 @@ const HeaderSearch = (props: React.PropsWithChildren<{ placeHolder?: string }>) 
           </ul>
         </DropdownContent>
       </DropdownWrapper>
-      <button className="bg-[#ff6533] py-3 px-6 rounded-sm shopee-linear-gradient-l hover:opacity-80">
+      <button
+        aria-label="Tìm kiếm"
+        className="bg-[#ff6533] py-3 px-6 rounded-sm shopee-linear-gradient-l hover:opacity-80">
         <FaSearch className="fill-white " />
       </button>
     </div>

@@ -17,7 +17,7 @@ import DropdownDowloadContent from "./DowloadContent";
 import notifyData from "./NotifyContent/notifyData";
 import User from "./User";
 
-export const user = true;
+export const user = false;
 
 const HeaderNavbar = (): JSX.Element => {
   return (
@@ -35,7 +35,7 @@ const HeaderNavbar = (): JSX.Element => {
               Tải ứng dụng
             </NavItem>
           </DropdownControl>
-          <DropdownContent className="left-0 ">
+          <DropdownContent className="left-0">
             <DropdownDowloadContent />
           </DropdownContent>
         </DropdownWrapper>
