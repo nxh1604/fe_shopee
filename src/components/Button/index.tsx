@@ -4,9 +4,9 @@ import { PropsWithChildren } from "react";
 const Button = (
   props: PropsWithChildren<
     {
-      variant?: "primary" | "normal";
+      variant?: "primary" | "normal" | "normal-no-hover";
       className?: string;
-      size?: "small" | "medium" | "large" | "full";
+      size?: "icon" | "small" | "medium" | "large" | "full" | "Xsmall";
     } & React.ComponentPropsWithoutRef<"button">
   >
 ) => {
@@ -15,18 +15,22 @@ const Button = (
   return (
     <button
       className={clsx(
-        "cursor-pointer flex items-center justify-center text-sm  rounded-sm",
+        "cursor-pointer flex items-center justify-center text-sm rounded-sm",
         {
           "bg-primary text-white": variant === "primary",
-          "bg-white text-black hover:bg-gray-100": variant === "normal",
-          " ": size === "small",
+          "bg-white text-black": variant === "normal-no-hover",
+          "bg-white text-black hover:bg-primaryBgColor": variant === "normal",
+          "bg-transparent": size === "icon",
+          "px-[10px]": size === "Xsmall",
+          "px-4 py-2 text-sm": size === "small",
           "py-2": size === "medium",
           "": size === "large",
           "w-full": size === "full",
         },
         className
       )}
-      {...rest}>
+      {...rest}
+    >
       {children}
     </button>
   );

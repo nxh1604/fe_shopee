@@ -19,7 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AuthModalProvider>
           <Header />
           <AuthModal />
-          <div>{children}</div>
+          {children}
         </AuthModalProvider>
       </body>
     </html>
