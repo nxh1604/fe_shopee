@@ -1,4 +1,4 @@
-import { ICartItem } from "@/components/Header/HeaderCart/definitions";
+import { ICartItem } from "@/lib/definitions";
 
 const cartData: ICartItem[] = [
   {

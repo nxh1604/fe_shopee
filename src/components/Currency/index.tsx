@@ -4,8 +4,8 @@ const Currency = ({ price }: { price: number }) => {
   const currencyFormat = formatCurrency(price);
 
   return (
-    <span className="first-letter:text-[4px]">
-      <span className="text-[10px] relative -top-[2px] underline ">đ</span>
+    <span className="first-letter:text-[4px] flex items-center">
+      <u className="text-[10px] ">₫</u>
       {currencyFormat}
     </span>
   );

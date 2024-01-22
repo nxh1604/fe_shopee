@@ -1,9 +1,20 @@
-import { FaChevronDown, FaFacebook, FaGlobe, FaInstagram, FaQuestionCircle, FaRegBell } from "react-icons/fa";
+import {
+  FaChevronDown,
+  FaFacebook,
+  FaGlobe,
+  FaInstagram,
+  FaQuestionCircle,
+  FaRegBell,
+} from "react-icons/fa";
 
 import SignUp from "@/components/Header/Navbar//SignupItem";
 import Signin from "@/components/Header/Navbar/SigninItem";
 import HeaderDropdownNotify from "@/components/Header/Navbar/NotifyContent";
-import { DropdownContent, DropdownControl, DropdownWrapper } from "@/components/Header/Dropdown/WhenHover";
+import {
+  DropdownContent,
+  DropdownControl,
+  DropdownWrapper,
+} from "@/components/Header/Dropdown/WhenHover";
 import { NavItem, NavItemWithIcon } from "@/components/Header/Navbar/NavbarUI";
 import DropdownLanguageContent from "@/components/Header/Navbar/LanguageContent";
 import DropdownDowloadContent from "@/components/Header/Navbar/DowloadContent";
@@ -18,9 +29,11 @@ const HeaderNavbar = (): JSX.Element => {
       <ul className="justify-start flex items-center gap-3 px-2 min-w-fit ">
         <NavItem href={"#"}>Kênh người bán</NavItem>
 
-        <NavItem className="border-l-2 pl-3 border-slate-300" href={"#"}>
-          Trở này Người bán Shopee
-        </NavItem>
+        {!user && (
+          <NavItem className="border-l-2 pl-3 border-slate-300" href={"#"}>
+            Trở thành Người bán Shopee
+          </NavItem>
+        )}
 
         <DropdownWrapper>
           <DropdownControl>

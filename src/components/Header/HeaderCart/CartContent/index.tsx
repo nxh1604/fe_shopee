@@ -5,13 +5,16 @@ import { TriangleUp } from "@/components/Triangle";
 import user from "@/lib/data/userData";
 import cartData from "@/lib/data/cartData";
 import { ICartItem } from "@/lib/definitions";
+import Currency from "@/components/Currency";
 
 const DropdownCartContent = () => {
   return (
     <DropdownBox isTriangle className="origin-[calc(100%-16px)_top]">
       <TriangleUp className="right-[16px]" />
       {user ? (
-        <div className="w-[400px]">{cartData.length > 0 ? <CartContent cartItems={cartData} /> : <EmptyCartContent />}</div>
+        <div className="w-[400px]">
+          {cartData.length > 0 ? <CartContent cartItems={cartData} /> : <EmptyCartContent />}
+        </div>
       ) : (
         <EmptyCartContent />
       )}
@@ -31,8 +34,13 @@ const CartContent = ({ cartItems }: { cartItems: ICartItem[] }) => {
           <CartItem key={item.title} item={item} />
         ))}
       </ul>
-      <footer className={"flex p-2 items-center" + ` ${remainCartItems > 0 ? "justify-between" : "justify-end"}`}>
-        {remainCartItems > 0 && <p className="text-textColor ">{remainCartItems} thêm vào giỏ hàng</p>}
+      <footer
+        className={
+          "flex p-2 items-center" + ` ${remainCartItems > 0 ? "justify-between" : "justify-end"}`
+        }>
+        {remainCartItems > 0 && (
+          <p className="text-textColor ">{remainCartItems} thêm vào giỏ hàng</p>
+        )}
         <Button variant="primary" className="p-2">
           Xem giỏ hàng
         </Button>
@@ -47,10 +55,16 @@ const CartItem = ({ item }: { item: ICartItem }) => {
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img width={40} height={40} src={item.imgSrc} className="h-auto self-center" alt="" />
       <p className="flex-1 px-2 ">
-        {item.combo && <span className="text-red-500 border-[1px] rounded-xl border-red-500 text-xs mr-1 tracking-tighter px-1">{item.combo}</span>}
-        {item.title.length + item.combo?.length > 30 ? `${item.title.slice(0, 30 - item.combo.length)}...` : item.title}
+        {item.combo && (
+          <span className="text-red-500 border-[1px] rounded-xl border-red-500 text-xs mr-1 tracking-tighter px-1">
+            {item.combo}
+          </span>
+        )}
+        {item.title.length + item.combo?.length > 30
+          ? `${item.title.slice(0, 30 - item.combo.length)}...`
+          : item.title}
       </p>
-      <span className="text-red-500 text-xs self-center">{formatCurrency(item.price)}</span>
+      <span className="text-red-500 text-xs self-center">{<Currency price={item.price} />}</span>
     </li>
   );
 };
