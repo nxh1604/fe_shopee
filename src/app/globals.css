@@ -19,6 +19,32 @@
   .fade-in-animation {
     @apply animate-[fadeIn_0.2s] ease-linear will-change-[opacity];
   }
+
+  .slideIn-r-animation {
+    @apply animate-[slideInFromRight_0.3s] will-change-[transform];
+  }
+
+  .slideOut-l-animation {
+    @apply animate-[slideOutFromRight_0.3s] will-change-[transform];
+  }
+}
+
+@keyframes slideOutFromRight {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 @keyframes fadeIn {
