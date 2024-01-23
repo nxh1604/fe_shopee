@@ -2,44 +2,73 @@
 "use client";
 
 import carouselData from "@/lib/data/carouselData";
-import {
-  MouseEvent,
-  MouseEventHandler,
-  PropsWithChildren,
-  SetStateAction,
-  useEffect,
-  useState,
-} from "react";
+import { MouseEventHandler, PropsWithChildren, SetStateAction, useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 const Carousel = () => {
   const [carouselIndex, setCarouselIndex] = useState<number>(0);
   const [onMouseDown, setOnMouseDown] = useState<boolean>(false);
   const [lastMouseDownX, setLastMouseDownX] = useState(0);
+  const [transformValue, setTransformValue] = useState(0);
 
   const handleMouseDown: MouseEventHandler<HTMLUListElement> = (e) => {
     setLastMouseDownX(e.clientX);
     setOnMouseDown(true);
+    setTransformValue(parseInt(window.getComputedStyle(e.currentTarget).transform.split(",")[4].trim()));
   };
 
   const handleMouseMove: MouseEventHandler<HTMLUListElement> = (e) => {
     if (onMouseDown) {
       const diffX = e.clientX - lastMouseDownX;
-      const transformValue = window
-        .getComputedStyle(e.currentTarget)
-        .transform.split(",")[4]
-        .trim();
-      console.log(transformValue + diffX);
-      e.currentTarget.style.transform = `translateX(${parseInt(transformValue) + diffX}px)`;
+      if (transformValue + diffX < 450 && transformValue + diffX > -4650) {
+        e.currentTarget.style.transform = `translateX(${transformValue + diffX}px)`;
+      }
     }
   };
 
-  const handleMouseUp = () => {
+  const handleMouseUp: MouseEventHandler<HTMLUListElement> = (e) => {
+    const diffX = e.clientX - lastMouseDownX;
+    if (diffX > 0) {
+      const condition = diffX / 150 >= 1;
+      if (condition && carouselIndex !== 0) setCarouselIndex((prev) => --prev);
+      else {
+        e.currentTarget.style.transform = `translateX(-${12.5 * 48 * carouselIndex}px)`;
+        e.currentTarget.style.transition = `transform 0.5s ease-in`;
+      }
+    }
+    if (diffX < 0) {
+      const condition = Math.abs(diffX) / 150 >= 1;
+      if (condition && carouselIndex !== carouselData.length - 1) setCarouselIndex((prev) => ++prev);
+      else {
+        e.currentTarget.style.transform = `translateX(-${12.5 * 48 * carouselIndex}px)`;
+        e.currentTarget.style.transition = `transform 0.5s ease-in`;
+      }
+    }
+
     setOnMouseDown(false);
   };
 
-  const handleMouseLeave = () => {
-    setOnMouseDown(false);
+  const handleMouseLeave: MouseEventHandler<HTMLUListElement> = (e) => {
+    if (onMouseDown) {
+      const diffX = e.clientX - lastMouseDownX;
+      if (diffX > 0) {
+        const condition = diffX / 150 >= 1;
+        if (condition && carouselIndex !== 0) setCarouselIndex((prev) => --prev);
+        else {
+          e.currentTarget.style.transform = `translateX(-${12.5 * 48 * carouselIndex}px)`;
+          e.currentTarget.style.transition = `transform 0.5s ease-in`;
+        }
+      }
+      if (diffX < 0) {
+        const condition = Math.abs(diffX) / 150 >= 1;
+        if (condition && carouselIndex !== carouselData.length - 1) setCarouselIndex((prev) => ++prev);
+        else {
+          e.currentTarget.style.transform = `translateX(-${12.5 * 48 * carouselIndex}px)`;
+          e.currentTarget.style.transition = `transform 0.5s ease-in`;
+        }
+      }
+      setOnMouseDown(false);
+    }
   };
 
   const handleNext = () => {
@@ -58,73 +87,35 @@ const Carousel = () => {
     }
   };
 
-  //   useEffect(() => {
-  //     let interval: ReturnType<typeof setInterval> | null = null;
-  //     if (!onMouseDown) {
-  //       interval = setInterval(() => {
-  //         handleNext();
-  //       }, 3000);
-  //     }
-  //     return () => {
-  //       interval && clearInterval(interval);
-  //     };
-  //   });
+  useEffect(() => {
+    let interval: ReturnType<typeof setInterval> | null = null;
+    if (!onMouseDown) {
+      interval = setInterval(() => {
+        handleNext();
+      }, 3000);
+    }
+    return () => {
+      interval && clearInterval(interval);
+    };
+  });
 
   return (
-    <div className="relative w-[600px] h-[300px] overflow-hidden">
+    <div className="relative w-[600px] overflow-hidden">
       <CarouselButton action={handlePrevious}>Previous</CarouselButton>
-      {/* Carousel from top to bottom */}
-      {/* <ul
-        className={twMerge(
-          "absolute flex flex-col-reverse bottom-0 w-max transition-[transform] duration-[0.7s]",
-          carouselIndex === 0 && "translate-y-0",
-          carouselIndex === 1 && "translate-y-[12.5%]",
-          carouselIndex === 2 && "translate-y-[25%]",
-          carouselIndex === 3 && "translate-y-[37.5%]",
-          carouselIndex === 4 && "translate-y-[50%]",
-          carouselIndex === 5 && "translate-y-[62.5%]",
-          carouselIndex === 6 && "translate-y-[75%]",
-          carouselIndex === 7 && "translate-y-[87.5%]"
-        )}>
-        {carouselData.map((item) => {
-          return (
-            <li key={item.id}>
-              <img
-                className={twMerge(
-                  "min-w-0 grow-0 shrink-0 w-[600px] h-[300px] object-cover object-top"
-                )}
-                src={item.image}
-                width={600}
-                height={300}
-                alt="carousel"
-              />
-            </li>
-          );
-        })}
-      </ul> */}
-      {/* Carousel from right to left */}
       <ul
-        style={{ transform: `translateX(-${carouselIndex * 12.5}%)` }}
+        style={{ transform: `translateX(-${carouselIndex * 12.5 * 48}px)`, transition: `transform ${onMouseDown ? "0s" : "0.5s"} ease-in` }}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
-        onMouseUp={() => {
-          console.log("mouseup");
-          setOnMouseDown(false);
-        }}
-        onMouseLeave={() => {
-          console.log("mouseleave");
-
-          setOnMouseDown(false);
-        }}
-        className={twMerge("flex relative w-max transition-[transform] duration-[0.7s]")}>
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseLeave}
+        className={twMerge("flex relative w-max")}
+      >
         {carouselData.map((item) => {
           return (
-            <li key={item.id}>
+            <li className="hover:cursor-grab active:cursor-grabbing" key={item.id}>
               <img
                 draggable={false}
-                className={twMerge(
-                  "min-w-0 grow-0 shrink-0 w-[600px] h-[300px] object-cover object-top"
-                )}
+                className={twMerge("grow-0 shrink-0 w-[600px] h-[400px] object-cover object-top")}
                 src={item.image}
                 width={600}
                 height={300}
@@ -138,11 +129,7 @@ const Carousel = () => {
         Next
       </CarouselButton>
 
-      <CarouselFooterPaginate
-        carouselData={carouselData}
-        carouselIndex={carouselIndex}
-        setCarouselIndex={setCarouselIndex}
-      />
+      <CarouselFooterPaginate carouselData={carouselData} carouselIndex={carouselIndex} setCarouselIndex={setCarouselIndex} />
     </div>
   );
 };
@@ -160,7 +147,8 @@ const CarouselButton = ({
         "absolute top-[50%] translate-y-[-50%] text-gray-400 bg-black/20 px-1 py-3 hover:bg-black/50 z-[1]",
         ` ${type === "previous" ? "left-0" : "right-0"}`,
         className
-      )}>
+      )}
+    >
       {children}
     </button>
   );
@@ -182,9 +170,7 @@ const CarouselFooterPaginate = ({
           <button
             onClick={() => setCarouselIndex(item.id - 1)}
             key={item.id}
-            className={`w-2 h-2 rounded-full ${
-              carouselIndex === item.id - 1 ? "bg-primary" : "bg-black/20"
-            }`}
+            className={`w-3 h-3 rounded-full ${carouselIndex === item.id - 1 ? "bg-primary" : "bg-black/20"}`}
           />
         );
       })}
