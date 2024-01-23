@@ -50,11 +50,7 @@ export default function Page() {
             <div className="flex justify-between px-5 py-3 rounded items-center text-sm bg-secondaryBgColor">
               <div className="flex gap-1 items-center ">
                 <h1 className=" mr-1 text-[#555]"> Sắp xếp theo</h1>
-                <Button
-                  aria-label="Phổ biến"
-                  onClick={() => setIsActive(true)}
-                  variant={isActive ? "primary" : "normal-no-hover"}
-                  size="small">
+                <Button aria-label="Phổ biến" onClick={() => setIsActive(true)} variant={isActive ? "primary" : "normal-no-hover"} size="small">
                   Phổ biến
                 </Button>
                 <Button aria-label="Mới nhất" variant="normal-no-hover" size="small">
@@ -63,21 +59,23 @@ export default function Page() {
                 <Button aria-label="Bán chạy" variant="normal-no-hover" size="small">
                   Bán chạy
                 </Button>
-                <div className="relative self-stretch bg-white items-center flex justify-between">
+                <div className="relative self-stretch bg-white items-center rounded-sm flex justify-between">
                   <div
                     onClick={(e) => {
                       e.stopPropagation();
                       setIsOpenSortOption((prev) => !prev);
                     }}
-                    className="cursor-pointer w-[200px] h-full items-center flex justify-between pr-1 pl-3">
+                    className="cursor-pointer w-[200px] h-full items-center flex justify-between pr-1 pl-3"
+                  >
                     <span className="capitalize">{selectedOption ? selectedOption : "Giá"}</span>
                     <IoIosArrowDown />
                   </div>
                   <ul
                     className={
-                      `absolute bg-white top-[calc(100%+4px)] w-full z-[1] left-0 shadow-md fade-in-animation` +
+                      `absolute bg-white top-[calc(100%+4px)] w-full z-[1] left-0 shadow-md fade-in-animation rounded-sm overflow-hidden` +
                       ` ${isOpenSortOption ? "block" : "hidden"}`
-                    }>
+                    }
+                  >
                     {sortOptions.map((option) => {
                       return (
                         <li
@@ -87,11 +85,10 @@ export default function Page() {
                             setSelectedOption(option.option);
                             setIsOpenSortOption((prev) => !prev);
                           }}
-                          key={option.option}>
+                          key={option.option}
+                        >
                           {option.option}
-                          {selectedOption === option.option && (
-                            <FaCheck className="w-2 h-2 fill-primary" />
-                          )}
+                          {selectedOption === option.option && <FaCheck className="w-2 h-2 fill-primary" />}
                         </li>
                       );
                     })}
@@ -105,19 +102,18 @@ export default function Page() {
                 <div className="flex">
                   <Button
                     aria-label="Lùi về trang trước"
-                    className={twMerge(
-                      `border-[2px] border-[#e6e6e6]`,
-                      "disabled:cursor-default disabled:bg-primaryBgColor"
-                    )}
+                    className={twMerge(`border-[2px] border-[#e6e6e6]`, "disabled:cursor-default disabled:bg-primaryBgColor")}
                     disabled={page < 2}
-                    size="Xsmall">
+                    size="Xsmall"
+                  >
                     <MdOutlineKeyboardArrowLeft />
                   </Button>
                   <Button
                     aria-label="Tới trang tiếp theo"
                     size="Xsmall"
                     className="disabled:cursor-default disabled:bg-primaryBgColor border-[2px] border-l-0 border-[#e6e6e6]"
-                    disabled={page >= 9}>
+                    disabled={page >= 9}
+                  >
                     <MdKeyboardArrowRight />
                   </Button>
                 </div>
@@ -144,18 +140,15 @@ export default function Page() {
                       <li className="text-[#939393] capitalize  cursor-pointer" key={i}>
                         {i === "Facebook" ? (
                           <Link className="flex items-center gap-2" href={"#"}>
-                            <FaFacebook className="w-4 h-4" />{" "}
-                            <span className="hover:text-primary ">{i}</span>
+                            <FaFacebook className="w-4 h-4" /> <span className="hover:text-primary ">{i}</span>
                           </Link>
                         ) : i === "instagram" ? (
                           <Link className="flex items-center gap-2" href={"#"}>
-                            <FaInstagram className="w-4 h-4" />{" "}
-                            <span className="hover:text-primary ">{i}</span>
+                            <FaInstagram className="w-4 h-4" /> <span className="hover:text-primary ">{i}</span>
                           </Link>
                         ) : (
                           <Link className="flex items-center gap-2" href={"#"}>
-                            <FaLinkedin className="w-4 h-4" />{" "}
-                            <span className="hover:text-primary ">{i}</span>
+                            <FaLinkedin className="w-4 h-4" /> <span className="hover:text-primary ">{i}</span>
                           </Link>
                         )}
                       </li>
@@ -180,9 +173,7 @@ export default function Page() {
                   ) : (
                     item.list.map((i) => {
                       return (
-                        <li
-                          className="text-[#939393] hover:text-primary cursor-pointer capitalize"
-                          key={i}>
+                        <li className="text-[#939393] hover:text-primary cursor-pointer capitalize" key={i}>
                           <Link href={"#"}>{i}</Link>
                         </li>
                       );
@@ -193,9 +184,7 @@ export default function Page() {
             );
           })}
         </div>
-        <p className="text-[#939393] text-center text-sm pb-2">
-          &copy; 2022 Shopee. Tất cả các quyền đã được bảo lưu
-        </p>
+        <p className="text-[#939393] text-center text-sm pb-2">&copy; 2022 Shopee. Tất cả các quyền đã được bảo lưu</p>
       </footer>
     </>
   );
@@ -220,11 +209,6 @@ const footer = [
   },
   {
     title: "Vào cửa hàng trên ứng dụng",
-    list: [
-      "/img/qr_code.png",
-      "/img/app_store.png",
-      "/img/google_play.png",
-      "/img/app_gallery.png",
-    ],
+    list: ["/img/qr_code.png", "/img/app_store.png", "/img/google_play.png", "/img/app_gallery.png"],
   },
 ];
