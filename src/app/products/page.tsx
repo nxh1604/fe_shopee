@@ -1,16 +1,17 @@
 "use client";
 import Button from "@/components/Button";
-import Sidebar from "@/components/Sidebar";
-import { useEffect, useState } from "react";
-import { FaCheck, FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
-import { IoIosArrowDown } from "react-icons/io";
-import { MdKeyboardArrowRight, MdOutlineKeyboardArrowLeft } from "react-icons/md";
-import { twMerge } from "tailwind-merge";
-import CardProduct from "./components/CardProduct";
-import productsData from "@/lib/data/productsData";
-import PaginationFooter from "./components/PaginationFooter";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { IoIosArrowDown } from "react-icons/io";
+import { MdKeyboardArrowRight, MdOutlineKeyboardArrowLeft } from "react-icons/md";
+import { FaCheck, FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
+import { twMerge } from "tailwind-merge";
+
+import Sidebar from "@/components/Sidebar";
+import CardProduct from "@/app/products/components/CardProduct";
+import productsData from "@/lib/data/productsData";
+import PaginationFooter from "@/app/products/components/PaginationFooter";
 
 const sortOptions = [
   {
@@ -44,87 +45,93 @@ export default function Page() {
   return (
     <>
       <main className="bg-primaryBgColor py-8">
-        <div className="max-w-[1200px] mx-auto flex">
-          <Sidebar className="self-start" />
-          <div className="flex-1">
-            <div className="flex justify-between px-5 py-3 rounded items-center text-sm bg-secondaryBgColor">
-              <div className="flex gap-1 items-center ">
-                <h1 className=" mr-1 text-[#555]"> Sắp xếp theo</h1>
-                <Button aria-label="Phổ biến" onClick={() => setIsActive(true)} variant={isActive ? "primary" : "normal-no-hover"} size="small">
-                  Phổ biến
-                </Button>
-                <Button aria-label="Mới nhất" variant="normal-no-hover" size="small">
-                  Mới nhất
-                </Button>
-                <Button aria-label="Bán chạy" variant="normal-no-hover" size="small">
-                  Bán chạy
-                </Button>
-                <div className="relative self-stretch bg-white items-center rounded-sm flex justify-between">
-                  <div
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setIsOpenSortOption((prev) => !prev);
-                    }}
-                    className="cursor-pointer w-[200px] h-full items-center flex justify-between pr-1 pl-3"
-                  >
-                    <span className="capitalize">{selectedOption ? selectedOption : "Giá"}</span>
-                    <IoIosArrowDown />
+        <div className="max-w-[1200px] mx-auto">
+          <div className="flex -mx-3 flex-wrap">
+            <Sidebar className="self-start px-3" />
+            <div className="flex-1 px-3">
+              <div className="flex justify-between px-5 py-3 rounded items-center text-sm bg-secondaryBgColor">
+                <div className="flex gap-1 items-center ">
+                  <h1 className=" mr-1 text-[#555]"> Sắp xếp theo</h1>
+                  <Button
+                    aria-label="Phổ biến"
+                    onClick={() => setIsActive(true)}
+                    variant={isActive ? "primary" : "normal-no-hover"}
+                    size="small">
+                    Phổ biến
+                  </Button>
+                  <Button aria-label="Mới nhất" variant="normal-no-hover" size="small">
+                    Mới nhất
+                  </Button>
+                  <Button aria-label="Bán chạy" variant="normal-no-hover" size="small">
+                    Bán chạy
+                  </Button>
+                  <div className="relative self-stretch bg-white items-center rounded-sm flex justify-between">
+                    <div
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsOpenSortOption((prev) => !prev);
+                      }}
+                      className="cursor-pointer w-[200px] h-full items-center flex justify-between pr-1 pl-3">
+                      <span className="capitalize">{selectedOption ? selectedOption : "Giá"}</span>
+                      <IoIosArrowDown />
+                    </div>
+                    <ul
+                      className={
+                        `absolute bg-white top-[calc(100%+4px)] w-full z-[1] left-0 shadow-md fade-in-animation rounded-sm overflow-hidden` +
+                        ` ${isOpenSortOption ? "block" : "hidden"}`
+                      }>
+                      {sortOptions.map((option) => {
+                        return (
+                          <li
+                            className="hover:text-primary flex items-center cursor-pointer pl-3 pb-2 capitalize justify-between pr-2 first:pt-2"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedOption(option.option);
+                              setIsOpenSortOption((prev) => !prev);
+                            }}
+                            key={option.option}>
+                            {option.option}
+                            {selectedOption === option.option && (
+                              <FaCheck className="w-2 h-2 fill-primary" />
+                            )}
+                          </li>
+                        );
+                      })}
+                    </ul>
                   </div>
-                  <ul
-                    className={
-                      `absolute bg-white top-[calc(100%+4px)] w-full z-[1] left-0 shadow-md fade-in-animation rounded-sm overflow-hidden` +
-                      ` ${isOpenSortOption ? "block" : "hidden"}`
-                    }
-                  >
-                    {sortOptions.map((option) => {
-                      return (
-                        <li
-                          className="hover:text-primary flex items-center cursor-pointer pl-3 pb-2 capitalize justify-between pr-2 first:pt-2"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedOption(option.option);
-                            setIsOpenSortOption((prev) => !prev);
-                          }}
-                          key={option.option}
-                        >
-                          {option.option}
-                          {selectedOption === option.option && <FaCheck className="w-2 h-2 fill-primary" />}
-                        </li>
-                      );
-                    })}
-                  </ul>
+                </div>
+                <div className="flex gap-4 self-stretch">
+                  <div className="self-center">
+                    <span className="text-primary">{page < 2 ? 1 : page}</span>/<span>9</span>
+                  </div>
+                  <div className="flex">
+                    <Button
+                      aria-label="Lùi về trang trước"
+                      className={twMerge(
+                        `border-[2px] border-[#e6e6e6]`,
+                        "disabled:cursor-default disabled:bg-primaryBgColor"
+                      )}
+                      disabled={page < 2}
+                      size="Xsmall">
+                      <MdOutlineKeyboardArrowLeft />
+                    </Button>
+                    <Button
+                      aria-label="Tới trang tiếp theo"
+                      size="Xsmall"
+                      className="disabled:cursor-default disabled:bg-primaryBgColor border-[2px] border-l-0 border-[#e6e6e6]"
+                      disabled={page >= 9}>
+                      <MdKeyboardArrowRight />
+                    </Button>
+                  </div>
                 </div>
               </div>
-              <div className="flex gap-4 self-stretch">
-                <div className="self-center">
-                  <span className="text-primary">{page < 2 ? 1 : page}</span>/<span>9</span>
-                </div>
-                <div className="flex">
-                  <Button
-                    aria-label="Lùi về trang trước"
-                    className={twMerge(`border-[2px] border-[#e6e6e6]`, "disabled:cursor-default disabled:bg-primaryBgColor")}
-                    disabled={page < 2}
-                    size="Xsmall"
-                  >
-                    <MdOutlineKeyboardArrowLeft />
-                  </Button>
-                  <Button
-                    aria-label="Tới trang tiếp theo"
-                    size="Xsmall"
-                    className="disabled:cursor-default disabled:bg-primaryBgColor border-[2px] border-l-0 border-[#e6e6e6]"
-                    disabled={page >= 9}
-                  >
-                    <MdKeyboardArrowRight />
-                  </Button>
-                </div>
-              </div>
+              <ul className="flex flex-wrap -mx-[5px]">
+                {productsData.map((product) => {
+                  return <CardProduct key={product.id} {...product} />;
+                })}
+              </ul>
+              <PaginationFooter />
             </div>
-            <ul className="pt-2 flex flex-wrap gap-[10px]">
-              {productsData.map((product) => {
-                return <CardProduct key={product.id} {...product} />;
-              })}
-            </ul>
-            <PaginationFooter />
           </div>
         </div>
       </main>
@@ -140,15 +147,18 @@ export default function Page() {
                       <li className="text-[#939393] capitalize  cursor-pointer" key={i}>
                         {i === "Facebook" ? (
                           <Link className="flex items-center gap-2" href={"#"}>
-                            <FaFacebook className="w-4 h-4" /> <span className="hover:text-primary ">{i}</span>
+                            <FaFacebook className="w-4 h-4" />{" "}
+                            <span className="hover:text-primary ">{i}</span>
                           </Link>
                         ) : i === "instagram" ? (
                           <Link className="flex items-center gap-2" href={"#"}>
-                            <FaInstagram className="w-4 h-4" /> <span className="hover:text-primary ">{i}</span>
+                            <FaInstagram className="w-4 h-4" />{" "}
+                            <span className="hover:text-primary ">{i}</span>
                           </Link>
                         ) : (
                           <Link className="flex items-center gap-2" href={"#"}>
-                            <FaLinkedin className="w-4 h-4" /> <span className="hover:text-primary ">{i}</span>
+                            <FaLinkedin className="w-4 h-4" />{" "}
+                            <span className="hover:text-primary ">{i}</span>
                           </Link>
                         )}
                       </li>
@@ -173,7 +183,9 @@ export default function Page() {
                   ) : (
                     item.list.map((i) => {
                       return (
-                        <li className="text-[#939393] hover:text-primary cursor-pointer capitalize" key={i}>
+                        <li
+                          className="text-[#939393] hover:text-primary cursor-pointer capitalize"
+                          key={i}>
                           <Link href={"#"}>{i}</Link>
                         </li>
                       );
@@ -184,7 +196,9 @@ export default function Page() {
             );
           })}
         </div>
-        <p className="text-[#939393] text-center text-sm pb-2">&copy; 2022 Shopee. Tất cả các quyền đã được bảo lưu</p>
+        <p className="text-[#939393] text-center text-sm pb-2">
+          &copy; 2022 Shopee. Tất cả các quyền đã được bảo lưu
+        </p>
       </footer>
     </>
   );
@@ -209,6 +223,11 @@ const footer = [
   },
   {
     title: "Vào cửa hàng trên ứng dụng",
-    list: ["/img/qr_code.png", "/img/app_store.png", "/img/google_play.png", "/img/app_gallery.png"],
+    list: [
+      "/img/qr_code.png",
+      "/img/app_store.png",
+      "/img/google_play.png",
+      "/img/app_gallery.png",
+    ],
   },
 ];

@@ -22,7 +22,7 @@ const Sidebar = ({ className = "" }: { className?: string }) => {
   const [isActive, setIsActive] = useState<null | string>(null);
 
   return (
-    <aside className={twMerge("w-[16.667%] pr-5", className)}>
+    <aside className={twMerge("w-[16.667%]", className)}>
       <div className="bg-white h-full">
         <h1 className="gap-2 items-center pl-2 flex text-base font-bold py-3 border-b-[1px] border-[#e9e9e9] mb-2">
           <IoIosList />
