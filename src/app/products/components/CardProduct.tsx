@@ -29,9 +29,9 @@ const CardProduct = ({ src, title, discount, price, shop, location, rating, sold
   const width = (((rating - 0.1) / 5) * 100).toFixed(1) + "%";
 
   return (
-    <li className="w-[calc(20%-8px)] flex flex-col bg-white cursor-pointer translate-x-0 transition-[transform] rounded-t-[3px] duration-100 ease-linear hover:-translate-y-[2px] shadow hover:shadow-xl rounded-b-[2px]">
-      <Link scroll={false} href={"#"}>
-        <div className="relative text-xs text-center">
+    <li className="w-[calc(20%-8px)] lg:w-[calc(25%-7.5px)] md:w-[calc(33.333%-6.667px)] sm:w-[calc(50%-5px)] xs:w-[100%] bg-white cursor-pointer translate-x-0 transition-[transform] rounded-t-[3px] duration-100 ease-linear hover:-translate-y-[2px] shadow hover:shadow-xl rounded-b-[2px]">
+      <Link className="text-xs lg:text-sm sm:text-lg xs:text-2xl" scroll={false} href={"#"}>
+        <div className="relative block text-center">
           {discount && (
             <div className="absolute w-[36px] right-0 bg-yellow-500 rounded-tr-[3px]">
               <span className="text-[#ed3814] font-bold block ">{discount}%</span>
@@ -41,7 +41,7 @@ const CardProduct = ({ src, title, discount, price, shop, location, rating, sold
           )}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            className="w-[200px] h-[200px] rounded-t-[3px] object-cover object-center"
+            className="w-full h-[200px] lg:h-[225px] md:h-[275px] sm:h-[300px] xs-h[350px] rounded-t-[3px] object-cover object-center"
             src={src}
             alt=""
             width={200}
@@ -52,8 +52,8 @@ const CardProduct = ({ src, title, discount, price, shop, location, rating, sold
             <div className="border-l-[4px] border-t-[6px] absolute border-t-primary brightness-[0.6] border-l-transparent left-0 bottom-[-6px]"></div>
           </div>
         </div>
-        <div className="text-xs p-2 flex-1 flex flex-col">
-          <h3 className="text-xs mb-4 h-[32px] line-clamp-2">{title}</h3>
+        <div className="p-2 flex-1">
+          <h3 className="mb-4 line-clamp-2 ">{title}</h3>
           <div className="pb-3 mt-auto flex flex-wrap items-center justify-between">
             <span className="text-base text-primary">
               <Currency price={priceDiscount} />
@@ -69,6 +69,7 @@ const CardProduct = ({ src, title, discount, price, shop, location, rating, sold
             <Button aria-label="like" onClick={() => setIsLike((prev) => !prev)} size="icon">
               {isLike ? <FaHeart className="fill-red-500" /> : <FaRegHeart />}
             </Button>
+            {/* star rating */}
             <div className="relative w-14 ml-auto">
               <span
                 // onMouseMove={(e) => {
@@ -79,7 +80,8 @@ const CardProduct = ({ src, title, discount, price, shop, location, rating, sold
                 //     siblingTarget.style.width = `${newWidth}px`;
                 //   }
                 // }}
-                className="flex gap-[1px] translate-y-[-50%] left-0 absolute">
+                className="flex gap-[1px] translate-y-[-50%] left-0 absolute"
+              >
                 <IoStarOutline className="w-[10px] h-[10px]" />
                 <IoStarOutline className="w-[10px] h-[10px]" />
                 <IoStarOutline className="w-[10px] h-[10px]" />
@@ -93,7 +95,8 @@ const CardProduct = ({ src, title, discount, price, shop, location, rating, sold
                 //   e.currentTarget.style.width = `${newWidth}px`;
                 // }}
                 style={{ width: width }}
-                className={"h-[10px] w-0 overflow-hidden absolute translate-y-[-50%] left-0"}>
+                className={"h-[10px] w-0 overflow-hidden absolute translate-y-[-50%] left-0"}
+              >
                 <IoStarSharp className="fill-yellow-500 absolute w-[10px] h-[10px] left-0" />
                 <IoStarSharp className="fill-yellow-500 absolute w-[10px] h-[10px] left-[11px]" />
                 <IoStarSharp className="fill-yellow-500 absolute w-[10px] h-[10px] left-[22px] " />

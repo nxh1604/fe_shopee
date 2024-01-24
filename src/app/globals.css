@@ -27,6 +27,10 @@
   .slideOut-l-animation {
     @apply animate-[slideOutFromRight_0.3s] will-change-[transform];
   }
+
+  .gridLayout {
+    @apply max-w-[1200px] xl:max-w-[984px] lg:max-w-[644px] mx-auto;
+  }
 }
 
 @keyframes slideOutFromRight {

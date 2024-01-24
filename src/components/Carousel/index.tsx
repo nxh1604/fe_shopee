@@ -10,67 +10,20 @@ const Carousel = () => {
   const [onMouseDown, setOnMouseDown] = useState<boolean>(false);
   const [lastMouseDownX, setLastMouseDownX] = useState(0);
   const [transformValue, setTransformValue] = useState(0);
+  const [currentTarget, setCurrentTarget] = useState<HTMLElement | null>(null);
+  const [currentElementInfo, setCurrentElementInfo] = useState<{ width: number; perItemWidth: number } | null>(null);
 
   const handleMouseDown: MouseEventHandler<HTMLUListElement> = (e) => {
+    const width = e.currentTarget.getClientRects()[0].width;
+    const perItemWidth = width / carouselData.length;
     setLastMouseDownX(e.clientX);
     setOnMouseDown(true);
+    setCurrentTarget(e.currentTarget);
     setTransformValue(parseInt(window.getComputedStyle(e.currentTarget).transform.split(",")[4].trim()));
+    setCurrentElementInfo({ width, perItemWidth });
   };
 
-  const handleMouseMove: MouseEventHandler<HTMLUListElement> = (e) => {
-    if (onMouseDown) {
-      const diffX = e.clientX - lastMouseDownX;
-      if (transformValue + diffX < 450 && transformValue + diffX > -4650) {
-        e.currentTarget.style.transform = `translateX(${transformValue + diffX}px)`;
-      }
-    }
-  };
-
-  const handleMouseUp: MouseEventHandler<HTMLUListElement> = (e) => {
-    const diffX = e.clientX - lastMouseDownX;
-    if (diffX > 0) {
-      const condition = diffX / 150 >= 1;
-      if (condition && carouselIndex !== 0) setCarouselIndex((prev) => --prev);
-      else {
-        e.currentTarget.style.transform = `translateX(-${12.5 * 48 * carouselIndex}px)`;
-        e.currentTarget.style.transition = `transform 0.5s ease-in`;
-      }
-    }
-    if (diffX < 0) {
-      const condition = Math.abs(diffX) / 150 >= 1;
-      if (condition && carouselIndex !== carouselData.length - 1) setCarouselIndex((prev) => ++prev);
-      else {
-        e.currentTarget.style.transform = `translateX(-${12.5 * 48 * carouselIndex}px)`;
-        e.currentTarget.style.transition = `transform 0.5s ease-in`;
-      }
-    }
-
-    setOnMouseDown(false);
-  };
-
-  const handleMouseLeave: MouseEventHandler<HTMLUListElement> = (e) => {
-    if (onMouseDown) {
-      const diffX = e.clientX - lastMouseDownX;
-      if (diffX > 0) {
-        const condition = diffX / 150 >= 1;
-        if (condition && carouselIndex !== 0) setCarouselIndex((prev) => --prev);
-        else {
-          e.currentTarget.style.transform = `translateX(-${12.5 * 48 * carouselIndex}px)`;
-          e.currentTarget.style.transition = `transform 0.5s ease-in`;
-        }
-      }
-      if (diffX < 0) {
-        const condition = Math.abs(diffX) / 150 >= 1;
-        if (condition && carouselIndex !== carouselData.length - 1) setCarouselIndex((prev) => ++prev);
-        else {
-          e.currentTarget.style.transform = `translateX(-${12.5 * 48 * carouselIndex}px)`;
-          e.currentTarget.style.transition = `transform 0.5s ease-in`;
-        }
-      }
-      setOnMouseDown(false);
-    }
-  };
-
+  // goto next carousel item
   const handleNext = () => {
     if (carouselIndex < carouselData.length - 1) {
       setCarouselIndex(carouselIndex + 1);
@@ -79,6 +32,7 @@ const Carousel = () => {
     }
   };
 
+  // goto previous carousel item
   const handlePrevious = () => {
     if (carouselIndex > 0) {
       setCarouselIndex(carouselIndex - 1);
@@ -87,6 +41,7 @@ const Carousel = () => {
     }
   };
 
+  // set period time to goto next carousel item
   useEffect(() => {
     let interval: ReturnType<typeof setInterval> | null = null;
     if (!onMouseDown) {
@@ -99,15 +54,116 @@ const Carousel = () => {
     };
   });
 
+  // add global event listener when grab carousel item
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (onMouseDown && currentTarget && currentElementInfo) {
+        const { width: elementWidth, perItemWidth } = currentElementInfo;
+        const diffX = e.clientX - lastMouseDownX;
+        if (transformValue + diffX < (perItemWidth * 2) / 3 && transformValue + diffX > -elementWidth + perItemWidth / 3) {
+          currentTarget.style.transform = `translateX(${transformValue + diffX}px)`;
+        }
+      }
+    };
+    const handleMouseUp = (e: MouseEvent) => {
+      const diffX = e.clientX - lastMouseDownX;
+      const absDiffX = Math.abs(diffX);
+      if (currentTarget && currentElementInfo) {
+        const { perItemWidth } = currentElementInfo;
+        if (absDiffX > 600) {
+          const multiple = Math.floor(absDiffX / 600);
+          const range = absDiffX - 600 * multiple;
+          if (diffX > 0) {
+            const condition = range / (perItemWidth / 3) >= 1;
+            if (carouselIndex - multiple <= 0) {
+              setCarouselIndex(0);
+              currentTarget.style.transform = `translateX(0px)`;
+              currentTarget.style.transition = `transform 0.5s ease-in`;
+            } else if (condition) {
+              if (carouselIndex - multiple - 1 <= 0) {
+                setCarouselIndex(0);
+                currentTarget.style.transform = `translateX(0px)`;
+                currentTarget.style.transition = `transform 0.5s ease-in`;
+              } else {
+                setCarouselIndex((prev) => {
+                  prev -= multiple + 1;
+                  return prev;
+                });
+              }
+            } else {
+              setCarouselIndex((prev) => {
+                prev -= multiple;
+                return prev;
+              });
+            }
+          }
+          if (diffX < 0) {
+            const condition = range / (perItemWidth / 3) >= 1;
+            if (carouselIndex + multiple >= carouselData.length - 1) {
+              setCarouselIndex(carouselData.length - 1);
+              currentTarget.style.transform = `translateX(-${perItemWidth * (carouselData.length - 1)}px)`;
+              currentTarget.style.transition = `transform 0.5s ease-in`;
+            } else if (condition) {
+              if (carouselIndex + multiple + 1 >= carouselData.length - 1) {
+                setCarouselIndex(carouselData.length - 1);
+                currentTarget.style.transform = `translateX(-${perItemWidth * (carouselData.length - 1)}px)`;
+                currentTarget.style.transition = `transform 0.5s ease-in`;
+              } else {
+                setCarouselIndex((prev) => {
+                  prev += multiple + 1;
+                  return prev;
+                });
+              }
+            } else {
+              setCarouselIndex((prev) => {
+                console.log("condition 3");
+
+                prev += multiple;
+                return prev;
+              });
+            }
+          }
+        } else {
+          if (diffX > 0) {
+            const condition = diffX / (perItemWidth / 3) >= 1;
+            if (condition && carouselIndex !== 0) setCarouselIndex((prev) => --prev);
+            else {
+              currentTarget.style.transform = `translateX(-${perItemWidth * carouselIndex}px)`;
+              currentTarget.style.transition = `transform 0.5s ease-in`;
+            }
+          }
+          if (diffX < 0) {
+            const condition = Math.abs(diffX) / (perItemWidth / 3) >= 1;
+            if (condition && carouselIndex !== carouselData.length - 1) setCarouselIndex((prev) => ++prev);
+            else {
+              currentTarget.style.transform = `translateX(-${perItemWidth * carouselIndex}px)`;
+              currentTarget.style.transition = `transform 0.5s ease-in`;
+            }
+          }
+        }
+        setCurrentElementInfo(null);
+        setCurrentTarget(null);
+      }
+      setOnMouseDown(false);
+    };
+
+    if (onMouseDown) {
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
+    }
+
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [onMouseDown, carouselIndex, currentTarget, lastMouseDownX, transformValue, currentElementInfo]);
+
   return (
     <div className="relative w-[600px] overflow-hidden">
       <CarouselButton action={handlePrevious}>Previous</CarouselButton>
       <ul
-        style={{ transform: `translateX(-${carouselIndex * 12.5 * 48}px)`, transition: `transform ${onMouseDown ? "0s" : "0.5s"} ease-in` }}
+        style={{ transform: `translateX(-${carouselIndex * 600}px)`, transition: `transform ${onMouseDown ? "0s" : "0.5s"} ease-in` }}
         onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseLeave}
         className={twMerge("flex relative w-max")}
       >
         {carouselData.map((item) => {

@@ -1,20 +1,10 @@
-import {
-  FaChevronDown,
-  FaFacebook,
-  FaGlobe,
-  FaInstagram,
-  FaQuestionCircle,
-  FaRegBell,
-} from "react-icons/fa";
+import { twMerge } from "tailwind-merge";
+import { FaChevronDown, FaFacebook, FaGlobe, FaInstagram, FaQuestionCircle, FaRegBell } from "react-icons/fa";
 
 import SignUp from "@/components/Header/Navbar//SignupItem";
 import Signin from "@/components/Header/Navbar/SigninItem";
 import HeaderDropdownNotify from "@/components/Header/Navbar/NotifyContent";
-import {
-  DropdownContent,
-  DropdownControl,
-  DropdownWrapper,
-} from "@/components/Header/Dropdown/WhenHover";
+import { DropdownContent, DropdownControl, DropdownWrapper } from "@/components/Header/Dropdown/WhenHover";
 import { NavItem, NavItemWithIcon } from "@/components/Header/Navbar/NavbarUI";
 import DropdownLanguageContent from "@/components/Header/Navbar/LanguageContent";
 import DropdownDowloadContent from "@/components/Header/Navbar/DowloadContent";
@@ -23,9 +13,9 @@ import User from "@/components/Header/Navbar/User";
 import user from "@/lib/data/userData";
 import notifyData from "@/lib/data/notifyData";
 
-const HeaderNavbar = (): JSX.Element => {
+const HeaderNavbar = ({ className }: { className?: string }): JSX.Element => {
   return (
-    <nav className="py-2 flex justify-between ">
+    <nav className={twMerge("py-2 flex justify-between", className)}>
       <ul className="justify-start flex items-center gap-3 px-2 min-w-fit ">
         <NavItem href={"#"}>Kênh người bán</NavItem>
 
