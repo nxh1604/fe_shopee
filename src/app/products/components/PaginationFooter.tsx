@@ -6,7 +6,7 @@ import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-i
 const array = [1, 2, 3, 4, 5];
 
 export default function PaginationFooter(): JSX.Element {
-  const [isSelected, setIsSelected] = useState(0);
+  const [isSelected, setIsSelected] = useState(1);
 
   return (
     <nav className="pt-[40px] pb-[60px] flex justify-center items-center gap-8 text-xl text-[#939393]">
@@ -18,7 +18,8 @@ export default function PaginationFooter(): JSX.Element {
             return prev;
           })
         }
-        href={"#"}>
+        href={"#"}
+      >
         <MdOutlineKeyboardArrowLeft className="w-8 h-8" />
       </Link>
       {array.map((item) => (
@@ -26,11 +27,9 @@ export default function PaginationFooter(): JSX.Element {
           scroll={false}
           onClick={() => setIsSelected(item)}
           key={item}
-          className={
-            "w-[40px] h-[30px] text-center leading-[30px]" +
-            ` ${isSelected === item ? " bg-primary text-white rounded-sm" : ""}`
-          }
-          href={"#"}>
+          className={"w-[40px] h-[30px] text-center leading-[30px]" + ` ${isSelected === item ? " bg-primary text-white rounded-sm" : ""}`}
+          href={"#"}
+        >
           {item}
         </Link>
       ))}
@@ -42,7 +41,8 @@ export default function PaginationFooter(): JSX.Element {
             return prev;
           })
         }
-        href={"#"}>
+        href={"#"}
+      >
         <MdOutlineKeyboardArrowRight className="w-8 h-8" />
       </Link>
     </nav>

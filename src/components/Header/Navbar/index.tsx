@@ -15,7 +15,7 @@ import notifyData from "@/lib/data/notifyData";
 
 const HeaderNavbar = ({ className }: { className?: string }): JSX.Element => {
   return (
-    <nav className={twMerge("py-2 flex justify-between", className)}>
+    <nav className={twMerge("flex justify-between", className)}>
       <ul className="justify-start flex items-center gap-3 px-2 min-w-fit ">
         <NavItem href={"#"}>Kênh người bán</NavItem>
 

@@ -20,7 +20,7 @@ const Button = (
           "bg-primary text-white": variant === "primary",
           "bg-white text-black": variant === "normal-no-hover",
           "bg-white text-black hover:bg-primaryBgColor": variant === "normal",
-          "bg-transparent": size === "icon",
+          "": size === "icon",
           "px-[10px]": size === "Xsmall",
           "px-4 py-2 text-sm": size === "small",
           "py-2": size === "medium",

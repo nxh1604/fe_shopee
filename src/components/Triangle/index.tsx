@@ -16,9 +16,8 @@ const TriangleUp = (
 
   return (
     <div
-      className={twMerge(
-        `absolute border-x-[16px] border-y-[8px] top-[-16px] right-[20px] ${triangleUpColor[color]} ${className}`
-      )}></div>
+      className={twMerge(`m-and-t:hidden absolute border-x-[16px] border-y-[8px] top-[-16px] right-[20px] ${triangleUpColor[color]} ${className}`)}
+    ></div>
   );
 };
 

@@ -1,23 +1,18 @@
+"use client";
 import { FaCheck, FaSearch } from "react-icons/fa";
 
 import SearchContent from "@/components/Header/HeaderSearch/SearchContent";
-import {
-  DropdownContent,
-  DropdownControl,
-  DropdownWrapper,
-} from "@/components/Header/Dropdown/WhenHover";
+import { DropdownContent, DropdownControl, DropdownWrapper } from "@/components/Header/Dropdown/WhenHover";
+import { twMerge } from "tailwind-merge";
+import Button from "@/components/Button";
 
-const HeaderSearch = (props: React.PropsWithChildren<{ placeHolder?: string }>) => {
-  const { placeHolder } = props;
+const HeaderSearch = (props: React.PropsWithChildren<{ className?: string; placeHolder?: string }>) => {
+  const { placeHolder, className } = props;
 
   return (
-    <div className="flex-1 flex rounded-sm gap-1 text-black items-center bg-white p-1">
+    <div onClick={(e) => e.stopPropagation()} className={twMerge("flex-1 flex rounded-sm gap-1 text-black items-center bg-white p-1", className)}>
       <div className="flex-1 relative ">
-        <input
-          placeholder={placeHolder ? placeHolder : "Tìm kiếm"}
-          type="text"
-          className="w-full peer p-2 text-base min-w-[300px]"
-        />
+        <input placeholder={placeHolder ? placeHolder : "Tìm kiếm"} type="text" className="w-full peer p-2 text-base " />
         <div className="absolute hidden z-[1] top-[calc(100%+10px)] peer-focus:flex fade-in-animation rounded flex-col gap-2 bg-white w-full shadow-md">
           <SearchContent />
         </div>
@@ -41,11 +36,9 @@ const HeaderSearch = (props: React.PropsWithChildren<{ placeHolder?: string }>) 
           </ul>
         </DropdownContent>
       </DropdownWrapper>
-      <button
-        aria-label="Tìm kiếm"
-        className="bg-[#ff6533] py-3 px-6 rounded-sm shopee-linear-gradient-l hover:opacity-80">
-        <FaSearch className="fill-white " />
-      </button>
+      <Button size="icon" variant="primary" aria-label="Tìm kiếm" className="py-3 px-6 hover:opacity-80">
+        <FaSearch className="fill-white" />
+      </Button>
     </div>
   );
 };

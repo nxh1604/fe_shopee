@@ -19,7 +19,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AuthModalProvider>
           <Header />
           <AuthModal />
-          {children}
+          <div className="m-and-t:[margin-top:calc(var(--header-mobile-height)_+_var(--products-mobile-sort-bar))]">{children}</div>
         </AuthModalProvider>
       </body>
     </html>

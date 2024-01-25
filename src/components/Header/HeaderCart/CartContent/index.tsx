@@ -1,4 +1,3 @@
-import { formatCurrency } from "@/lib/utilies";
 import { DropdownBox, DropdownBoxHeader } from "@/components/Header/Dropdown/UI";
 import Button from "@/components/Button";
 import { TriangleUp } from "@/components/Triangle";
@@ -12,7 +11,9 @@ const DropdownCartContent = () => {
     <DropdownBox isTriangle className="origin-[calc(100%-16px)_top]">
       <TriangleUp className="right-[16px]" />
       {user ? (
-        <div className="w-[400px]">{cartData.length > 0 ? <CartContent cartItems={cartData} /> : <EmptyCartContent />}</div>
+        <div className="w-[400px] text-left m-and-t:w-[644px] mobile:w-full mobile:mx-0 m-and-t:mx-[calc((100%-644px)/2)]">
+          {cartData.length > 0 ? <CartContent cartItems={cartData} /> : <EmptyCartContent />}
+        </div>
       ) : (
         <EmptyCartContent />
       )}
@@ -44,16 +45,19 @@ const CartContent = ({ cartItems }: { cartItems: ICartItem[] }) => {
 
 const CartItem = ({ item }: { item: ICartItem }) => {
   return (
-    <li className="flex justify-between cursor-pointer hover:bg-slate-300 py-3 px-2">
+    <li className="flex justify-between hover:bg-slate-300 py-3 px-2">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img width={40} height={40} src={item.imgSrc} className="h-auto self-center" alt="" />
-      <p className="flex-1 px-2 ">
-        {item.combo && <span className="text-red-500 border-[1px] rounded-xl border-red-500 text-xs mr-1 tracking-tighter px-1">{item.combo}</span>}
-        {item.title.length + item.combo?.length > 30 ? `${item.title.slice(0, 30 - item.combo.length)}...` : item.title}
-      </p>
-      <span className="text-red-500 text-xs self-center flex gap-1">
-        {<Currency price={item.price} />} <span className="text-textColor text-xs">x 2</span>
-      </span>
+      <img width={40} height={40} src={item.imgSrc} className="object-fill" alt="" />
+      <div className="flex-1 px-2 flex flex-col gap-2">
+        <p className={`${item.combo ? "line-clamp-1" : "line-clamp-2"}`}>{item.title}</p>
+        {item.combo && <p className="text-red-500 border-[1px] rounded-xl border-red-500 text-xs mr-1 w-fit tracking-tighter px-1">{item.combo}</p>}
+      </div>
+      <div className="flex flex-col gap-2 items-end ">
+        <span className="text-red-500 text-xs self-center flex gap-1">
+          {<Currency price={item.price} />} <span className="text-textColor text-xs">x 2</span>
+        </span>
+        <Button className="text-xs py-0 px-2">Xóa</Button>
+      </div>
     </li>
   );
 };
