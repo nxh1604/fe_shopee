@@ -1,27 +1,17 @@
 "use client";
-
-import Button from "@/components/Button";
-import { useEffect, useState } from "react";
-import { FaCheck } from "react-icons/fa";
+import { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
+import { FaCheck } from "react-icons/fa";
 import { twMerge } from "tailwind-merge";
+
+import useClickOutside from "@/hooks/useClickOutside";
+import Button from "@/components/Button";
 
 const ProductsSortBar = ({ className }: { className?: string }) => {
   const [isActive, setIsActive] = useState<1 | 2 | 3 | 4>(1);
   const [isOpenSortOption, setIsOpenSortOption] = useState(false);
   const [selectedOption, setSelectedOption] = useState("Giá: thấp đến cao");
-
-  useEffect(() => {
-    const handleClickOutSide = () => {
-      setIsOpenSortOption(false);
-    };
-
-    if (isOpenSortOption) {
-      document.addEventListener("click", handleClickOutSide);
-    }
-
-    return () => document.removeEventListener("click", handleClickOutSide);
-  }, [isOpenSortOption]);
+  const ulOptionsRef = useClickOutside<HTMLUListElement>(isOpenSortOption, setIsOpenSortOption);
 
   return (
     <div className={twMerge("flex gap-1 items-center", className)}>
@@ -56,7 +46,6 @@ const ProductsSortBar = ({ className }: { className?: string }) => {
       <div className="relative self-stretch bg-white items-center rounded-sm flex justify-between min-w-fit m-and-t:border-r-[1px] m-and-t:border-black/20">
         <div
           onClick={(e) => {
-            e.stopPropagation();
             setIsOpenSortOption((prev) => !prev);
           }}
           className="cursor-pointer w-[200px] m-and-t:w-full h-full items-center flex gap-4 justify-between pr-1 pl-3"
@@ -65,6 +54,7 @@ const ProductsSortBar = ({ className }: { className?: string }) => {
           <IoIosArrowDown />
         </div>
         <ul
+          ref={ulOptionsRef}
           className={
             `absolute bg-white top-[calc(100%+4px)] w-full z-[1] left-0 shadow-md fade-in-animation rounded-sm overflow-hidden` +
             ` ${isOpenSortOption ? "block" : "hidden"}`
@@ -74,8 +64,7 @@ const ProductsSortBar = ({ className }: { className?: string }) => {
             return (
               <li
                 className="hover:text-primary flex items-center cursor-pointer pl-3 pb-2 capitalize justify-between pr-2 first:pt-2"
-                onClick={(e) => {
-                  e.stopPropagation();
+                onClick={() => {
                   setSelectedOption(option.option);
                   setIsOpenSortOption((prev) => !prev);
                 }}

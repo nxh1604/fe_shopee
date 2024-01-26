@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { DropdownContent, DropdownControl, DropdownWrapper } from "@/components/Header/Dropdown/WhenHover";
+import { DropdownContent, DropdownControl, DropdownWrapper } from "@/components/Dropdown";
 import { DropdownBox } from "@/components/Header/Dropdown/UI";
 import { TriangleUp } from "@/components/Triangle";
 

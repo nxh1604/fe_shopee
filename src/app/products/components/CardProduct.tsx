@@ -44,7 +44,13 @@ const CardProduct = ({ src, title, discount, price, shop, location, rating, sold
             </div>
           )}
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img className="w-full h-[200px] rounded-t-[3px] object-cover object-center" src={src} alt="" width={200} height={200} />
+          <img
+            className="w-full h-[200px] small-mobile:h-[300px] rounded-t-[3px] object-cover object-center"
+            src={src}
+            alt=""
+            width={200}
+            height={200}
+          />
           <div className="absolute flex top-2 -left-1 px-1 rounded-r text-xs bg-primary">
             <span className="text-white">Yêu thích</span>
             <div className="border-l-[4px] border-t-[6px] absolute border-t-primary brightness-[0.6] border-l-transparent left-0 bottom-[-6px]"></div>

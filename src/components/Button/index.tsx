@@ -15,7 +15,7 @@ const Button = (
   return (
     <button
       className={clsx(
-        "cursor-pointer flex items-center justify-center text-sm rounded-sm",
+        "cursor-pointer flex items-center justify-center text-sm m-and-t:text-base rounded-sm",
         {
           "bg-primary text-white": variant === "primary",
           "bg-white text-black": variant === "normal-no-hover",

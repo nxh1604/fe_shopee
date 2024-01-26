@@ -2,18 +2,19 @@
 import { FaCheck, FaSearch } from "react-icons/fa";
 
 import SearchContent from "@/components/Header/HeaderSearch/SearchContent";
-import { DropdownContent, DropdownControl, DropdownWrapper } from "@/components/Header/Dropdown/WhenHover";
+import { DropdownContent, DropdownControl, DropdownWrapper } from "@/components/Dropdown";
 import { twMerge } from "tailwind-merge";
 import Button from "@/components/Button";
+import { forwardRef } from "react";
 
-const HeaderSearch = (props: React.PropsWithChildren<{ className?: string; placeHolder?: string }>) => {
+const HeaderSearch = forwardRef<HTMLDivElement, { className?: string; placeHolder?: string }>((props, ref) => {
   const { placeHolder, className } = props;
 
   return (
-    <div onClick={(e) => e.stopPropagation()} className={twMerge("flex-1 flex rounded-sm gap-1 text-black items-center bg-white p-1", className)}>
+    <div ref={ref} className={twMerge("flex-1 flex rounded-sm gap-1 text-black items-center bg-white p-1", className)}>
       <div className="flex-1 relative ">
         <input placeholder={placeHolder ? placeHolder : "Tìm kiếm"} type="text" className="w-full peer p-2 text-base " />
-        <div className="absolute hidden z-[1] top-[calc(100%+10px)] peer-focus:flex fade-in-animation rounded flex-col gap-2 bg-white w-full shadow-md">
+        <div className="absolute hidden z-[1] top-[calc(100%+10px)] peer-focus:flex fade-in-animation hover:flex rounded flex-col gap-2 bg-white w-full shadow-md">
           <SearchContent />
         </div>
       </div>
@@ -41,6 +42,8 @@ const HeaderSearch = (props: React.PropsWithChildren<{ className?: string; place
       </Button>
     </div>
   );
-};
+});
+
+HeaderSearch.displayName = "HeaderSearch";
 
 export default HeaderSearch;

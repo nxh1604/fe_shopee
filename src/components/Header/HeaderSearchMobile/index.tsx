@@ -1,36 +1,32 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { FaSearch } from "react-icons/fa";
 import HeaderSearch from "../HeaderSearch";
+import useClickOutside from "@/hooks/useClickOutside";
+import clsx from "clsx";
 
-const HeaderSearchMobile = () => {
+const HeaderSearchMobile = ({ className }: { className?: string }) => {
   const [isOpenSearch, setIsOpenSearch] = useState(false);
-
-  useEffect(() => {
-    const handleCloseSearch = () => {
-      setIsOpenSearch(false);
-    };
-    if (isOpenSearch) {
-      document.addEventListener("click", handleCloseSearch);
-    }
-
-    return () => document.removeEventListener("click", handleCloseSearch);
-  }, [isOpenSearch]);
+  const headerSearchRef = useClickOutside<HTMLDivElement>(isOpenSearch, setIsOpenSearch);
 
   return (
-    <button
-      onClick={(e) => {
-        e.stopPropagation();
-        setIsOpenSearch(true);
-      }}
-      className="-order-1"
-    >
-      <FaSearch className="fill-white w-7 h-7" />
-      <div onClick={(e) => e.stopPropagation()}>
-        <HeaderSearch className={`absolute` + ` ${isOpenSearch ? "" : "hidden"}`} />
-      </div>
-    </button>
+    <div className={clsx(className)}>
+      <button
+        onClick={() => {
+          setIsOpenSearch(!isOpenSearch);
+        }}
+      >
+        <FaSearch className="fill-white w-7 h-7" />
+      </button>
+      <HeaderSearch
+        ref={headerSearchRef}
+        className={
+          `fixed top-[var(--header-mobile-height)] px-3 fixed-all-width h-[var(--products-mobile-sort-bar)] z-[10]` +
+          ` ${isOpenSearch ? "" : "hidden"}`
+        }
+      />
+    </div>
   );
 };
 

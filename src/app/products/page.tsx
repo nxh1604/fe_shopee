@@ -16,7 +16,7 @@ const page = 9;
 export default function Page() {
   return (
     <>
-      <main className="bg-primaryBgColor py-8">
+      <main className="bg-primaryBgColor py-8 w-full">
         <div className="gridLayout mx-auto">
           <div className="row-12px">
             <Sidebar className="self-start col-12px m-and-t:hidden" />

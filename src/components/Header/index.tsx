@@ -4,8 +4,8 @@ import HeaderNavbar from "./Navbar";
 import HeaderCart from "./HeaderCart";
 import Link from "next/link";
 import ProductsSortBar from "@/app/products/components/ProductsSortBar";
-import { FaSearch } from "react-icons/fa";
 import HeaderSearchMobile from "./HeaderSearchMobile";
+import HeaderMenuBar from "./HeaderMenuBar";
 
 const Header = (): JSX.Element => {
   return (
@@ -17,11 +17,14 @@ const Header = (): JSX.Element => {
             <ShopeeLogo className="fill-white w-full" />
           </Link>
           <HeaderSearch className="mobile:hidden" />
-          <HeaderSearchMobile />
-          <HeaderCart className="mobile:mx-0" />
+          <div className="-order-1 items-center gap-4 self-stretch hidden m-and-t:flex">
+            <HeaderMenuBar />
+            <HeaderSearchMobile className="hidden mobile:block" />
+          </div>
+          <HeaderCart classNameShoppingCartIcon="mobile:mx-0" />
         </div>
       </header>
-      <div className=" bg-white top-[var(--header-mobile-height)] [height:var(--products-mobile-sort-bar)] fixed z-10 fixed-all-width w-full hidden m-and-t:block">
+      <div className="shadow bg-white top-[var(--header-mobile-height)] [height:var(--products-mobile-sort-bar)] fixed z-10 fixed-all-width w-full hidden m-and-t:block">
         <ProductsSortBar className="gridLayout items-stretch h-full justify-between flex gap-0 *:border-l-[1px] *:border-black/20 *:flex-1" />
       </div>
     </>

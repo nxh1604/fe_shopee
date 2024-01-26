@@ -4,7 +4,7 @@ import { FaChevronDown, FaFacebook, FaGlobe, FaInstagram, FaQuestionCircle, FaRe
 import SignUp from "@/components/Header/Navbar//SignupItem";
 import Signin from "@/components/Header/Navbar/SigninItem";
 import HeaderDropdownNotify from "@/components/Header/Navbar/NotifyContent";
-import { DropdownContent, DropdownControl, DropdownWrapper } from "@/components/Header/Dropdown/WhenHover";
+import { DropdownContent, DropdownControl, DropdownWrapper } from "@/components/Dropdown";
 import { NavItem, NavItemWithIcon } from "@/components/Header/Navbar/NavbarUI";
 import DropdownLanguageContent from "@/components/Header/Navbar/LanguageContent";
 import DropdownDowloadContent from "@/components/Header/Navbar/DowloadContent";

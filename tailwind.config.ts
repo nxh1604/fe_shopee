@@ -9,7 +9,7 @@ const config: Config = {
         "m-and-t": { max: "1023px" },
         tablet: { min: "740px", max: "1023px" },
         mobile: { max: "739px" },
-        "small-mobile": { max: "560px" },
+        "small-mobile": { max: "684px" },
       },
 
       backgroundImage: {

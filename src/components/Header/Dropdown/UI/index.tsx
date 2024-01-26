@@ -1,5 +1,5 @@
+import clsx from "clsx";
 import { ReactNode } from "react";
-import { twMerge } from "tailwind-merge";
 
 const DropdownBox = ({
   isTriangle = false,
@@ -13,11 +13,12 @@ const DropdownBox = ({
 }) => {
   return (
     <div
-      className={twMerge(
+      className={clsx(
         "shadow-md bg-white relative text-black text-wrap text-justify rounded",
         ` ${isTriangle ? "header-notify-animation" : "fade-in-animation"}`,
         className
-      )}>
+      )}
+    >
       {children}
     </div>
   );

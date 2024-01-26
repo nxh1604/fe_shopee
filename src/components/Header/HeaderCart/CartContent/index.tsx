@@ -29,8 +29,8 @@ const CartContent = ({ cartItems }: { cartItems: ICartItem[] }) => {
     <>
       <DropdownBoxHeader title="Sản phẩm mới thêm" />
       <ul className=" flex flex-col *:flex-grow-1">
-        {newCartItems.map((item) => (
-          <CartItem key={item.title} item={item} />
+        {newCartItems.map((item, index) => (
+          <CartItem key={index} item={item} />
         ))}
       </ul>
       <footer className={"flex p-2 items-center" + ` ${remainCartItems > 0 ? "justify-between" : "justify-end"}`}>
