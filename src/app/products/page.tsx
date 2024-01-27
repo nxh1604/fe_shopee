@@ -16,47 +16,46 @@ const page = 9;
 export default function Page() {
   return (
     <>
-      <main className="bg-primaryBgColor py-8 w-full">
-        <div className="gridLayout mx-auto">
-          <div className="row-12px">
-            <Sidebar className="self-start col-12px m-and-t:hidden" />
-            <div className="flex-1 col-12px">
-              <div className="flex justify-between px-5 py-3 rounded items-center text-sm bg-secondaryBgColor m-and-t:hidden">
-                <ProductsSortBar />
-                <div className="flex gap-4 self-stretch">
-                  <div className="self-center">
-                    <span className="text-primary">{page < 2 ? 1 : page}</span>/<span>9</span>
-                  </div>
-                  <div className="flex">
-                    <Button
-                      aria-label="Lùi về trang trước"
-                      className={twMerge(`border-[2px] border-[#e6e6e6]`, "disabled:cursor-default disabled:bg-primaryBgColor")}
-                      disabled={page < 2}
-                      size="Xsmall"
-                    >
-                      <MdOutlineKeyboardArrowLeft />
-                    </Button>
-                    <Button
-                      aria-label="Tới trang tiếp theo"
-                      size="Xsmall"
-                      className="disabled:cursor-default disabled:bg-primaryBgColor border-[2px] border-l-0 border-[#e6e6e6]"
-                      disabled={page >= 9}
-                    >
-                      <MdKeyboardArrowRight />
-                    </Button>
-                  </div>
+      <div className="gridLayout mx-auto">
+        <div className="row-12px">
+          <Sidebar className="self-start col-12px m-and-t:hidden" />
+          <div className="flex-1 col-12px">
+            <div className="flex justify-between px-5 py-3 rounded items-center text-sm bg-secondaryBgColor m-and-t:hidden">
+              <ProductsSortBar />
+              <div className="flex gap-4 self-stretch">
+                <div className="self-center">
+                  <span className="text-primary">{page < 2 ? 1 : page}</span>/<span>9</span>
+                </div>
+                <div className="flex">
+                  <Button
+                    aria-label="Lùi về trang trước"
+                    className={twMerge(
+                      `border-[2px] border-[#e6e6e6]`,
+                      "disabled:cursor-default disabled:bg-primaryBgColor"
+                    )}
+                    disabled={page < 2}
+                    size="Xsmall">
+                    <MdOutlineKeyboardArrowLeft />
+                  </Button>
+                  <Button
+                    aria-label="Tới trang tiếp theo"
+                    size="Xsmall"
+                    className="disabled:cursor-default disabled:bg-primaryBgColor border-[2px] border-l-0 border-[#e6e6e6]"
+                    disabled={page >= 9}>
+                    <MdKeyboardArrowRight />
+                  </Button>
                 </div>
               </div>
-              <ul className="row-5px">
-                {productsData.map((product) => {
-                  return <CardProduct key={product.id} {...product} />;
-                })}
-              </ul>
-              <PaginationFooter />
             </div>
+            <ul className="row-5px">
+              {productsData.map((product) => {
+                return <CardProduct key={product.id} {...product} />;
+              })}
+            </ul>
+            <PaginationFooter />
           </div>
         </div>
-      </main>
+      </div>
       <footer className="border-t-4 border-t-primary h-[200px]">
         <div className="flex gap-10 max-w-[1200px] justify-between mx-auto pt-10 pb-20">
           {footer.map((item) => {
@@ -69,15 +68,18 @@ export default function Page() {
                       <li className="text-[#939393] capitalize  cursor-pointer" key={i}>
                         {i === "Facebook" ? (
                           <Link className="flex items-center gap-2" href={"#"}>
-                            <FaFacebook className="w-4 h-4" /> <span className="hover:text-primary ">{i}</span>
+                            <FaFacebook className="w-4 h-4" />{" "}
+                            <span className="hover:text-primary ">{i}</span>
                           </Link>
                         ) : i === "instagram" ? (
                           <Link className="flex items-center gap-2" href={"#"}>
-                            <FaInstagram className="w-4 h-4" /> <span className="hover:text-primary ">{i}</span>
+                            <FaInstagram className="w-4 h-4" />{" "}
+                            <span className="hover:text-primary ">{i}</span>
                           </Link>
                         ) : (
                           <Link className="flex items-center gap-2" href={"#"}>
-                            <FaLinkedin className="w-4 h-4" /> <span className="hover:text-primary ">{i}</span>
+                            <FaLinkedin className="w-4 h-4" />{" "}
+                            <span className="hover:text-primary ">{i}</span>
                           </Link>
                         )}
                       </li>
@@ -102,7 +104,9 @@ export default function Page() {
                   ) : (
                     item.list.map((i) => {
                       return (
-                        <li className="text-[#939393] hover:text-primary cursor-pointer capitalize" key={i}>
+                        <li
+                          className="text-[#939393] hover:text-primary cursor-pointer capitalize"
+                          key={i}>
                           <Link href={"#"}>{i}</Link>
                         </li>
                       );
@@ -113,7 +117,9 @@ export default function Page() {
             );
           })}
         </div>
-        <p className="text-[#939393] text-center text-sm pb-2">&copy; 2022 Shopee. Tất cả các quyền đã được bảo lưu</p>
+        <p className="text-[#939393] text-center text-sm pb-2">
+          &copy; 2022 Shopee. Tất cả các quyền đã được bảo lưu
+        </p>
       </footer>
     </>
   );
@@ -138,6 +144,11 @@ const footer = [
   },
   {
     title: "Vào cửa hàng trên ứng dụng",
-    list: ["/img/qr_code.png", "/img/app_store.png", "/img/google_play.png", "/img/app_gallery.png"],
+    list: [
+      "/img/qr_code.png",
+      "/img/app_store.png",
+      "/img/google_play.png",
+      "/img/app_gallery.png",
+    ],
   },
 ];

@@ -53,6 +53,7 @@ const RatingOneStar = ({
   starSize?: number;
   ratingOneStar?: number;
 }) => {
+  const ratingOneStarRound = Number(ratingOneStar.toFixed(1));
   return (
     <span className={clsx("relative")}>
       <IoStarOutline
@@ -74,7 +75,29 @@ const RatingOneStar = ({
           const newWidth = e.clientX - target.left;
           e.currentTarget.style.width = `${newWidth}px`;
         }}
-        style={{ width: `${ratingOneStar * 100}%` }}
+        style={{
+          width: `${
+            (ratingOneStarRound === 0.5 || ratingOneStarRound === 1
+              ? ratingOneStarRound
+              : ratingOneStarRound == 0.1
+              ? ratingOneStarRound * 2.5
+              : ratingOneStarRound == 0.2
+              ? ratingOneStarRound * 1.6
+              : ratingOneStarRound == 0.3
+              ? ratingOneStarRound * 1.3
+              : ratingOneStarRound == 0.4
+              ? ratingOneStarRound * 1.16
+              : ratingOneStarRound == 0.6
+              ? ratingOneStarRound * 0.93
+              : ratingOneStarRound == 0.7
+              ? ratingOneStarRound * 0.85
+              : ratingOneStarRound == 0.8
+              ? ratingOneStarRound * 0.8
+              : ratingOneStarRound == 0.9
+              ? ratingOneStarRound * 0.8
+              : ratingOneStarRound) * 100
+          }%`,
+        }}
         className="h-full absolute top-0 overflow-hidden">
         <IoStarSharp
           style={{ width: `${starSize}px`, height: `${starSize}px` }}
