@@ -1,12 +1,14 @@
 "use client";
 import Button from "@/components/Button";
 import Currency from "@/components/Currency";
+import RatingStar from "@/components/RatingStar";
 import Link from "next/link";
 import { useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
 import { IoStarOutline, IoStarSharp } from "react-icons/io5";
 
 interface IProduct {
+  id: number;
   src: string;
   title: string;
   discount: null | number;
@@ -19,21 +21,19 @@ interface IProduct {
 
 // const maxTitleLength = "Mũ lông nhung họa tiết mèo nhiều màu Lorem ipsum, dolor a".length;
 
-const CardProduct = ({ src, title, discount, price, shop, location, rating, sold }: IProduct) => {
+const CardProduct = ({ id, src, title, discount, price, shop, location, rating, sold }: IProduct) => {
   const [isLike, setIsLike] = useState(false);
 
   const priceDiscount = discount ? price - (discount * price) / 100 : price;
 
   const soldCalculated = sold > 1000 ? Math.floor(sold / 1000) + "k" : sold;
 
-  const width = (((rating - 0.1) / 5) * 100).toFixed(1) + "%";
-
   return (
     <li className="pt-[10px] col-5px w-1/5 t-and-pc:w-1/4 tablet:w-1/3 mobile:w-1/2 small-mobile:w-full">
       <Link
         className="text-xs h-full flex bg-white flex-col cursor-pointer translate-x-0 transition-[transform] rounded-t-[3px] duration-100 ease-linear hover:-translate-y-[2px] shadow hover:shadow-xl rounded-b-[2px]"
         scroll={false}
-        href={"#"}
+        href={`/products/${id}`}
       >
         <div className="relative block text-center">
           {discount && (
@@ -74,40 +74,7 @@ const CardProduct = ({ src, title, discount, price, shop, location, rating, sold
               {isLike ? <FaHeart className="fill-red-500" /> : <FaRegHeart />}
             </Button>
             {/* star rating */}
-            <div className="relative w-14 ml-auto">
-              <span
-                // onMouseMove={(e) => {
-                //   const target = e.currentTarget.getBoundingClientRect();
-                //   const newWidth = e.clientX - target.left;
-                //   const siblingTarget = e.currentTarget.nextElementSibling;
-                //   if (siblingTarget && siblingTarget instanceof HTMLElement) {
-                //     siblingTarget.style.width = `${newWidth}px`;
-                //   }
-                // }}
-                className="flex gap-[1px] translate-y-[-50%] left-0 absolute"
-              >
-                <IoStarOutline className="w-[10px] h-[10px]" />
-                <IoStarOutline className="w-[10px] h-[10px]" />
-                <IoStarOutline className="w-[10px] h-[10px]" />
-                <IoStarOutline className="w-[10px] h-[10px]" />
-                <IoStarOutline className="w-[10px] h-[10px]" />
-              </span>
-              <span
-                // onMouseMove={(e) => {
-                //   const target = e.currentTarget.getBoundingClientRect();
-                //   const newWidth = e.clientX - target.left;
-                //   e.currentTarget.style.width = `${newWidth}px`;
-                // }}
-                style={{ width: width }}
-                className={"h-[10px] w-0 overflow-hidden absolute translate-y-[-50%] left-0"}
-              >
-                <IoStarSharp className="fill-yellow-500 absolute w-[10px] h-[10px] left-0" />
-                <IoStarSharp className="fill-yellow-500 absolute w-[10px] h-[10px] left-[11px]" />
-                <IoStarSharp className="fill-yellow-500 absolute w-[10px] h-[10px] left-[22px] " />
-                <IoStarSharp className="fill-yellow-500 absolute w-[10px] h-[10px] left-[33px]" />
-                <IoStarSharp className="fill-yellow-500 absolute w-[10px] h-[10px] left-[44px] " />
-              </span>
-            </div>
+            <RatingStar ratingStar={rating} />
             {sold ? <span className="ml-1">Đã bán {soldCalculated}</span> : null}
           </div>
           <div className="mt-auto flex justify-between text-textColor">
