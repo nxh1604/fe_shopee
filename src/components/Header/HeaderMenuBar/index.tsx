@@ -13,14 +13,20 @@ const HeaderMenuBar = () => {
       <button onClick={() => setIsOpen(!isOpen)}>
         <TfiMenu className="fill-white w-7 h-7 self-start" />
       </button>
-      {isOpen && <div onClick={() => setIsOpen(false)} className="fixed top-0 right-0 left-0 bottom-0 bg-black/20 fade-in-animation z-40" />}
+      {isOpen && (
+        <div
+          onClick={() => setIsOpen(false)}
+          className="fixed top-0 right-0 left-0 bottom-0 bg-black/20 fade-in-animation z-40"
+        />
+      )}
       <div
         className={clsx(
           "fixed top-0 bottom-0 left-0 bg-primaryBgColor text-black w-1/3 mobile:w-1/2 translate-x-[-100%] transition-[transform] duration-200 z-50",
           isOpen && "translate-x-[0]"
-        )}
-      >
-        <button onClick={() => setIsOpen(false)} className="absolute top-0 right-0 py-2 px-3 hover:bg-slate-200">
+        )}>
+        <button
+          onClick={() => setIsOpen(false)}
+          className="absolute top-0 right-0 py-2 px-3 hover:bg-slate-200">
           <HiXMark className="w-7 h-7" />
         </button>
         <div>
