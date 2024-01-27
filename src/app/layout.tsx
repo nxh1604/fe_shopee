@@ -19,8 +19,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AuthModalProvider>
           <Header />
           <AuthModal />
-          <div className="m-and-t:[margin-top:calc(var(--header-mobile-height)_+_var(--products-mobile-sort-bar))] w-full overflow-hidden ">
-            {children}
+          <div className="m-and-t:[margin-top:calc(var(--header-mobile-height)_+_var(--products-mobile-sort-bar))] w-full overflow-hidden">
+            <main className="bg-primaryBgColor py-8 w-full">{children}</main>
           </div>
         </AuthModalProvider>
       </body>

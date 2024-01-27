@@ -49,7 +49,7 @@ const productsData = [
     title: "Reimu trong Touhou. Miko của vùng đất thánh, chuyên gia hòa giải vấn đề",
     discount: 10,
     price: 500000,
-    rating: 4.8,
+    rating: 4.5,
     sold: 151234,
     shop: "Rem",
     location: "Eastern Wonderland",
