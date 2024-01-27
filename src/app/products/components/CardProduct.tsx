@@ -74,7 +74,7 @@ const CardProduct = ({ id, src, title, discount, price, shop, location, rating, 
               {isLike ? <FaHeart className="fill-red-500" /> : <FaRegHeart />}
             </Button>
             {/* star rating */}
-            <RatingStar ratingStar={rating} />
+            <RatingStar className="ml-auto relative -top-[1px]" starSize={10} starGap={1} ratingStar={rating} />
             {sold ? <span className="ml-1">Đã bán {soldCalculated}</span> : null}
           </div>
           <div className="mt-auto flex justify-between text-textColor">

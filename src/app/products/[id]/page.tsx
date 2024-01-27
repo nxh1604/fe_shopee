@@ -53,9 +53,9 @@ const Page = ({ params }: { params: { id: string } }) => {
             </div>
             <div className="">
               <div className="flex gap-4">
-                <div className="flex gap-2">
-                  {product.rating}
-                  <RatingStar starSize={20} starGap={10} ratingStar={product.rating} />
+                <div className="flex gap-2 items-center">
+                  <span>{product.rating}</span>
+                  <RatingStar starSize={20} starGap={4} numOfStars={5} className="text-blue-500" ratingStar={product.rating} />
                 </div>
                 <div>Danh Gia</div>
                 <div>{product.sold}</div>
