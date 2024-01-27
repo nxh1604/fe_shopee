@@ -5,7 +5,6 @@ import RatingStar from "@/components/RatingStar";
 import Link from "next/link";
 import { useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { IoStarOutline, IoStarSharp } from "react-icons/io5";
 
 interface IProduct {
   id: number;
@@ -21,7 +20,17 @@ interface IProduct {
 
 // const maxTitleLength = "Mũ lông nhung họa tiết mèo nhiều màu Lorem ipsum, dolor a".length;
 
-const CardProduct = ({ id, src, title, discount, price, shop, location, rating, sold }: IProduct) => {
+const CardProduct = ({
+  id,
+  src,
+  title,
+  discount,
+  price,
+  shop,
+  location,
+  rating,
+  sold,
+}: IProduct) => {
   const [isLike, setIsLike] = useState(false);
 
   const priceDiscount = discount ? price - (discount * price) / 100 : price;
@@ -33,8 +42,7 @@ const CardProduct = ({ id, src, title, discount, price, shop, location, rating, 
       <Link
         className="text-xs h-full flex bg-white flex-col cursor-pointer translate-x-0 transition-[transform] rounded-t-[3px] duration-100 ease-linear hover:-translate-y-[2px] shadow hover:shadow-xl rounded-b-[2px]"
         scroll={false}
-        href={`/products/${id}`}
-      >
+        href={`/products/${id}`}>
         <div className="relative block text-center">
           {discount && (
             <div className="absolute w-[36px] right-0 bg-yellow-500 rounded-tr-[3px]">
@@ -74,7 +82,12 @@ const CardProduct = ({ id, src, title, discount, price, shop, location, rating, 
               {isLike ? <FaHeart className="fill-red-500" /> : <FaRegHeart />}
             </Button>
             {/* star rating */}
-            <RatingStar ratingStar={rating} />
+            <RatingStar
+              className="ml-auto relative -top-[1px]"
+              starSize={10}
+              starGap={1}
+              ratingStar={rating}
+            />
             {sold ? <span className="ml-1">Đã bán {soldCalculated}</span> : null}
           </div>
           <div className="mt-auto flex justify-between text-textColor">
