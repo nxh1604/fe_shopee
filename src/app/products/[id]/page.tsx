@@ -26,7 +26,7 @@ const Page = ({ params }: { params: { id: string } }) => {
 
   return (
     <>
-      <div>Bread Crums</div>
+      <div className="gridLayout">Bread Crums</div>
       <div className="gridLayout bg-white p-4">
         <section className="row-12px">
           <h1 className="sr-only">{product.title}</h1>

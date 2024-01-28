@@ -1,9 +1,5 @@
 const Page = () => {
-  return (
-    <>
-      <div>Cart</div>
-    </>
-  );
+  return <div className="gridLayout"></div>;
 };
 
 export default Page;

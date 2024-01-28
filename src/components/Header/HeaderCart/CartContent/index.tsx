@@ -1,3 +1,4 @@
+"use client";
 import { DropdownBox, DropdownBoxHeader } from "@/components/Header/Dropdown/UI";
 import Button from "@/components/Button";
 import { TriangleUp } from "@/components/Triangle";
@@ -5,6 +6,7 @@ import user from "@/lib/data/userData";
 import cartData from "@/lib/data/cartData";
 import { ICartItem } from "@/lib/definitions";
 import Currency from "@/components/Currency";
+import { useRouter } from "next/navigation";
 
 const DropdownCartContent = () => {
   return (
@@ -22,6 +24,7 @@ const DropdownCartContent = () => {
 };
 
 const CartContent = ({ cartItems }: { cartItems: ICartItem[] }) => {
+  const router = useRouter();
   const newCartItems = cartItems.length > 5 ? cartItems.slice(0, 5) : cartItems;
   const remainCartItems = -newCartItems.length + cartItems.length;
 
@@ -35,7 +38,7 @@ const CartContent = ({ cartItems }: { cartItems: ICartItem[] }) => {
       </ul>
       <footer className={"flex p-2 items-center" + ` ${remainCartItems > 0 ? "justify-between" : "justify-end"}`}>
         {remainCartItems > 0 && <p className="text-textColor ">{remainCartItems} thêm vào giỏ hàng</p>}
-        <Button variant="primary" className="p-2">
+        <Button onClick={() => router.push("/cart")} variant="primary" className="p-2">
           Xem giỏ hàng
         </Button>
       </footer>
