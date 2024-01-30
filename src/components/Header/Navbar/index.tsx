@@ -31,7 +31,7 @@ const HeaderNavbar = ({ className }: { className?: string }): JSX.Element => {
               Tải ứng dụng
             </NavItem>
           </DropdownControl>
-          <DropdownContent className="left-0 right-[none]">
+          <DropdownContent className="left-0 right-auto right-[none]">
             <DropdownDowloadContent />
           </DropdownContent>
         </DropdownWrapper>

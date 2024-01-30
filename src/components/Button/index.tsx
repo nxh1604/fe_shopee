@@ -4,7 +4,7 @@ import { PropsWithChildren } from "react";
 const Button = (
   props: PropsWithChildren<
     {
-      variant?: "primary" | "normal" | "normal-no-hover";
+      variant?: "primary" | "normal" | "normal-no-hover" | "unset";
       className?: string;
       size?: "icon" | "small" | "medium" | "large" | "full" | "Xsmall";
     } & React.ComponentPropsWithoutRef<"button">
@@ -20,6 +20,7 @@ const Button = (
           "bg-primary text-white": variant === "primary",
           "bg-white text-black": variant === "normal-no-hover",
           "bg-white text-black hover:bg-primaryBgColor": variant === "normal",
+          "": variant === "unset",
           "": size === "icon",
           "px-[10px]": size === "Xsmall",
           "px-4 py-2 text-sm": size === "small",

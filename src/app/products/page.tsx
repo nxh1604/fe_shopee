@@ -1,154 +1,69 @@
-import Button from "@/components/Button";
-import Image from "next/image";
-import Link from "next/link";
-import { MdKeyboardArrowRight, MdOutlineKeyboardArrowLeft } from "react-icons/md";
-import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
-import { twMerge } from "tailwind-merge";
-
 import Sidebar from "@/components/Sidebar";
 import CardProduct from "@/app/products/components/CardProduct";
 import productsData from "@/lib/data/productsData";
 import PaginationFooter from "@/app/products/components/PaginationFooter";
 import ProductsSortBar from "./components/ProductsSortBar";
+import { SortbarPagination } from "./components/Pagination";
 
-const page = 9;
+const ItemPerPage = 20;
 
-export default function Page() {
+export interface IPageSearchParams {
+  page: number | string;
+}
+
+export interface ICategorySearchParams {
+  category?: number;
+}
+
+export interface ISortSearchParams {
+  order?: "asc" | "desc";
+  category?: number;
+  sortBy: "pop" | "ctime" | "sales" | "price";
+}
+
+interface ISearchParams extends IPageSearchParams, ISortSearchParams, ICategorySearchParams {}
+
+export default function Page({ searchParams }: { searchParams: ISearchParams }) {
+  const { page = 1, order, category = 1, sortBy = "pop" } = searchParams;
+  const currentPage = Number(page) < 1 ? 1 : Number(page);
+  const maxPage = Math.ceil(productsData.length / ItemPerPage);
+  const newProductsData = productsData.filter((_, index) => {
+    if (currentPage <= 1) return index + 1 <= ItemPerPage;
+    if (currentPage >= maxPage) return index + 1 > (maxPage - 1) * ItemPerPage;
+    else return index + 1 < ItemPerPage * currentPage && index + 1 >= ItemPerPage * (currentPage - 1);
+  });
+
   return (
     <>
+      <div className="shadow bg-white top-[var(--header-mobile-height)] [height:var(--products-mobile-sort-bar)] fixed z-10 fixed-all-width w-full hidden m-and-t:block">
+        <ProductsSortBar
+          order={order}
+          sortBy={sortBy}
+          className="gridLayout items-stretch h-full justify-between flex gap-0 *:border-l-[1px] *:border-black/20 *:flex-1"
+        />
+      </div>
       <div className="gridLayout mx-auto">
         <div className="row-12px">
-          <Sidebar className="self-start col-12px m-and-t:hidden" />
+          <Sidebar category={Number(category)} className="self-start col-12px m-and-t:hidden" />
           <div className="flex-1 col-12px">
             <div className="flex justify-between px-5 py-3 rounded items-center text-sm bg-secondaryBgColor m-and-t:hidden">
-              <ProductsSortBar />
+              <ProductsSortBar order={order} sortBy={sortBy} />
               <div className="flex gap-4 self-stretch">
                 <div className="self-center">
-                  <span className="text-primary">{page < 2 ? 1 : page}</span>/<span>9</span>
+                  <span className="text-primary">{currentPage}</span>/<span>{maxPage}</span>
                 </div>
-                <div className="flex">
-                  <Button
-                    aria-label="Lùi về trang trước"
-                    className={twMerge(
-                      `border-[2px] border-[#e6e6e6]`,
-                      "disabled:cursor-default disabled:bg-primaryBgColor"
-                    )}
-                    disabled={page < 2}
-                    size="Xsmall">
-                    <MdOutlineKeyboardArrowLeft />
-                  </Button>
-                  <Button
-                    aria-label="Tới trang tiếp theo"
-                    size="Xsmall"
-                    className="disabled:cursor-default disabled:bg-primaryBgColor border-[2px] border-l-0 border-[#e6e6e6]"
-                    disabled={page >= 9}>
-                    <MdKeyboardArrowRight />
-                  </Button>
-                </div>
+                <SortbarPagination currentPage={currentPage} maxPage={maxPage} />
               </div>
             </div>
             <ul className="row-5px">
-              {productsData.map((product) => {
+              {newProductsData.map((product) => {
                 return <CardProduct key={product.id} {...product} />;
               })}
             </ul>
-            <PaginationFooter />
+            <PaginationFooter currentPage={currentPage} maxPage={maxPage} />
           </div>
         </div>
       </div>
-      <footer className="border-t-4 border-t-primary h-[200px]">
-        <div className="flex gap-10 max-w-[1200px] justify-between mx-auto pt-10 pb-20">
-          {footer.map((item) => {
-            return (
-              <div key={item.title} className="text-xs space-y-5">
-                <h3 className="uppercase font-semibold">{item.title}</h3>
-                <ul className="space-y-3">
-                  {item.title === "Theo dõi" ? (
-                    item.list.map((i) => (
-                      <li className="text-[#939393] capitalize  cursor-pointer" key={i}>
-                        {i === "Facebook" ? (
-                          <Link className="flex items-center gap-2" href={"#"}>
-                            <FaFacebook className="w-4 h-4" />{" "}
-                            <span className="hover:text-primary ">{i}</span>
-                          </Link>
-                        ) : i === "instagram" ? (
-                          <Link className="flex items-center gap-2" href={"#"}>
-                            <FaInstagram className="w-4 h-4" />{" "}
-                            <span className="hover:text-primary ">{i}</span>
-                          </Link>
-                        ) : (
-                          <Link className="flex items-center gap-2" href={"#"}>
-                            <FaLinkedin className="w-4 h-4" />{" "}
-                            <span className="hover:text-primary ">{i}</span>
-                          </Link>
-                        )}
-                      </li>
-                    ))
-                  ) : item.title === "Vào cửa hàng trên ứng dụng" ? (
-                    <div className="flex gap-2">
-                      <Link className="shadow p-1" href={"#"}>
-                        <Image src={item.list[0]} width={88} height={88} alt="" />
-                      </Link>
-                      <div className="flex flex-col justify-between">
-                        <Link className="shadow p-1" href={"#"}>
-                          <Image src={item.list[2]} width={70} height={70} alt="" />
-                        </Link>
-                        <Link className="shadow p-1" href={"#"}>
-                          <Image src={item.list[1]} width={70} height={70} alt="" />
-                        </Link>
-                        <Link className="shadow p-1" href={"#"}>
-                          <Image src={item.list[3]} width={70} height={70} alt="" />
-                        </Link>
-                      </div>
-                    </div>
-                  ) : (
-                    item.list.map((i) => {
-                      return (
-                        <li
-                          className="text-[#939393] hover:text-primary cursor-pointer capitalize"
-                          key={i}>
-                          <Link href={"#"}>{i}</Link>
-                        </li>
-                      );
-                    })
-                  )}
-                </ul>
-              </div>
-            );
-          })}
-        </div>
-        <p className="text-[#939393] text-center text-sm pb-2">
-          &copy; 2022 Shopee. Tất cả các quyền đã được bảo lưu
-        </p>
-      </footer>
     </>
   );
 }
-
-const footer = [
-  {
-    title: "Chăm sóc khách hàng",
-    list: ["Trung tâm trợ giúp", "f8-shop mall", "hướng dẫn mua hàng"],
-  },
-  {
-    title: "Giới thiệu",
-    list: ["Giới thiệu", "Tuyển dụng", "Điều khoản"],
-  },
-  {
-    title: "Danh mục",
-    list: ["trang điểm mặt", "trang điểm môi", "trang điểm mắt"],
-  },
-  {
-    title: "Theo dõi",
-    list: ["Facebook", "instagram", "Linkedin"],
-  },
-  {
-    title: "Vào cửa hàng trên ứng dụng",
-    list: [
-      "/img/qr_code.png",
-      "/img/app_store.png",
-      "/img/google_play.png",
-      "/img/app_gallery.png",
-    ],
-  },
-];

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header";
 import AuthModalProvider from "@/context/AuthModalContext";
 import AuthModal from "@/components/Modal/AuthModal";
+import { ImageContextProvider } from "@/context/ImageModalContext";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,11 +18,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className={inter.className}>
         <AuthModalProvider>
-          <Header />
-          <AuthModal />
-          <div className="m-and-t:[margin-top:calc(var(--header-mobile-height)_+_var(--products-mobile-sort-bar))] w-full overflow-hidden">
-            <main className="bg-primaryBgColor py-8 w-full">{children}</main>
-          </div>
+          <ImageContextProvider>
+            <AuthModal />
+            <div className="flex flex-col min-h-[100vh]">
+              {children}
+              <Footer />
+            </div>
+          </ImageContextProvider>
         </AuthModalProvider>
       </body>
     </html>

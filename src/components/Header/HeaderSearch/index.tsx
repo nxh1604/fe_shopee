@@ -11,7 +11,7 @@ const HeaderSearch = forwardRef<HTMLDivElement, { className?: string; placeHolde
   const { placeHolder, className } = props;
 
   return (
-    <div ref={ref} className={twMerge("flex-1 flex rounded-sm gap-1 text-black items-center bg-white p-1", className)}>
+    <div ref={ref} className={twMerge("flex rounded-sm gap-1 text-black items-center bg-white p-1", className)}>
       <div className="flex-1 relative ">
         <input placeholder={placeHolder ? placeHolder : "Tìm kiếm"} type="text" className="w-full peer p-2 text-base " />
         <div className="absolute hidden z-[1] top-[calc(100%+10px)] peer-focus:flex fade-in-animation hover:flex rounded flex-col gap-2 bg-white w-full shadow-md">
@@ -37,7 +37,7 @@ const HeaderSearch = forwardRef<HTMLDivElement, { className?: string; placeHolde
           </ul>
         </DropdownContent>
       </DropdownWrapper>
-      <Button size="icon" variant="primary" aria-label="Tìm kiếm" className="py-3 px-6 hover:opacity-80">
+      <Button size="icon" variant="primary" aria-label="Tìm kiếm" className="py-3 px-6 hover:opacity-80 self-stretch">
         <FaSearch className="fill-white" />
       </Button>
     </div>

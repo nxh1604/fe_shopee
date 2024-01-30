@@ -1,9 +1,14 @@
+"use client";
+
 /* eslint-disable @next/next/no-img-element */
 import Currency from "@/components/Currency";
+import ImageModal from "@/components/Modal/ImageModal";
 import RatingStar from "@/components/RatingStar";
+import ImageContext from "@/context/ImageModalContext";
 import productsData from "@/lib/data/productsData";
 import clsx from "clsx";
 import Image from "next/image";
+import { useContext } from "react";
 import { FaFacebook, FaFacebookMessenger, FaHeart, FaPinterest, FaRegHeart, FaTruck, FaTwitter } from "react-icons/fa";
 import { GiShoppingCart } from "react-icons/gi";
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
@@ -12,6 +17,7 @@ const Page = ({ params }: { params: { id: string } }) => {
   const { id } = params;
   const index = parseInt(id) - 1;
   const product = productsData[index];
+  const { handleOpen } = useContext(ImageContext);
 
   if (!product) return <h1 className="text-red-500">Product not found!</h1>;
 
@@ -26,6 +32,7 @@ const Page = ({ params }: { params: { id: string } }) => {
 
   return (
     <>
+      <ImageModal />
       <div className="gridLayout">Bread Crums</div>
       <div className="gridLayout bg-white p-4">
         <section className="row-12px">
@@ -34,7 +41,8 @@ const Page = ({ params }: { params: { id: string } }) => {
             <h2 className="sr-only">Product Image Section</h2>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              className="w-[500px] h-[500px] border-2 border-primary rounded-sm object-contain object-center"
+              onClick={handleOpen}
+              className="w-[500px] h-[500px] border-2 hover:cursor-pointer border-primary rounded-sm object-contain object-center"
               width={400}
               height={400}
               src={src}

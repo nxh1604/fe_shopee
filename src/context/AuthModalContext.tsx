@@ -1,17 +1,17 @@
 "use client";
 
 import useModalContext from "@/hooks/useModalContext";
-import { PropsWithChildren, createContext, Dispatch, SetStateAction } from "react";
+import { PropsWithChildren, createContext, Dispatch, SetStateAction, useState } from "react";
 
-interface ModalContextProps {
+export interface ModalContextProps {
   isOpen: boolean;
   handleOpen: () => void;
   handleClose: () => void;
-  title: "Đăng nhập" | "Đăng ký";
-  setTitle: Dispatch<SetStateAction<"Đăng nhập" | "Đăng ký">>;
 }
 
-const AuthModalContext = createContext<ModalContextProps>({
+const AuthModalContext = createContext<
+  ModalContextProps & { title: "Đăng nhập" | "Đăng ký"; setTitle: Dispatch<SetStateAction<"Đăng nhập" | "Đăng ký">> }
+>({
   isOpen: true,
   handleClose: () => {},
   handleOpen: () => {},
@@ -20,7 +20,8 @@ const AuthModalContext = createContext<ModalContextProps>({
 });
 
 const AuthModalProvider = ({ children }: PropsWithChildren) => {
-  const { isOpen, handleClose, handleOpen, title, setTitle } = useModalContext();
+  const { isOpen, handleClose, handleOpen } = useModalContext();
+  const [title, setTitle] = useState<"Đăng nhập" | "Đăng ký">("Đăng nhập");
 
   return <AuthModalContext.Provider value={{ isOpen, handleClose, handleOpen, title, setTitle }}>{children}</AuthModalContext.Provider>;
 };

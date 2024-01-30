@@ -17,6 +17,10 @@
     cursor: pointer;
   }
 
+  .stickyBuyCart {
+    @apply shadow-[0px_-6px_4px_0px] shadow-black/10;
+  }
+
   .header-notify-animation {
     @apply animate-[headerNotify_0.3s] will-change-[opacity,_scale];
   }
