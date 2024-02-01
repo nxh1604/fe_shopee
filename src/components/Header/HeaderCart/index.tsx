@@ -28,7 +28,7 @@ const HeaderCart = ({
           </span>
         )}
       </DropdownControl>
-      <DropdownControl className={clsx("relative hover:cursor-pointer m-and-t:hiden block", classNameControl)}>
+      <DropdownControl className={clsx("relative hover:cursor-pointer m-and-t:hidden block", classNameControl)}>
         <Link href={"/cart"}>
           <FaShoppingCart className={clsx("w-7 h-7 self-center fill-white hover:cursor-pointer", classNameShoppingCartIcon)} />
           {user && cartData.length > 0 && (
@@ -38,7 +38,7 @@ const HeaderCart = ({
           )}
         </Link>
       </DropdownControl>
-      <DropdownContent className="right-[calc(50%-34px)] top-[calc(100%+4px)] block  m-and-t:fixed m-and-t:pt-0 m-and-t:fixed-all-width m-and-t:top-[var(--header-mobile-height)]">
+      <DropdownContent className="right-[calc(50%-34px)] top-[calc(100%+4px)] block m-and-t:fixed m-and-t:pt-0 m-and-t:fixed-all-width m-and-t:top-[var(--header-mobile-height)]">
         <DropdownCartContent />
       </DropdownContent>
     </DropdownWrapper>

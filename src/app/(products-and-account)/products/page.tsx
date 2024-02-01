@@ -4,6 +4,7 @@ import productsData from "@/lib/data/productsData";
 import PaginationFooter from "@/app/(products-and-account)/products/components/PaginationFooter";
 import ProductsSortBar from "./components/ProductsSortBar";
 import { SortbarPagination } from "./components/Pagination";
+import CategoriesMobile from "@/components/CategoriesMobile";
 
 const ItemPerPage = 20;
 
@@ -45,6 +46,8 @@ export default function Page({ searchParams }: { searchParams: ISearchParams }) 
           className="gridLayout items-stretch h-full justify-between flex gap-0 *:border-l-[1px] *:border-black/20 *:flex-1"
         />
       </div>
+      <CategoriesMobile className="hidden m-and-t:block" />
+
       <div className="gridLayout mx-auto scroll-smooth">
         <div className="row-12px">
           <Sidebar category={currentCategory} className="self-start col-12px m-and-t:hidden" />

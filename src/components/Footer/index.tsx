@@ -5,7 +5,7 @@ import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
 const Footer = () => {
   return (
     <footer className="border-t-4 border-t-primary h-[200px]">
-      <div className="flex gap-10 max-w-[1200px] justify-between mx-auto pt-10 pb-20">
+      <div className="flex flex-wrap gap-10 gridLayout justify-between mx-auto pt-10 pb-20 mobile:mx-8">
         {footer.map((item) => {
           return (
             <div key={item.title} className="text-xs space-y-5">
@@ -60,7 +60,7 @@ const Footer = () => {
           );
         })}
       </div>
-      <p className="text-[#939393] text-center text-sm pb-2">&copy; 2022 Shopee. Tất cả các quyền đã được bảo lưu</p>
+      <p className="text-[#939393] text-center text-sm pb-2 bg-primaryBgColor p-2">&copy; 2022 Shopee. Tất cả các quyền đã được bảo lưu</p>
     </footer>
   );
 };

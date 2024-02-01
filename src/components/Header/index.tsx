@@ -11,10 +11,10 @@ const Header = (): JSX.Element => {
     <header className="bg-gradient-shopee-b text-white text-sm m-and-t:[height:var(--header-mobile-height)] m-and-t:items-center m-and-t:pb-0 m-and-t:fixed m-and-t:fixed-top-all-width m-and-t:z-50">
       <HeaderNavbar className="gridLayout m-and-t:hidden pt-2 pb-2" />
       <div className="lg:gridLayout m-and-t:h-full">
-        <div className="lg:row-12px m-and-t:h-full mobile:flex pt-2 pb-3 tablet:py-4 mobile:pt-5 items-end mobile:items-center mobile:justify-between mobile:px-5">
+        <div className="lg:row-12px w-full m-and-t:h-full mobile:flex pt-2 pb-3 tablet:py-4 mobile:pt-5 items-end mobile:items-center mobile:justify-between mobile:px-5">
           <HeaderMenuBar classNameMenu="text-center mobile:flex-1 mobile:text-start hidden mobile:block" />
           <Link
-            className="lg:col-12px small-mobile:hidden mobile:relative mobile:-top-[6px] tablet:hidden w-1/6 mobile:w-[150px] pr-6 mobile:pr-0"
+            className="lg:col-12px mobile:relative mobile:-top-[6px] tablet:hidden w-1/6 mobile:w-[150px] pr-6 mobile:pr-0"
             aria-label="home"
             href={"/"}
           >

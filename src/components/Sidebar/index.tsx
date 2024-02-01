@@ -1,5 +1,5 @@
 "use client";
-import { ICategorySearchParams } from "@/app/products/page";
+import { ICategorySearchParams } from "@/app/(products-and-account)/products/page";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { IoIosList, IoMdArrowDropright } from "react-icons/io";
