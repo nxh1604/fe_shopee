@@ -2,10 +2,10 @@
 
 import useScrollDetectOnDocument from "@/hooks/useScrollDetectOnDocument";
 import clsx from "clsx";
-import { FaArrowUpLong } from "react-icons/fa6";
+import { FaArrowDownLong, FaArrowUpLong } from "react-icons/fa6";
 
 const ScrollToTop = () => {
-  const { isScrollDown, isScrollUp } = useScrollDetectOnDocument(300);
+  const { isScrollDown } = useScrollDetectOnDocument(300);
 
   return (
     <button
@@ -15,8 +15,9 @@ const ScrollToTop = () => {
       className={clsx(
         "p-2 rounded-full bg-blue-300 fixed bottom-[5%] right-[2%] z-50 lg:hidden opacity-0 transition-all rotate-0 duration-300 ease-linear",
         isScrollDown && "opacity-100 rotate-180"
-      )}>
-      <FaArrowUpLong className="w-8 h-8 fill-primary" />
+      )}
+    >
+      <FaArrowDownLong className="w-8 h-8 fill-primary" />
     </button>
   );
 };

@@ -45,7 +45,7 @@ const Modal = ({ children, isOpen = false, handleClose }: ModalProps) => {
     setMounted(true);
   }, [mounted]);
 
-  return mounted
+  return mounted && isOpen
     ? createPortal(
         <ModalOverlay handleClose={handleClose} isOpen={isOpen}>
           <ModalContent handleClose={handleClose}>{children}</ModalContent>

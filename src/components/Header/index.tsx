@@ -17,17 +17,15 @@ const Header = (): JSX.Element => {
           <Link
             className="lg:col-12px mobile:relative mobile:-top-[6px] tablet:hidden w-1/6 mobile:w-[150px] pr-6 mobile:pr-0"
             aria-label="home"
-            href={"/"}>
+            href={"/"}
+          >
             <ShopeeLogo className="fill-white w-full" />
           </Link>
-          <div className="lg:col-12px flex-1 m-and-t:flex-1 mobile:justify-end flex items-center mobile:self-stretch mobile:gap-5">
-            <HeaderSearch className="mobile:hidden w-4/5 tablet:w-full tablet:gridLayout" />
+          <div className="lg:col-12px flex-1 mobile:justify-end flex items-center mobile:self-stretch mobile:gap-5">
+            <HeaderSearch className="mobile:hidden tablet:flex-[10] flex-1 tablet:w-full tablet:gridLayout" />
             <HeaderMenuBar classNameMenu="-order-1 flex-1 text-center hidden tablet:block" />
             <HeaderSearchMobile className="-order-1 hidden mobile:block" />
-            <HeaderCart
-              classNameWrapper="lg:w-1/5 tablet:flex-1 flex justify-center"
-              classNameShoppingCartIcon="mobile:mx-0"
-            />
+            <HeaderCart classNameWrapper="lg:w-1/6 tablet:flex-1 flex justify-center" classNameShoppingCartIcon="mobile:mx-0" />
           </div>
         </div>
       </div>

@@ -5,6 +5,7 @@ import { FaSearch } from "react-icons/fa";
 import HeaderSearch from "../HeaderSearch";
 import useClickOutside from "@/hooks/useClickOutside";
 import clsx from "clsx";
+import { createPortal } from "react-dom";
 
 const HeaderSearchMobile = ({ className }: { className?: string }) => {
   const [isOpenSearch, setIsOpenSearch] = useState(false);
@@ -19,6 +20,8 @@ const HeaderSearchMobile = ({ className }: { className?: string }) => {
       >
         <FaSearch className="fill-white w-7 h-7" />
       </button>
+      {isOpenSearch &&
+        createPortal(<div onClick={() => setIsOpenSearch(false)} className={clsx("hidden m-and-t:block fixed fixed-all")} />, document.body)}
       <HeaderSearch
         ref={headerSearchRef}
         className={

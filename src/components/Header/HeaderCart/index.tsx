@@ -1,5 +1,3 @@
-"use client";
-
 import { FaShoppingCart } from "react-icons/fa";
 
 import DropdownCartContent from "@/components/Header/HeaderCart/CartContent";
@@ -38,7 +36,7 @@ const HeaderCart = ({
           )}
         </Link>
       </DropdownControl>
-      <DropdownContent className="right-[calc(50%-34px)] top-[calc(100%+4px)] block m-and-t:fixed m-and-t:pt-0 m-and-t:fixed-all-width m-and-t:top-[var(--header-mobile-height)]">
+      <DropdownContent className="right-[calc(50%-34px)] top-[calc(100%+4px)] m-and-t:fixed m-and-t:pt-0 m-and-t:fixed-all-width m-and-t:top-[var(--header-mobile-height)]">
         <DropdownCartContent />
       </DropdownContent>
     </DropdownWrapper>

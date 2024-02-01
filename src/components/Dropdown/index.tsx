@@ -3,6 +3,7 @@
 import { useState, createContext, useContext, Dispatch, SetStateAction, MutableRefObject } from "react";
 import useClickOutside from "@/hooks/useClickOutside";
 import clsx from "clsx";
+import { createPortal } from "react-dom";
 
 interface IDropdown {
   isOpen: boolean;
@@ -46,14 +47,17 @@ const DropdownContent = ({ children, className = "" }: { className?: string; chi
   const { isOpen, divRef, setIsOpen } = useContext(DropdownContext);
 
   return isOpen ? (
-    <div
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={() => setIsOpen(false)}
-      ref={divRef}
-      className={clsx("absolute top-[100%] pt-3 z-10 right-0", className)}
-    >
-      {children}
-    </div>
+    <>
+      {createPortal(<div onClick={() => setIsOpen(false)} className="hidden m-and-t:block fixed fixed-all" />, document.body)}
+      <div
+        onMouseEnter={() => setIsOpen(true)}
+        onMouseLeave={() => setIsOpen(false)}
+        ref={divRef}
+        className={clsx("absolute top-[100%] pt-3 z-10 right-0", className)}
+      >
+        {children}
+      </div>
+    </>
   ) : null;
 };
 
