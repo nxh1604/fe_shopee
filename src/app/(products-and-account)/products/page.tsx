@@ -2,7 +2,7 @@ import Sidebar from "@/components/Sidebar";
 import CardProduct from "@/app/(products-and-account)/products/components/CardProduct";
 import productsData from "@/lib/data/productsData";
 import PaginationFooter from "@/app/(products-and-account)/products/components/PaginationFooter";
-import ProductsSortBar from "./components/ProductsSortBar";
+import ProductsSortBar, { ProductsSortBarMobileWrapper } from "./components/ProductsSortBar";
 import { SortbarPagination } from "./components/Pagination";
 import CategoriesMobile from "@/components/CategoriesMobile";
 
@@ -34,18 +34,19 @@ export default function Page({ searchParams }: { searchParams: ISearchParams }) 
   const newProductsData = productsData.filter((_, index) => {
     if (currentPage <= 1) return index + 1 <= ItemPerPage;
     if (currentPage >= maxPage) return index + 1 > (maxPage - 1) * ItemPerPage;
-    else return index + 1 < ItemPerPage * currentPage && index + 1 >= ItemPerPage * (currentPage - 1);
+    else
+      return index + 1 < ItemPerPage * currentPage && index + 1 >= ItemPerPage * (currentPage - 1);
   });
 
   return (
     <>
-      <div className="shadow bg-white top-[var(--header-mobile-height)] [height:var(--products-mobile-sort-bar)] m-and-t:fixed z-10 m-and-t:fixed-all-width w-full hidden m-and-t:block">
+      <ProductsSortBarMobileWrapper>
         <ProductsSortBar
           order={order}
           sortBy={sortBy}
           className="gridLayout items-stretch h-full justify-between flex gap-0 *:border-l-[1px] *:border-black/20 *:flex-1"
         />
-      </div>
+      </ProductsSortBarMobileWrapper>
       <CategoriesMobile className="hidden m-and-t:block" />
 
       <div className="gridLayout mx-auto scroll-smooth">

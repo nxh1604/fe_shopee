@@ -8,6 +8,7 @@
 }
 
 @layer components {
+  /* normal css*/
   .hide-scroll::-webkit-scrollbar {
     display: none;
   }
@@ -30,6 +31,8 @@
   .stickyBuyCart {
     @apply shadow-[0px_-6px_4px_0px] shadow-black/10;
   }
+
+  /* animation */
 
   .header-notify-animation {
     @apply animate-[headerNotify_0.3s] will-change-[opacity,_scale];
@@ -60,6 +63,7 @@
     @apply px-[5px]  small-mobile:px-0;
   }
 
+  /* Fixed */
   .fixed-top-all-width {
     top: 0;
     right: 0;
