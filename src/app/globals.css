@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --header-mobile-height: 100px;
+  --header-mobile-height: 80px;
   --products-mobile-sort-bar: 45px;
 }
 
@@ -29,6 +29,7 @@
     @apply animate-[fadeIn_0.2s] ease-linear will-change-[opacity];
   }
 
+  /* Responsive design here ↓*/
   .gridLayout {
     @apply max-w-[1200px] t-and-pc:max-w-[984px]  m-and-t:max-w-[644px]  mx-auto;
   }

@@ -20,7 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <AuthModalProvider>
           <ImageContextProvider>
             <AuthModal />
-            <div className="flex flex-col min-h-[100vh]">
+            <div className="flex flex-col min-h-[100vh] ">
               {children}
               <Footer />
             </div>

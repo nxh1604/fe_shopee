@@ -32,17 +32,17 @@ const Footer = () => {
                 ) : item.title === "Vào cửa hàng trên ứng dụng" ? (
                   <div className="flex gap-2">
                     <Link className="shadow p-1" href={"#"}>
-                      <Image src={item.list[0]} width={88} height={88} alt="" />
+                      <Image className="w-[88px] h-auto" src={item.list[0]} width={100} height={100} alt="" />
                     </Link>
                     <div className="flex flex-col justify-between">
                       <Link className="shadow p-1" href={"#"}>
-                        <Image src={item.list[2]} width={70} height={70} alt="" />
+                        <Image className="w-[70px] h-auto" src={item.list[2]} width={100} height={100} alt="" />
                       </Link>
                       <Link className="shadow p-1" href={"#"}>
-                        <Image src={item.list[1]} width={70} height={70} alt="" />
+                        <Image className="w-[70px] h-auto" src={item.list[1]} width={100} height={100} alt="" />
                       </Link>
                       <Link className="shadow p-1" href={"#"}>
-                        <Image src={item.list[3]} width={70} height={70} alt="" />
+                        <Image className="w-[70px] h-auto" src={item.list[3]} width={100} height={100} alt="" />
                       </Link>
                     </div>
                   </div>
