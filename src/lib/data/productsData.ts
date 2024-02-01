@@ -659,17 +659,6 @@ const productsData = [
     shop: "Sizi",
     location: "Fairy land",
   },
-  {
-    id: 140,
-    src: "https://placewaifu.com/image/300/400",
-    title: "Aoba with her teddy bear pajamas. Kawaii and beautiful",
-    discount: 45,
-    price: 200000,
-    rating: 4.9,
-    sold: 10000,
-    shop: "Sizi",
-    location: "Fairy land",
-  },
 ];
 
 export default productsData;

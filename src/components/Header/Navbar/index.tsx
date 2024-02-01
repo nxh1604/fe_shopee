@@ -16,7 +16,7 @@ import notifyData from "@/lib/data/notifyData";
 const HeaderNavbar = ({ className }: { className?: string }): JSX.Element => {
   return (
     <nav className={twMerge("flex justify-between", className)}>
-      <ul className="justify-start flex items-center gap-3 px-2 min-w-fit ">
+      <ul className="justify-start flex items-center gap-3 min-w-fit ">
         <NavItem href={"#"}>Kênh người bán</NavItem>
 
         {!user && (
@@ -51,7 +51,7 @@ const HeaderNavbar = ({ className }: { className?: string }): JSX.Element => {
         </div>
       </ul>
 
-      <ul className="justify-end flex gap-3 px-2  min-w-fit">
+      <ul className="justify-end flex gap-3  min-w-fit">
         <DropdownWrapper>
           <DropdownControl>
             <NavItemWithIcon className="relative" href="#">
