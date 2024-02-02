@@ -238,7 +238,7 @@ const Page = ({ params }: { params: { id: string } }) => {
               ))}
             </div>
 
-            <div className="pl-3 flex gap-4 text-sm">
+            <div className="pl-3 flex gap-4 text-sm justify-center">
               <button className="bg-red-100 capitalize w-[200px] hover:opacity-90 text-red-600 border-[1px] px-4 py-3 flex gap-2 items-center border-red-600">
                 <GiShoppingCart className="w-6 h-6" />
                 Thêm vào giỏ hàng
@@ -247,7 +247,10 @@ const Page = ({ params }: { params: { id: string } }) => {
                 Mua ngay
               </button>
             </div>
-            <div className="pl-3 mt-[30px]">Footer</div>
+            <div className="pl-3 mt-[30px] capitalize text-sm">
+              Shopee đảm bảo{" "}
+              <span className="capitalize ml-4 text-[#888]"># ngày hoàn trả hàng / Hoàn tiền</span>
+            </div>
           </section>
         </section>
       </div>
