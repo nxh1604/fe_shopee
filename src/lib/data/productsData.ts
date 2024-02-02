@@ -58,7 +58,7 @@ const productsData = [
     id: 6,
     src: "https://placewaifu.com/image/500",
     title: "Unkown girl. Saddness eyes looking to the rain in myterious mood",
-    discount: 5,
+    discount: 0,
     price: 4000000,
     rating: 4.5,
     sold: 5800,

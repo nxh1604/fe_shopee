@@ -37,10 +37,12 @@ const User = () => {
       <DropdownContent>
         <DropdownBox isTriangle className="origin-[calc(100%-40px)_top]">
           <TriangleUp className="right-[40px]" />
-          <ul className="w-[150px] bg-white text-black shadow-md ">
+          <ul className="w-[150px] bg-white text-black shadow-md rounded-md overflow-hidden">
             {userAvatarOptions.map((option) => {
               return (
-                <li className="p-2 cursor-pointer hover:bg-[#fafafa] hover:text-[#46d0bd]" key={option.operation}>
+                <li
+                  className="p-2 cursor-pointer hover:bg-[#fafafa] hover:text-[#46d0bd]"
+                  key={option.operation}>
                   {option.operation}
                 </li>
               );
