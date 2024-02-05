@@ -18,23 +18,28 @@ import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-i
 export default function ProductImageSection({ product }: { product: IProduct }): JSX.Element {
   const { handleOpen } = useContext(ImageContext);
   const [showingPhotoIndexed, setShowingPhotoIndexed] = useState(0);
-  const [pageOfSubPhoto, setPageOfSubPhoto] = useState(1);
+  const [transSlateX, setTranSlateX] = useState(0);
+  const productPhotos = [product.photo, ...product.subPhotos];
 
   const handleShowNextPhoto = () => {
-    if (showingPhotoIndexed < product.subPhotos.length) {
-      setShowingPhotoIndexed(showingPhotoIndexed + 1);
+    if (transSlateX < 100 * (productPhotos.length - 4)) {
+      setTranSlateX((prev) => prev + 100);
     }
   };
 
   const handleShowPreviousPhoto = () => {
-    if (showingPhotoIndexed > 0) {
-      setShowingPhotoIndexed(showingPhotoIndexed - 1);
+    if (transSlateX > 0) {
+      setTranSlateX((prev) => prev - 100);
     }
+  };
+
+  const handleShowClickedPhoto = (indexed: number) => {
+    setShowingPhotoIndexed(indexed);
   };
 
   return (
     <section className="col-12px w-5/12">
-      <ImageModal />
+      <ImageModal title={product.title} productPhotos={productPhotos} />
       <h2 className="sr-only">Product Image Section</h2>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
@@ -43,51 +48,41 @@ export default function ProductImageSection({ product }: { product: IProduct }):
         width={400}
         height={400}
         src={showingPhotoIndexed === 0 ? product.photo : product.subPhotos[showingPhotoIndexed - 1]}
-        alt=""></img>
-      <div className="relative mt-4 overflow-hidden">
+        alt=""
+      />
+      <div className="relative mt-4">
         <button
           onClick={handleShowPreviousPhoto}
           aria-label="previous image"
           className="text-white absolute left-0 top-[50%] hover:bg-black/50 translate-y-[-50%] bg-black/5 py-2 z-10">
           <MdOutlineKeyboardArrowLeft className="w-6 h-6" />
         </button>
-        <ul
-          style={{
-            transform: `${
-              showingPhotoIndexed > 3 && "translateX(-" + (showingPhotoIndexed - 3) * 80 + "px)"
-            }`,
-          }}
-          className="flex min-w-max">
-          <li
-            className={clsx(
-              "w-[20%] p-1",
-              showingPhotoIndexed === 0 && "border-2  border-red-500"
-            )}>
-            <img
-              src={product.photo}
-              alt=""
-              width={150}
-              height={150}
-              className="w-[80px] object-contain"
-            />
-          </li>
-          {product.subPhotos.map((photo, index) => (
-            <li
-              key={index}
-              className={clsx(
-                "w-[20%] p-1",
-                showingPhotoIndexed === index + 1 && "border-2  border-red-500"
-              )}>
-              <img
-                src={photo}
-                alt=""
-                width={150}
-                height={150}
-                className="w-[80px] object-contain"
-              />
-            </li>
-          ))}
-        </ul>
+        <div className="overflow-x-scroll hide-scroll">
+          <ul
+            style={{
+              transform: `translateX(-${transSlateX}px)`,
+            }}
+            className="flex min-w-max -mx-1">
+            {productPhotos.map((photo, index) => (
+              <li
+                onMouseEnter={() => handleShowClickedPhoto(index)}
+                onClick={handleOpen}
+                key={index}
+                className={clsx("px-1")}>
+                <img
+                  src={photo}
+                  alt=""
+                  width={150}
+                  height={150}
+                  className={clsx(
+                    "w-[100px] object-contain hover:cursor-pointer",
+                    showingPhotoIndexed === index && "border-2 border-red-500"
+                  )}
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
         <button
           onClick={handleShowNextPhoto}
           aria-label="next image"
