@@ -35,13 +35,8 @@ const CartContent = ({ cartItems }: { cartItems: IProduct[] }) => {
           <CartItem key={index} item={item} />
         ))}
       </ul>
-      <footer
-        className={
-          "flex p-2 items-center" + ` ${remainCartItems > 0 ? "justify-between" : "justify-end"}`
-        }>
-        {remainCartItems > 0 && (
-          <p className="text-textColor ">{remainCartItems} thêm vào giỏ hàng</p>
-        )}
+      <footer className={"flex p-2 items-center" + ` ${remainCartItems > 0 ? "justify-between" : "justify-end"}`}>
+        {remainCartItems > 0 && <p className="text-textColor ">{remainCartItems} thêm vào giỏ hàng</p>}
         <Button onClick={() => router.push("/cart")} variant="primary" className="p-2">
           Xem giỏ hàng
         </Button>
@@ -54,14 +49,10 @@ const CartItem = ({ item }: { item: IProduct }) => {
   return (
     <li className="flex justify-between hover:bg-slate-300 py-3 px-2">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img width={40} height={40} src={item.photo} className="object-fill" alt="" />
+      <img width={40} height={40} src={item.photo} className="object-contain w-[50px] h-[50px]" alt="" />
       <div className="flex-1 px-2 flex flex-col gap-2">
         <p className={`${item.liked ? "line-clamp-1" : "line-clamp-2"}`}>{item.title}</p>
-        {item.liked && (
-          <p className="text-red-500 border-[1px] rounded-xl border-red-500 text-xs mr-1 w-fit tracking-tighter px-1">
-            {item.liked}
-          </p>
-        )}
+        {item.liked && <p className="text-red-500 border-[1px] rounded-xl border-red-500 text-xs mr-1 w-fit tracking-tighter px-1">{item.liked}</p>}
       </div>
       <div className="flex flex-col gap-2 items-end ">
         <span className="text-red-500 text-xs self-center flex gap-1">
