@@ -39,6 +39,7 @@ const categoriesList = [
 ];
 
 for (let i = 0; i < 100; i++) {
+  const randomNumber = faker.number.int({ min: 0, max: 4 });
   let subPhotos = [];
   for (let j = 0; j < faker.number.int({ min: 4, max: 10 }); j++) {
     subPhotos.push(subPickPhotos[faker.number.int({ min: 0, max: 4 })]);
@@ -46,10 +47,10 @@ for (let i = 0; i < 100; i++) {
 
   productsData.push({
     id: i.toString(),
-    photo: subPickPhotos[faker.number.int({ min: 0, max: 4 })],
+    photo: subPickPhotos[randomNumber],
     subPhotos,
     title: faker.lorem.words({ min: 3, max: 10 }),
-    categories: [categoriesList[faker.number.int({ min: 0, max: 4 })].category],
+    categories: [categoriesList[randomNumber].category],
     rating: faker.number.float({ min: 1, max: 5, fractionDigits: 1 }),
     discount: faker.number.int({ min: 0, max: 100 }),
     price: Math.round(faker.number.int({ min: 1000, max: 50000000 }) / 1000) * 1000,

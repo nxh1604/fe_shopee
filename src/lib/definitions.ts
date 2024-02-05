@@ -1,10 +1,3 @@
-export interface ICartItem {
-  photo: string;
-  combo: string;
-  title: string;
-  price: number;
-}
-
 export interface ICategory {
   id: string;
   category: string;
@@ -29,6 +22,7 @@ export interface IProduct {
   totalSold: number;
   soldPerMonth: number;
   shop: string;
+  liked: boolean;
   location: string;
   createdAt: Date;
 }

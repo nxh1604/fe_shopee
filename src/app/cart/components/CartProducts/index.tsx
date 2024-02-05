@@ -15,12 +15,15 @@ const CartProducts = () => {
       <div className="flex h-[55px] bg-white text-[#888888] pr-4 pl-8">
         {tableHeadCartData.map((data) => {
           return (
-            <div className="first:w-1/2 my-auto text-center capitalize first:text-start w-[12.5%]" key={data.name}>
+            <div
+              className="first:w-1/2 my-auto text-center capitalize first:text-start w-[12.5%]"
+              key={data.name}>
               {data.name}
             </div>
           );
         })}
       </div>
+      <button>Chon tat Ca</button>
       <ul className="mt-4 space-y-4 bg-white p-4">
         {cart?.map((product) => (
           <Product key={product.id} DeleteOneProduct={DeleteOneProduct} product={product} />

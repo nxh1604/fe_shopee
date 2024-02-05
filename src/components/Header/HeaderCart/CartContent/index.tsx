@@ -3,18 +3,17 @@ import { DropdownBox, DropdownBoxHeader } from "@/components/Header/Dropdown/UI"
 import Button from "@/components/Button";
 import { TriangleUp } from "@/components/Triangle";
 import user from "@/lib/data/userData";
-import cartData from "@/lib/data/cartData";
-import { ICartItem } from "@/lib/definitions";
+import { IProduct } from "@/lib/definitions";
 import Currency from "@/components/Currency";
 import { useRouter } from "next/navigation";
 
-const DropdownCartContent = () => {
+const DropdownCartContent = ({ cart }: { cart: IProduct[] | null }) => {
   return (
     <DropdownBox isTriangle className="origin-[calc(100%-16px)_top]">
       <TriangleUp className="right-[16px]" />
       {user ? (
         <div className="w-[400px] text-left m-and-t:w-[644px] mobile:w-full mobile:mx-0 m-and-t:mx-[calc((100%-644px)/2)]">
-          {cartData.length > 0 ? <CartContent cartItems={cartData} /> : <EmptyCartContent />}
+          {cart && cart.length > 0 ? <CartContent cartItems={cart} /> : <EmptyCartContent />}
         </div>
       ) : (
         <EmptyCartContent />
@@ -23,7 +22,7 @@ const DropdownCartContent = () => {
   );
 };
 
-const CartContent = ({ cartItems }: { cartItems: ICartItem[] }) => {
+const CartContent = ({ cartItems }: { cartItems: IProduct[] }) => {
   const router = useRouter();
   const newCartItems = cartItems.length > 5 ? cartItems.slice(0, 5) : cartItems;
   const remainCartItems = -newCartItems.length + cartItems.length;
@@ -36,8 +35,13 @@ const CartContent = ({ cartItems }: { cartItems: ICartItem[] }) => {
           <CartItem key={index} item={item} />
         ))}
       </ul>
-      <footer className={"flex p-2 items-center" + ` ${remainCartItems > 0 ? "justify-between" : "justify-end"}`}>
-        {remainCartItems > 0 && <p className="text-textColor ">{remainCartItems} thêm vào giỏ hàng</p>}
+      <footer
+        className={
+          "flex p-2 items-center" + ` ${remainCartItems > 0 ? "justify-between" : "justify-end"}`
+        }>
+        {remainCartItems > 0 && (
+          <p className="text-textColor ">{remainCartItems} thêm vào giỏ hàng</p>
+        )}
         <Button onClick={() => router.push("/cart")} variant="primary" className="p-2">
           Xem giỏ hàng
         </Button>
@@ -46,14 +50,18 @@ const CartContent = ({ cartItems }: { cartItems: ICartItem[] }) => {
   );
 };
 
-const CartItem = ({ item }: { item: ICartItem }) => {
+const CartItem = ({ item }: { item: IProduct }) => {
   return (
     <li className="flex justify-between hover:bg-slate-300 py-3 px-2">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img width={40} height={40} src={item.imgSrc} className="object-fill" alt="" />
+      <img width={40} height={40} src={item.photo} className="object-fill" alt="" />
       <div className="flex-1 px-2 flex flex-col gap-2">
-        <p className={`${item.combo ? "line-clamp-1" : "line-clamp-2"}`}>{item.title}</p>
-        {item.combo && <p className="text-red-500 border-[1px] rounded-xl border-red-500 text-xs mr-1 w-fit tracking-tighter px-1">{item.combo}</p>}
+        <p className={`${item.liked ? "line-clamp-1" : "line-clamp-2"}`}>{item.title}</p>
+        {item.liked && (
+          <p className="text-red-500 border-[1px] rounded-xl border-red-500 text-xs mr-1 w-fit tracking-tighter px-1">
+            {item.liked}
+          </p>
+        )}
       </div>
       <div className="flex flex-col gap-2 items-end ">
         <span className="text-red-500 text-xs self-center flex gap-1">
