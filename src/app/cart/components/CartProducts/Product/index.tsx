@@ -15,8 +15,11 @@ const Product = ({
   const totalPrice = priceAfterDiscount * product.quantities;
 
   return (
-    <li className="flex pl-4 py-4 items-center border-[2px] border-pink-100">
-      <ProductInfo title={product.title} src={product.src} id={product.id} />
+    <li className="flex py-4 items-center border-[2px] border-pink-100">
+      <label className="w-1/12 self-stretch justify-center flex items-center" htmlFor={product.id}>
+        <input id={product.id} type="checkbox" />
+      </label>
+      <ProductInfo title={product.title} photo={product.photo} id={product.id} />
       <div className="w-[12.5%] text-center">
         <Currency className="flex justify-center" price={priceAfterDiscount} />
       </div>
@@ -28,8 +31,11 @@ const Product = ({
         <Button onClick={() => DeleteOneProduct(product.id)} variant="unset">
           Xóa
         </Button>
-        <Button variant="unset" className="text-primary text-center flex items-center gap-1 relative">
-          Tìm sản phẩm <br /> tương tự <MdArrowDropDown className="absolute w-5 h-5 -right-[22px] top-[50%] -translate-y-[50%]" />
+        <Button
+          variant="unset"
+          className="text-primary text-center flex items-center gap-1 relative">
+          Tìm sản phẩm <br /> tương tự
+          <MdArrowDropDown className="absolute w-5 h-5 -right-[22px] top-[50%] -translate-y-[50%]" />
         </Button>
       </div>
     </li>
