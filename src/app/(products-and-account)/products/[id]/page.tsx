@@ -1,14 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 
-import productsData from "@/lib/data/productsData";
-
 import ProductInfoSection from "./components/ProductInfoSection";
 import ProductImageSection from "./components/ProductImageSection";
+import { productsData } from "../page";
 
 const Page = ({ params }: { params: { id: string } }) => {
   const { id } = params;
-  const index = parseInt(id) - 1;
-  const product = productsData[index];
+  const product = productsData.filter((product) => product.id === id)[0];
 
   if (!product) return <h1 className="text-red-500">Product not found!</h1>;
 
