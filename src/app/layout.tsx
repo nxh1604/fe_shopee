@@ -5,6 +5,7 @@ import AuthModalProvider from "@/context/AuthModalContext";
 import AuthModal from "@/components/Modal/AuthModal";
 import { ImageContextProvider } from "@/context/ImageModalContext";
 import Footer from "@/components/Footer";
+import { CartContextProvider } from "@/context/CartContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,11 +20,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={inter.className}>
         <AuthModalProvider>
           <ImageContextProvider>
-            <AuthModal />
-            <div className="flex flex-col min-h-[100vh]">
-              {children}
-              <Footer />
-            </div>
+            <CartContextProvider>
+              <AuthModal />
+              <div className="flex flex-col min-h-[100vh]">
+                {children}
+                <Footer />
+              </div>
+            </CartContextProvider>
           </ImageContextProvider>
         </AuthModalProvider>
       </body>
