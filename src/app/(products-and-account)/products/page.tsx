@@ -27,10 +27,7 @@ export default function Page({ searchParams }: { searchParams: ISearchParams }) 
   const currentPage = !page || Number(page) <= 1 ? 1 : Number(page);
 
   // filteredData
-  const currentCategory =
-    !category || !categoriesList.filter((categoryItem) => categoryItem.category === category).length
-      ? "all"
-      : category;
+  const currentCategory = !category || !categoriesList.filter((categoryItem) => categoryItem.category === category).length ? "all" : category;
 
   const filteredData = productsData.filter((product) => {
     if (currentCategory === "all") return true;
@@ -47,15 +44,9 @@ export default function Page({ searchParams }: { searchParams: ISearchParams }) 
     case "price":
       {
         if (order === "asc") {
-          filteredData.sort(
-            (a, b) =>
-              a.price - (a.price * a.discount) / 100 - (b.price - (b.price * b.discount) / 100)
-          );
+          filteredData.sort((a, b) => a.price - (a.price * a.discount) / 100 - (b.price - (b.price * b.discount) / 100));
         } else {
-          filteredData.sort(
-            (a, b) =>
-              -(a.price - (a.price * a.discount) / 100) + (b.price - (b.price * b.discount) / 100)
-          );
+          filteredData.sort((a, b) => -(a.price - (a.price * a.discount) / 100) + (b.price - (b.price * b.discount) / 100));
         }
       }
       break;
@@ -84,8 +75,7 @@ export default function Page({ searchParams }: { searchParams: ISearchParams }) 
   const newProductsData = filteredData.filter((_, index) => {
     if (currentPage <= 1) return index + 1 <= ItemPerPage;
     if (currentPage >= maxPage) return index + 1 > (maxPage - 1) * ItemPerPage;
-    else
-      return index + 1 < ItemPerPage * currentPage && index + 1 >= ItemPerPage * (currentPage - 1);
+    else return index + 1 < ItemPerPage * currentPage && index + 1 >= ItemPerPage * (currentPage - 1);
   });
 
   return (
@@ -97,15 +87,11 @@ export default function Page({ searchParams }: { searchParams: ISearchParams }) 
           className="gridLayout items-stretch h-full justify-between flex gap-0 *:border-l-[1px] *:border-black/20 *:flex-1"
         />
       </ProductsSortBarMobileWrapper>
-      <CategoriesMobile className="hidden m-and-t:block" />
+      <CategoriesMobile categoriesList={categoriesList} getCategory={currentCategory} className="hidden m-and-t:block" />
 
       <div className="gridLayout mx-auto scroll-smooth">
         <div className="row-12px">
-          <Sidebar
-            categoriesList={categoriesList}
-            getCategory={currentCategory}
-            className="self-start col-12px m-and-t:hidden"
-          />
+          <Sidebar categoriesList={categoriesList} getCategory={currentCategory} className="self-start col-12px m-and-t:hidden" />
           <div className="flex-1 col-12px">
             <div className="flex justify-between px-5 py-3 rounded items-center text-sm bg-secondaryBgColor m-and-t:hidden">
               <ProductsSortBar order={order} sortBy={currentSortBy} />

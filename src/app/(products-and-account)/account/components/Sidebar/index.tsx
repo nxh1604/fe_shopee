@@ -1,5 +1,6 @@
 "use client";
 import clsx from "clsx";
+import { subscribe } from "diagnostics_channel";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -32,7 +33,7 @@ const navigateData = [
 ];
 
 const SidebarAccount = ({ className }: { className?: string }) => {
-  const pathName = usePathname().split("/").at(-1);
+  const pathName = usePathname();
   return (
     <aside className={clsx("flex flex-col text-sm", className)}>
       <div className="flex py-4 items-center border-b-2 gap-3 border-b-slate-200/80">
@@ -53,12 +54,9 @@ const SidebarAccount = ({ className }: { className?: string }) => {
       <ul className="space-y-2 flex-1 mt-7">
         {navigateData.map((data) => {
           return (
-            <li key={data.name}>
+            <li className={clsx()} key={data.name}>
               <Link
-                className={clsx(
-                  pathName === data.href.split("/").at(-1) && data.href.split("/").at(-1) !== "profile" && "text-primary",
-                  "flex items-center gap-1 pb-2"
-                )}
+                className={clsx(pathName === data.href && data.subNavigate.length === 0 && "text-primary", "flex items-center gap-1 pb-2")}
                 key={data.name}
                 href={data.href}
               >
@@ -67,13 +65,22 @@ const SidebarAccount = ({ className }: { className?: string }) => {
                 {data.name}
               </Link>
               {data.subNavigate.length > 0 ? (
-                <ul className="pl-12 space-y-2">
-                  {data.subNavigate.map((subData) => (
-                    <li className={clsx(pathName === subData.href.split("/").at(-1) && "text-primary")} key={subData.name}>
-                      <Link href={subData.href}>{subData.name}</Link>
-                    </li>
-                  ))}
-                </ul>
+                <div className={clsx(data.subNavigate.length > 0 && "overflow-hidden")}>
+                  <ul
+                    className={clsx(
+                      "pl-12 space-y-2 transition-all duration-150 ease-linear h-full",
+                      data.subNavigate.map((item) => item.href).includes(pathName)
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 -translate-y-[100px] h-[0px]"
+                    )}
+                  >
+                    {data.subNavigate.map((subData) => (
+                      <li className={clsx(pathName === subData.href && "text-primary")} key={subData.name}>
+                        <Link href={subData.href}>{subData.name}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               ) : null}
             </li>
           );

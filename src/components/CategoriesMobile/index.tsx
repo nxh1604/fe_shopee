@@ -1,43 +1,36 @@
 "use client";
-import { ICategorySearchParams } from "@/app/(products-and-account)/products/page";
+import { ICategory } from "@/lib/definitions";
 import clsx from "clsx";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
-import { IoIosList, IoMdArrowDropright } from "react-icons/io";
 import { twMerge } from "tailwind-merge";
 
-const categories = [
-  {
-    id: 1,
-    name: "Sản phẩm",
-  },
-  {
-    id: 2,
-    name: "Konosuba",
-  },
-  {
-    id: 3,
-    name: "UnknowWorld",
-  },
-  {
-    id: 4,
-    name: "Hoa mi khong hot, no se chet",
-  },
-  {
-    id: 5,
-    name: "Hoa mi hot, no cung se chet",
-  },
-];
-
-const CategoriesMobile = ({ category, className = "" }: { className?: string } & ICategorySearchParams) => {
+const CategoriesMobile = ({
+  categoriesList,
+  getCategory,
+  className = "",
+}: {
+  className?: string;
+  categoriesList: ICategory[];
+  getCategory: ICategory["category"];
+}) => {
   const { push, prefetch } = useRouter();
   const pathName = usePathname();
   const searchParams = useSearchParams();
 
-  const handleCategories = (category: number) => {
+  const handleCategories = (category: ICategory["category"]) => {
     const newSearchParams = new URLSearchParams(searchParams);
-    if (category === 1) newSearchParams.delete("category");
-    else if (category) newSearchParams.set("category", `${category}`);
+
+    const page = newSearchParams.get("page");
+
+    if (category === "all") {
+      newSearchParams.delete("category");
+    } else {
+      newSearchParams.set("category", `${category}`);
+    }
+    if (page) {
+      newSearchParams.delete("page");
+    }
 
     push(`${pathName}?${newSearchParams.toString()}`);
   };
@@ -45,13 +38,15 @@ const CategoriesMobile = ({ category, className = "" }: { className?: string } &
   return (
     <aside className={twMerge("pt-5 pb-4", className)}>
       <ul className="flex overflow-x-auto gap-4 gridLayout mobile:mx-1 hide-scroll">
-        {categories.map((categoryItem, index) => {
+        {categoriesList.map((categoryItem, index) => {
           return (
             <li
-              onClick={() => handleCategories(categoryItem.id)}
               key={categoryItem.id}
+              onClick={() => handleCategories(categoryItem.category)}
               className={clsx(
                 "shrink-0 text-center text-white min-w-[108px] flex items-center justify-center max-w-[200px] break-all p-2 rounded-2xl",
+                categoryItem.category === "all" && "-order-1",
+                getCategory === categoryItem.category && "brightness-[.85]",
                 {
                   "bg-[#76C9BD]": index % 3 === 0,
                   "bg-[#88CF81]": index % 3 === 2,
@@ -59,7 +54,7 @@ const CategoriesMobile = ({ category, className = "" }: { className?: string } &
                 }
               )}
             >
-              {categoryItem.name}
+              {categoryItem.category}
             </li>
           );
         })}
