@@ -88,8 +88,9 @@ export default function Page({ searchParams }: { searchParams: ISearchParams }) 
         />
       </ProductsSortBarMobileWrapper>
       <CategoriesMobile categoriesList={categoriesList} getCategory={currentCategory} className="hidden m-and-t:block" />
+      <PaginationFooter className="hidden mobile:flex pb-4 pt-4" currentPage={currentPage} maxPage={maxPage} />
 
-      <div className="gridLayout mx-auto scroll-smooth">
+      <div className="gridLayout mx-auto">
         <div className="row-12px">
           <Sidebar categoriesList={categoriesList} getCategory={currentCategory} className="self-start col-12px m-and-t:hidden" />
           <div className="flex-1 col-12px">

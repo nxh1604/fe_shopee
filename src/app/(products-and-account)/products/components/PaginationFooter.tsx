@@ -6,8 +6,17 @@ import clsx from "clsx";
 // import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
+import { twMerge } from "tailwind-merge";
 
-export default function PaginationFooter({ currentPage, maxPage }: { currentPage: number; maxPage: number }): JSX.Element {
+export default function PaginationFooter({
+  className,
+  currentPage,
+  maxPage,
+}: {
+  className?: string;
+  currentPage: number;
+  maxPage: number;
+}): JSX.Element {
   const { push, prefetch } = useRouter();
   const pathName = usePathname();
   const searchParams = useSearchParams();
@@ -45,13 +54,16 @@ export default function PaginationFooter({ currentPage, maxPage }: { currentPage
   };
 
   return (
-    <nav className="pt-[40px] pb-[60px] flex justify-center items-center gap-8 mobile:gap-0 text-xl text-[#939393]">
+    <nav
+      className={twMerge(
+        "pt-[40px] pb-[60px] flex justify-center items-center gap-8 mobile:gap-0 text-xl text-[#939393]",
+        className
+      )}>
       <Button
         aria-disabled={previousNavigateCondition}
         className={clsx(previousNavigateCondition ? "pointer-events-none" : "")}
         variant="unset"
-        onClick={handlePreviousPage}
-      >
+        onClick={handlePreviousPage}>
         <MdOutlineKeyboardArrowLeft className="w-8 h-8" />
       </Button>
       {array.map((_, index) => (
@@ -59,8 +71,10 @@ export default function PaginationFooter({ currentPage, maxPage }: { currentPage
           variant="unset"
           onClick={() => handleToPage(index + 1)}
           key={index}
-          className={"w-[40px] h-[30px] text-center leading-[30px]" + ` ${currentPage === index + 1 ? "bg-primary text-white rounded-sm" : ""}`}
-        >
+          className={
+            "w-[40px] h-[30px] text-center leading-[30px]" +
+            ` ${currentPage === index + 1 ? "bg-primary text-white rounded-sm" : ""}`
+          }>
           {index + 1}
         </Button>
       ))}
@@ -68,8 +82,7 @@ export default function PaginationFooter({ currentPage, maxPage }: { currentPage
         aria-disabled={previousNavigateCondition}
         className={clsx(nextNavigateCondition ? "pointer-events-none" : "")}
         variant="unset"
-        onClick={handleNextPage}
-      >
+        onClick={handleNextPage}>
         <MdOutlineKeyboardArrowRight className="w-8 h-8" />
       </Button>
       {/* <Link
