@@ -21,15 +21,26 @@ export default function ProductImageSection({ product }: { product: IProduct }):
   const [transSlateX, setTranSlateX] = useState(0);
   const productPhotos = [product.photo, ...product.subPhotos];
 
-  const handleShowNextPhoto = () => {
+  const handleTranslateRight = () => {
     if (transSlateX < 100 * (productPhotos.length - 4)) {
       setTranSlateX((prev) => prev + 100);
     }
   };
 
-  const handleShowPreviousPhoto = () => {
+  const handleTranslateLeft = () => {
     if (transSlateX > 0) {
       setTranSlateX((prev) => prev - 100);
+    }
+  };
+
+  const handleShowNextPhoto = () => {
+    if (showingPhotoIndexed < productPhotos.length - 1) {
+      setShowingPhotoIndexed((prev) => prev + 1);
+    }
+  };
+  const handleShowPreviousPhoto = () => {
+    if (showingPhotoIndexed > 0) {
+      setShowingPhotoIndexed((prev) => prev - 1);
     }
   };
 
@@ -38,21 +49,22 @@ export default function ProductImageSection({ product }: { product: IProduct }):
   };
 
   return (
-    <section className="col-12px w-5/12">
+    <section className="lg:col-12px lg:w-[500px] w-full">
       <ImageModal title={product.title} productPhotos={productPhotos} />
       <h2 className="sr-only">Product Image Section</h2>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         onClick={handleOpen}
-        className="w-[500px] h-[500px] border-2 hover:cursor-pointer border-primary rounded-sm object-contain object-center"
+        className="w-[500px] h-[500px]  border-2 hover:cursor-pointer border-primary rounded-sm object-contain"
         width={400}
         height={400}
         src={showingPhotoIndexed === 0 ? product.photo : product.subPhotos[showingPhotoIndexed - 1]}
         alt=""
       />
-      <div className="relative mt-4">
+
+      <div className="relative mt-4 m-and-t:hidden">
         <button
-          onClick={handleShowPreviousPhoto}
+          onClick={handleTranslateLeft}
           aria-label="previous image"
           className="text-white absolute left-0 top-[50%] hover:bg-black/50 translate-y-[-50%] bg-black/5 py-2 z-10">
           <MdOutlineKeyboardArrowLeft className="w-6 h-6" />
@@ -84,13 +96,13 @@ export default function ProductImageSection({ product }: { product: IProduct }):
           </ul>
         </div>
         <button
-          onClick={handleShowNextPhoto}
+          onClick={handleTranslateRight}
           aria-label="next image"
           className="text-white absolute  hover:bg-black/50 right-0 top-[50%] translate-y-[-50%] bg-black/5 py-2 z-10">
           <MdOutlineKeyboardArrowRight className="w-6 h-6" />
         </button>
       </div>
-      <div className="flex *:flex-1 mt-6">
+      <div className="flex *:flex-1 mt-6 m-and-t:hidden">
         <div className="flex justify-center gap-1 items-center">
           <span>Chia sẻ:</span>
           <div className="flex *:w-6 *:h-6 gap-1">

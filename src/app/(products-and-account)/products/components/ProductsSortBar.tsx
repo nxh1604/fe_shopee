@@ -131,7 +131,7 @@ const ProductsSortBar = ({
 };
 
 const ProductsSortBarMobileWrapper = ({ children }: PropsWithChildren<{}>) => {
-  const { isScrollUp, isScrollDown } = useScrollDetectOnDocument(300);
+  const { isScrollUp, isScrollDown } = useScrollDetectOnDocument(100);
 
   return (
     <div
