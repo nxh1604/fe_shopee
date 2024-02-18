@@ -317,29 +317,26 @@ const Carousel = ({ width = 400, height = 200, disableAutoScroll = true, scrollD
   ]);
 
   return (
-    <div style={{ width: width + "px" }} className="relative overflow-hidden">
+    <div className="relative overflow-hidden w-full h-[400px]">
       <CarouselButton action={handlePrevious}>Previous</CarouselButton>
       <ul
         style={{
           transform: `translateX(-${carouselIndex * width}px)`,
+          transition: `transform 0.5s ease-in`,
         }}
         onMouseDown={handleMouseDown}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        className={twMerge("flex relative w-max")}>
+        className={twMerge("flex max-w-max h-[400px]")}>
         {carouselData.map((item) => {
           return (
             <li
-              style={{
-                width: width + "px",
-                height: height + "px",
-              }}
-              className="hover:cursor-grab active:cursor-grabbing"
+              className="hover:cursor-grab active:cursor-grabbing shrink-0 grow-0 w-full h-full"
               key={item.id}>
               <img
                 draggable={false}
-                className={twMerge("grow-0 shrink-0 w-full h-full object-cover object-top")}
+                className={twMerge("w-full h-auto object-contain object-top")}
                 src={item.image}
                 width={width}
                 height={height}
