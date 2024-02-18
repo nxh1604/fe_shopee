@@ -1,18 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
+import Carousel from "@/components/Carousel";
 import ImageModal from "@/components/Modal/ImageModal";
 import ImageContext from "@/context/ImageModalContext";
 import { IProduct } from "@/lib/definitions";
 import clsx from "clsx";
 import { useContext, useState } from "react";
-import {
-  FaFacebook,
-  FaFacebookMessenger,
-  FaHeart,
-  FaPinterest,
-  FaRegHeart,
-  FaTwitter,
-} from "react-icons/fa";
+import { FaFacebook, FaFacebookMessenger, FaHeart, FaPinterest, FaRegHeart, FaTwitter } from "react-icons/fa";
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
 
 export default function ProductImageSection({ product }: { product: IProduct }): JSX.Element {
@@ -33,17 +27,6 @@ export default function ProductImageSection({ product }: { product: IProduct }):
     }
   };
 
-  const handleShowNextPhoto = () => {
-    if (showingPhotoIndexed < productPhotos.length - 1) {
-      setShowingPhotoIndexed((prev) => prev + 1);
-    }
-  };
-  const handleShowPreviousPhoto = () => {
-    if (showingPhotoIndexed > 0) {
-      setShowingPhotoIndexed((prev) => prev - 1);
-    }
-  };
-
   const handleShowClickedPhoto = (indexed: number) => {
     setShowingPhotoIndexed(indexed);
   };
@@ -55,18 +38,29 @@ export default function ProductImageSection({ product }: { product: IProduct }):
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         onClick={handleOpen}
-        className="w-[500px] h-[500px]  border-2 hover:cursor-pointer border-primary rounded-sm object-contain"
+        className="w-[500px] h-[500px] m-and-t:hidden border-2 hover:cursor-pointer border-primary rounded-sm object-contain"
         width={400}
         height={400}
         src={showingPhotoIndexed === 0 ? product.photo : product.subPhotos[showingPhotoIndexed - 1]}
         alt=""
       />
-
+      <div className="flex justify-center tablet:h-[700px] mobile:h-auto">
+        <Carousel
+          transition={true}
+          transitionDelay={0.3}
+          className="hidden m-and-t:block tablet:w-[500px] mobile:w-auto"
+          width={"full"}
+          disableAutoSlide={true}
+          height={"auto"}
+          data={productPhotos}
+        />
+      </div>
       <div className="relative mt-4 m-and-t:hidden">
         <button
           onClick={handleTranslateLeft}
           aria-label="previous image"
-          className="text-white absolute left-0 top-[50%] hover:bg-black/50 translate-y-[-50%] bg-black/5 py-2 z-10">
+          className="text-white absolute left-0 top-[50%] hover:bg-black/50 translate-y-[-50%] bg-black/5 py-2 z-10"
+        >
           <MdOutlineKeyboardArrowLeft className="w-6 h-6" />
         </button>
         <div className="overflow-x-scroll hide-scroll">
@@ -74,22 +68,16 @@ export default function ProductImageSection({ product }: { product: IProduct }):
             style={{
               transform: `translateX(-${transSlateX}px)`,
             }}
-            className="flex min-w-max -mx-1">
+            className="flex min-w-max -mx-1"
+          >
             {productPhotos.map((photo, index) => (
-              <li
-                onMouseEnter={() => handleShowClickedPhoto(index)}
-                onClick={handleOpen}
-                key={index}
-                className={clsx("px-1")}>
+              <li onMouseEnter={() => handleShowClickedPhoto(index)} onClick={handleOpen} key={index} className={clsx("px-1")}>
                 <img
                   src={photo}
                   alt=""
                   width={150}
                   height={150}
-                  className={clsx(
-                    "w-[100px] object-contain hover:cursor-pointer",
-                    showingPhotoIndexed === index && "border-2 border-red-500"
-                  )}
+                  className={clsx("w-[100px] object-contain hover:cursor-pointer", showingPhotoIndexed === index && "border-2 border-red-500")}
                 />
               </li>
             ))}
@@ -98,7 +86,8 @@ export default function ProductImageSection({ product }: { product: IProduct }):
         <button
           onClick={handleTranslateRight}
           aria-label="next image"
-          className="text-white absolute  hover:bg-black/50 right-0 top-[50%] translate-y-[-50%] bg-black/5 py-2 z-10">
+          className="text-white absolute  hover:bg-black/50 right-0 top-[50%] translate-y-[-50%] bg-black/5 py-2 z-10"
+        >
           <MdOutlineKeyboardArrowRight className="w-6 h-6" />
         </button>
       </div>
