@@ -16,18 +16,18 @@ import notifyData from "@/lib/data/notifyData";
 const HeaderNavbar = ({ className }: { className?: string }): JSX.Element => {
   return (
     <nav className={twMerge("flex justify-between", className)}>
-      <ul className="justify-start flex items-center gap-3 min-w-fit ">
+      <ul className="justify-start flex items-center gap-2 xl:gap-3 min-w-fit ">
         <NavItem href={"#"}>Kênh người bán</NavItem>
 
         {!user && (
-          <NavItem className="border-l-2 pl-3 border-slate-300" href={"#"}>
+          <NavItem className="border-l-2 pl-2 xl:pl-3 border-slate-300" href={"#"}>
             Trở thành Người bán Shopee
           </NavItem>
         )}
 
         <DropdownWrapper>
           <DropdownControl>
-            <NavItem className="border-l-2 pl-3 border-slate-300" href={"#"}>
+            <NavItem className="border-l-2 pl-2 xl:pl-3 border-slate-300" href={"#"}>
               Tải ứng dụng
             </NavItem>
           </DropdownControl>
@@ -36,7 +36,7 @@ const HeaderNavbar = ({ className }: { className?: string }): JSX.Element => {
           </DropdownContent>
         </DropdownWrapper>
 
-        <div className="flex gap-2 border-l-2 pl-3 border-slate-300 items-center">
+        <div className="flex gap-2 border-l-2 pl-2 xl:pl-3 border-slate-300 items-center">
           <span className="mr-1">Kết nối</span>
           <NavItem href="#">
             <abbr title="facebook">
@@ -51,7 +51,7 @@ const HeaderNavbar = ({ className }: { className?: string }): JSX.Element => {
         </div>
       </ul>
 
-      <ul className="justify-end flex gap-3  min-w-fit">
+      <ul className="justify-end flex gap-2 xl:gap-3 min-w-fit">
         <DropdownWrapper>
           <DropdownControl>
             <NavItemWithIcon className="relative" href="#">
@@ -83,9 +83,9 @@ const HeaderNavbar = ({ className }: { className?: string }): JSX.Element => {
         </DropdownWrapper>
         {user && <User />}
         {!user && (
-          <div className="ml-3 gap-3 flex">
+          <div className="ml-1 xl:ml-3 gap-2 xl:gap-3 flex">
             <Signin />
-            <SignUp className="border-l-2 pl-3 border-slate-300" />
+            <SignUp className="border-l-2 pl-2  xl:pl-3 border-slate-300" />
           </div>
         )}
       </ul>

@@ -2,17 +2,33 @@
 "use client";
 
 import carouselData from "@/lib/data/carouselData";
-import {
-  MouseEventHandler,
-  PropsWithChildren,
-  SetStateAction,
-  TouchEventHandler,
-  useEffect,
-  useState,
-} from "react";
+import clsx from "clsx";
+import { MouseEventHandler, PropsWithChildren, SetStateAction, TouchEventHandler, useEffect, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
-const Carousel = ({ width = 400, height = 200, disableAutoScroll = true, scrollDelay = 3000 }) => {
+interface ICarouselProperties {
+  onClick?: () => void;
+  width?: number | "full" | "auto";
+  height?: number | "full" | "auto";
+  disableAutoSlide?: boolean;
+  transition?: boolean;
+  slideAutoDelay?: number;
+  transitionDelay?: number;
+  data?: typeof carouselData;
+  className?: string;
+}
+
+const Carousel = ({
+  onClick = () => {},
+  width = "full",
+  height = 400,
+  disableAutoSlide = false,
+  slideAutoDelay = 3000,
+  data = carouselData,
+  transition = true,
+  transitionDelay = 0.5,
+  className = "",
+}: ICarouselProperties) => {
   const [carouselIndex, setCarouselIndex] = useState<number>(0);
   const [onTouchStart, setOnTouchStart] = useState<boolean>(false);
   const [lastTouchMoveX, setLastTouchMoveX] = useState<number>(0);
@@ -20,28 +36,24 @@ const Carousel = ({ width = 400, height = 200, disableAutoScroll = true, scrollD
   const [lastMouseDownX, setLastMouseDownX] = useState(0);
   const [transformValue, setTransformValue] = useState(0);
   const [currentTarget, setCurrentTarget] = useState<HTMLElement | null>(null);
-  const [currentElementInfo, setCurrentElementInfo] = useState<{
-    width: number;
-    perItemWidth: number;
-  } | null>(null);
+  const [childElementWidth, setChildElementWidth] = useState<number>(typeof width === "number" ? width : 0);
+  const [wrapperWidth, setWrapperWidth] = useState<number | string>(width === "full" ? "100%" : typeof width === "number" ? width + "px" : width);
+  const divRef = useRef<HTMLDivElement | null>(null);
 
-  const handleMouseDown: MouseEventHandler<HTMLUListElement> = (e) => {
-    const width = e.currentTarget.getClientRects()[0].width;
-    const perItemWidth = width / carouselData.length;
-    setLastMouseDownX(e.clientX);
-    setOnMouseDown(true);
-    setCurrentTarget(e.currentTarget);
-    setTransformValue(
-      parseInt(window.getComputedStyle(e.currentTarget).transform.split(",")[4].trim())
-    );
-    setCurrentElementInfo({ width, perItemWidth });
-  };
+  const setWidth = width === "full" ? "100%" : typeof width === "number" ? width + "px" : width;
+  const setHeight = height === "full" ? "100%" : typeof height === "number" ? height + "px" : height;
+  const newTransitionDelay = transition ? transitionDelay : 0;
+
+  useEffect(() => {
+    setWrapperWidth(divRef.current ? divRef.current.offsetWidth : setWidth);
+    setChildElementWidth((prev) => (divRef.current ? divRef.current.offsetWidth : prev));
+  }, [setWidth, data]);
 
   // goto next carousel item
   const handleNext = () => {
-    if (carouselIndex < carouselData.length - 1) {
+    if (carouselIndex < data.length - 1) {
       setCarouselIndex(carouselIndex + 1);
-    } else {
+    } else if (!disableAutoSlide) {
       setCarouselIndex(0);
     }
   };
@@ -50,30 +62,39 @@ const Carousel = ({ width = 400, height = 200, disableAutoScroll = true, scrollD
   const handlePrevious = () => {
     if (carouselIndex > 0) {
       setCarouselIndex(carouselIndex - 1);
-    } else {
-      setCarouselIndex(carouselData.length - 1);
+    } else if (!disableAutoSlide) {
+      setCarouselIndex(data.length - 1);
     }
   };
 
+  const handleMouseDown: MouseEventHandler<HTMLUListElement> = (e) => {
+    const width = e.currentTarget.firstElementChild
+      ? e.currentTarget.firstElementChild.getClientRects()[0].width
+      : e.currentTarget.getClientRects()[0].width;
+    setLastMouseDownX(e.clientX);
+    setOnMouseDown(true);
+    setCurrentTarget(e.currentTarget);
+    setTransformValue(parseInt(window.getComputedStyle(e.currentTarget).transform.split(",")[4].trim()));
+    setChildElementWidth(width);
+  };
+
   const handleTouchStart: TouchEventHandler<HTMLUListElement> = (e) => {
-    const width = e.currentTarget.getClientRects()[0].width;
-    const perItemWidth = width / carouselData.length;
+    const width = e.currentTarget.firstElementChild
+      ? e.currentTarget.firstElementChild.getClientRects()[0].width
+      : e.currentTarget.getClientRects()[0].width;
     setLastMouseDownX(e.touches[0].clientX);
     setOnTouchStart(true);
     setCurrentTarget(e.currentTarget);
-    setTransformValue(
-      parseInt(window.getComputedStyle(e.currentTarget).transform.split(",")[4].trim())
-    );
-    setCurrentElementInfo({ width, perItemWidth });
+    setTransformValue(parseInt(window.getComputedStyle(e.currentTarget).transform.split(",")[4].trim()));
+    setChildElementWidth(width);
   };
+
   const handleTouchMove: TouchEventHandler<HTMLUListElement> = (e) => {
-    if (onTouchStart && currentTarget && currentElementInfo) {
-      const { width: elementWidth, perItemWidth } = currentElementInfo;
+    if (onTouchStart && currentTarget && childElementWidth) {
+      const perItemWidth = childElementWidth;
+      const parentWidth = childElementWidth * data.length;
       const diffX = e.touches[0].clientX - lastMouseDownX;
-      if (
-        transformValue + diffX < (perItemWidth * 2) / 3 &&
-        transformValue + diffX > -elementWidth + perItemWidth / 3
-      ) {
+      if (transformValue + diffX < (perItemWidth * 2) / 3 && transformValue + diffX > -parentWidth + perItemWidth / 3) {
         currentTarget.style.transform = `translateX(${transformValue + diffX}px)`;
         currentTarget.style.transition = `transform 0s ease-in`;
       }
@@ -83,32 +104,33 @@ const Carousel = ({ width = 400, height = 200, disableAutoScroll = true, scrollD
 
   const handleTouchEnd = () => {
     const diffX = lastTouchMoveX - lastMouseDownX;
+    if (diffX === 0) return;
     const absDiffX = Math.abs(diffX);
-    if (currentTarget && currentElementInfo) {
-      const { perItemWidth } = currentElementInfo;
-      if (absDiffX > width) {
-        const multiple = Math.floor(absDiffX / width);
-        const range = absDiffX - width * multiple;
+    if (currentTarget && childElementWidth && diffX) {
+      const perItemWidth = childElementWidth;
+      if (absDiffX > perItemWidth) {
+        const multiple = Math.floor(absDiffX / perItemWidth);
+        const range = absDiffX - perItemWidth * multiple;
         if (diffX > 0) {
           const condition = range / (perItemWidth / 3) >= 1;
           if (carouselIndex - multiple <= 0) {
             setCarouselIndex(0);
             currentTarget.style.transform = `translateX(0px)`;
-            currentTarget.style.transition = `transform 0.5s ease-in`;
+            currentTarget.style.transition = `transform ${newTransitionDelay}s ease-in`;
           } else if (condition) {
             if (carouselIndex - multiple - 1 <= 0) {
               setCarouselIndex(0);
               currentTarget.style.transform = `translateX(0px)`;
-              currentTarget.style.transition = `transform 0.5s ease-in`;
+              currentTarget.style.transition = `transform ${newTransitionDelay}s ease-in`;
             } else {
-              currentTarget.style.transition = `transform 0.5s ease-in`;
+              currentTarget.style.transition = `transform ${newTransitionDelay}s ease-in`;
               setCarouselIndex((prev) => {
                 prev -= multiple + 1;
                 return prev;
               });
             }
           } else {
-            currentTarget.style.transition = `transform 0.5s ease-in`;
+            currentTarget.style.transition = `transform ${newTransitionDelay}s ease-in`;
             setCarouselIndex((prev) => {
               prev -= multiple;
               return prev;
@@ -117,31 +139,25 @@ const Carousel = ({ width = 400, height = 200, disableAutoScroll = true, scrollD
         }
         if (diffX < 0) {
           const condition = range / (perItemWidth / 3) >= 1;
-          if (carouselIndex + multiple >= carouselData.length - 1) {
-            setCarouselIndex(carouselData.length - 1);
-            currentTarget.style.transform = `translateX(-${
-              perItemWidth * (carouselData.length - 1)
-            }px)`;
-            currentTarget.style.transition = `transform 0.5s ease-in`;
+          if (carouselIndex + multiple >= data.length - 1) {
+            setCarouselIndex(data.length - 1);
+            currentTarget.style.transform = `translateX(-${perItemWidth * (data.length - 1)}px)`;
+            currentTarget.style.transition = `transform ${newTransitionDelay}s ease-in`;
           } else if (condition) {
-            if (carouselIndex + multiple + 1 >= carouselData.length - 1) {
-              setCarouselIndex(carouselData.length - 1);
-              currentTarget.style.transform = `translateX(-${
-                perItemWidth * (carouselData.length - 1)
-              }px)`;
-              currentTarget.style.transition = `transform 0.5s ease-in`;
+            if (carouselIndex + multiple + 1 >= data.length - 1) {
+              setCarouselIndex(data.length - 1);
+              currentTarget.style.transform = `translateX(-${perItemWidth * (data.length - 1)}px)`;
+              currentTarget.style.transition = `transform ${newTransitionDelay}s ease-in`;
             } else {
-              currentTarget.style.transition = `transform 0.5s ease-in`;
+              currentTarget.style.transition = `transform ${newTransitionDelay}s ease-in`;
               setCarouselIndex((prev) => {
                 prev += multiple + 1;
                 return prev;
               });
             }
           } else {
-            currentTarget.style.transition = `transform 0.5s ease-in`;
+            currentTarget.style.transition = `transform ${newTransitionDelay}s ease-in`;
             setCarouselIndex((prev) => {
-              console.log("condition 3");
-
               prev += multiple;
               return prev;
             });
@@ -152,36 +168,36 @@ const Carousel = ({ width = 400, height = 200, disableAutoScroll = true, scrollD
           const condition = diffX / (perItemWidth / 3) >= 1;
           if (condition && carouselIndex !== 0) {
             setCarouselIndex((prev) => --prev);
-            currentTarget.style.transition = `transform 0.5s ease-in`;
+            currentTarget.style.transition = `transform ${newTransitionDelay}s ease-in`;
           } else {
             currentTarget.style.transform = `translateX(-${perItemWidth * carouselIndex}px)`;
-            currentTarget.style.transition = `transform 0.5s ease-in`;
+            currentTarget.style.transition = `transform ${newTransitionDelay}s ease-in`;
           }
         }
         if (diffX < 0) {
           const condition = Math.abs(diffX) / (perItemWidth / 3) >= 1;
-          if (condition && carouselIndex !== carouselData.length - 1) {
-            currentTarget.style.transition = `transform 0.5s ease-in`;
+          if (condition && carouselIndex !== data.length - 1) {
+            currentTarget.style.transition = `transform ${newTransitionDelay}s ease-in`;
             setCarouselIndex((prev) => ++prev);
           } else {
             currentTarget.style.transform = `translateX(-${perItemWidth * carouselIndex}px)`;
-            currentTarget.style.transition = `transform 0.5s ease-in`;
+            currentTarget.style.transition = `transform ${newTransitionDelay}s ease-in`;
           }
         }
       }
-      setCurrentElementInfo(null);
-      setCurrentTarget(null);
     }
-    setOnMouseDown(false);
+    setCurrentTarget(null);
+    setOnTouchStart(false);
   };
+
   // set period time to goto next carousel item
   useEffect(() => {
-    if (disableAutoScroll) return;
+    if (disableAutoSlide) return;
     let interval: ReturnType<typeof setInterval> | null = null;
     if (!onMouseDown) {
       interval = setInterval(() => {
         handleNext();
-      }, scrollDelay);
+      }, slideAutoDelay);
     }
     return () => {
       interval && clearInterval(interval);
@@ -191,13 +207,11 @@ const Carousel = ({ width = 400, height = 200, disableAutoScroll = true, scrollD
   // add global event listener when grab carousel item
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
-      if (onMouseDown && currentTarget && currentElementInfo) {
-        const { width: elementWidth, perItemWidth } = currentElementInfo;
+      if (onMouseDown && currentTarget && childElementWidth) {
+        const perItemWidth = childElementWidth;
+        const parentWidth = childElementWidth * data.length;
         const diffX = e.clientX - lastMouseDownX;
-        if (
-          transformValue + diffX < (perItemWidth * 2) / 3 &&
-          transformValue + diffX > -elementWidth + perItemWidth / 3
-        ) {
+        if (transformValue + diffX < (perItemWidth * 2) / 3 && transformValue + diffX > -parentWidth + perItemWidth / 3) {
           currentTarget.style.transform = `translateX(${transformValue + diffX}px)`;
           currentTarget.style.transition = `transform 0s ease-in`;
         }
@@ -206,32 +220,35 @@ const Carousel = ({ width = 400, height = 200, disableAutoScroll = true, scrollD
 
     const handleMouseUp = (e: MouseEvent) => {
       const diffX = e.clientX - lastMouseDownX;
+      if (diffX === 0) return;
+      console.log({ diffX }, "2");
+
       const absDiffX = Math.abs(diffX);
-      if (currentTarget && currentElementInfo) {
-        const { perItemWidth } = currentElementInfo;
-        if (absDiffX > width) {
-          const multiple = Math.floor(absDiffX / width);
-          const range = absDiffX - width * multiple;
+      if (currentTarget && childElementWidth) {
+        const perItemWidth = childElementWidth;
+        if (absDiffX > perItemWidth) {
+          const multiple = Math.floor(absDiffX / perItemWidth);
+          const range = absDiffX - perItemWidth * multiple;
           if (diffX > 0) {
             const condition = range / (perItemWidth / 3) >= 1;
             if (carouselIndex - multiple <= 0) {
               setCarouselIndex(0);
               currentTarget.style.transform = `translateX(0px)`;
-              currentTarget.style.transition = `transform 0.5s ease-in`;
+              currentTarget.style.transition = `transform ${newTransitionDelay}s ease-in`;
             } else if (condition) {
               if (carouselIndex - multiple - 1 <= 0) {
                 setCarouselIndex(0);
                 currentTarget.style.transform = `translateX(0px)`;
-                currentTarget.style.transition = `transform 0.5s ease-in`;
+                currentTarget.style.transition = `transform ${newTransitionDelay}s ease-in`;
               } else {
-                currentTarget.style.transition = `transform 0.5s ease-in`;
+                currentTarget.style.transition = `transform ${newTransitionDelay}s ease-in`;
                 setCarouselIndex((prev) => {
                   prev -= multiple + 1;
                   return prev;
                 });
               }
             } else {
-              currentTarget.style.transition = `transform 0.5s ease-in`;
+              currentTarget.style.transition = `transform ${newTransitionDelay}s ease-in`;
               setCarouselIndex((prev) => {
                 prev -= multiple;
                 return prev;
@@ -240,31 +257,26 @@ const Carousel = ({ width = 400, height = 200, disableAutoScroll = true, scrollD
           }
           if (diffX < 0) {
             const condition = range / (perItemWidth / 3) >= 1;
-            if (carouselIndex + multiple >= carouselData.length - 1) {
-              setCarouselIndex(carouselData.length - 1);
-              currentTarget.style.transform = `translateX(-${
-                perItemWidth * (carouselData.length - 1)
-              }px)`;
-              currentTarget.style.transition = `transform 0.5s ease-in`;
+            if (carouselIndex + multiple >= data.length - 1) {
+              setCarouselIndex(data.length - 1);
+              currentTarget.style.transform = `translateX(-${perItemWidth * (data.length - 1)}px)`;
+              currentTarget.style.transition = `transform ${newTransitionDelay}s ease-in`;
             } else if (condition) {
-              if (carouselIndex + multiple + 1 >= carouselData.length - 1) {
-                setCarouselIndex(carouselData.length - 1);
-                currentTarget.style.transform = `translateX(-${
-                  perItemWidth * (carouselData.length - 1)
-                }px)`;
-                currentTarget.style.transition = `transform 0.5s ease-in`;
+              if (carouselIndex + multiple + 1 >= data.length - 1) {
+                setCarouselIndex(data.length - 1);
+
+                currentTarget.style.transform = `translateX(-${perItemWidth * (data.length - 1)}px)`;
+                currentTarget.style.transition = `transform ${newTransitionDelay}s ease-in`;
               } else {
-                currentTarget.style.transition = `transform 0.5s ease-in`;
+                currentTarget.style.transition = `transform ${newTransitionDelay}s ease-in`;
                 setCarouselIndex((prev) => {
                   prev += multiple + 1;
                   return prev;
                 });
               }
             } else {
-              currentTarget.style.transition = `transform 0.5s ease-in`;
+              currentTarget.style.transition = `transform ${newTransitionDelay}s ease-in`;
               setCarouselIndex((prev) => {
-                console.log("condition 3");
-
                 prev += multiple;
                 return prev;
               });
@@ -275,26 +287,25 @@ const Carousel = ({ width = 400, height = 200, disableAutoScroll = true, scrollD
             const condition = diffX / (perItemWidth / 3) >= 1;
             if (condition && carouselIndex !== 0) {
               setCarouselIndex((prev) => --prev);
-              currentTarget.style.transition = `transform 0.5s ease-in`;
+              currentTarget.style.transition = `transform ${newTransitionDelay}s ease-in`;
             } else {
               currentTarget.style.transform = `translateX(-${perItemWidth * carouselIndex}px)`;
-              currentTarget.style.transition = `transform 0.5s ease-in`;
+              currentTarget.style.transition = `transform ${newTransitionDelay}s ease-in`;
             }
           }
           if (diffX < 0) {
             const condition = Math.abs(diffX) / (perItemWidth / 3) >= 1;
-            if (condition && carouselIndex !== carouselData.length - 1) {
+            if (condition && carouselIndex !== data.length - 1) {
               setCarouselIndex((prev) => ++prev);
-              currentTarget.style.transition = `transform 0.5s ease-in`;
+              currentTarget.style.transition = `transform ${newTransitionDelay}s ease-in`;
             } else {
               currentTarget.style.transform = `translateX(-${perItemWidth * carouselIndex}px)`;
-              currentTarget.style.transition = `transform 0.5s ease-in`;
+              currentTarget.style.transition = `transform ${newTransitionDelay}s ease-in`;
             }
           }
         }
-        setCurrentElementInfo(null);
-        setCurrentTarget(null);
       }
+      setCurrentTarget(null);
       setOnMouseDown(false);
     };
     if (onMouseDown) {
@@ -306,41 +317,41 @@ const Carousel = ({ width = 400, height = 200, disableAutoScroll = true, scrollD
       document.removeEventListener("mousemove", handleMouseMove);
       document.removeEventListener("mouseup", handleMouseUp);
     };
-  }, [
-    width,
-    onMouseDown,
-    carouselIndex,
-    currentTarget,
-    lastMouseDownX,
-    transformValue,
-    currentElementInfo,
-  ]);
+  }, [onMouseDown, carouselIndex, currentTarget, lastMouseDownX, transformValue, childElementWidth, data, newTransitionDelay]);
 
   return (
-    <div style={{ width: width + "px" }} className="relative overflow-hidden">
-      <CarouselButton action={handlePrevious}>Previous</CarouselButton>
+    <div onClick={onClick} ref={divRef} className={clsx("relative overflow-hidden w-full ", className)}>
+      <CarouselButton className="mobile:hidden" action={handlePrevious}>
+        Previous
+      </CarouselButton>
       <ul
         style={{
-          transform: `translateX(-${carouselIndex * width}px)`,
+          transform: `translateX(-${carouselIndex * childElementWidth}px)`,
+          transition: transition ? `transform ${newTransitionDelay}s ease-in` : "",
         }}
         onMouseDown={handleMouseDown}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        className={twMerge("flex relative w-max")}>
-        {carouselData.map((item) => {
+        className={twMerge("flex max-w-max h-full")}
+      >
+        {data.map((item, index) => {
           return (
             <li
               style={{
-                width: width + "px",
-                height: height + "px",
+                width: wrapperWidth,
+                height: setHeight,
               }}
-              className="hover:cursor-grab active:cursor-grabbing"
-              key={item.id}>
+              className="hover:cursor-grab active:cursor-grabbing shrink-0 h-full"
+              key={index}
+            >
               <img
                 draggable={false}
-                className={twMerge("grow-0 shrink-0 w-full h-full object-cover object-top")}
-                src={item.image}
+                className={twMerge("w-full h-full object-contain object-center")}
+                onError={(e) => {
+                  e.currentTarget.src = "/img/ecat-fallback/png";
+                }}
+                src={item}
                 width={width}
                 height={height}
                 alt="carousel"
@@ -349,15 +360,11 @@ const Carousel = ({ width = 400, height = 200, disableAutoScroll = true, scrollD
           );
         })}
       </ul>
-      <CarouselButton type="next" action={handleNext}>
+      <CarouselButton className="mobile:hidden" type="next" action={handleNext}>
         Next
       </CarouselButton>
 
-      <CarouselFooterPaginate
-        carouselData={carouselData}
-        carouselIndex={carouselIndex}
-        setCarouselIndex={setCarouselIndex}
-      />
+      <CarouselFooterPaginate data={data} carouselIndex={carouselIndex} setCarouselIndex={setCarouselIndex} />
     </div>
   );
 };
@@ -375,31 +382,30 @@ const CarouselButton = ({
         "absolute top-[50%] translate-y-[-50%] text-gray-height bg-black/20 px-1 py-3 hover:bg-black/50 z-[1]",
         ` ${type === "previous" ? "left-0" : "right-0"}`,
         className
-      )}>
+      )}
+    >
       {children}
     </button>
   );
 };
 
 const CarouselFooterPaginate = ({
-  carouselData,
+  data,
   carouselIndex,
   setCarouselIndex,
 }: {
   carouselIndex: number;
   setCarouselIndex: React.Dispatch<SetStateAction<number>>;
-  carouselData: any[];
+  data: any[];
 }) => {
   return (
-    <div className="absolute bottom-0 right-[50%] space-x-2 translate-x-[50%] z-[1]">
-      {carouselData.map((item) => {
+    <div className="absolute bottom-0 right-[50%] translate-x-[50%] z-[1] flex flex-nowrap gap-2">
+      {data.map((_, index) => {
         return (
           <button
-            onClick={() => setCarouselIndex(item.id - 1)}
-            key={item.id}
-            className={`w-3 h-3 rounded-full ${
-              carouselIndex === item.id - 1 ? "bg-primary" : "bg-black/20"
-            }`}
+            onClick={() => setCarouselIndex(index)}
+            key={index}
+            className={`w-3 h-3 rounded-full ${carouselIndex === index ? "bg-primary" : "bg-black/20"}`}
           />
         );
       })}
