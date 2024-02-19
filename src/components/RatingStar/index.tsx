@@ -24,21 +24,11 @@ const RatingStar = ({
   return (
     <div
       style={{ gap: `${starGap}px` }}
-      className={clsx(
-        "flex items-center",
-        `${color === "primary" ? "text-primary" : "text-yellow-500"}`,
-        className
-      )}>
+      className={clsx("flex items-center text-start", `${color === "primary" ? "text-primary" : "text-yellow-500"}`, className)}
+    >
       {numberOfStars.map((_, index) => {
         const ratingOneStar = ratingStar > index + 1 ? 1 : ratingStar - index;
-        return (
-          <RatingOneStar
-            disableMouseMove={disableMouseMove}
-            ratingOneStar={ratingOneStar}
-            starSize={starSize}
-            key={index}
-          />
-        );
+        return <RatingOneStar disableMouseMove={disableMouseMove} ratingOneStar={ratingOneStar} starSize={starSize} key={index} />;
       })}
     </div>
   );
@@ -98,11 +88,9 @@ const RatingOneStar = ({
               : ratingOneStarRound) * 100
           }%`,
         }}
-        className="h-full absolute top-0 overflow-hidden">
-        <IoStarSharp
-          style={{ width: `${starSize}px`, height: `${starSize}px` }}
-          className="absolute top-0"
-        />
+        className="h-full absolute top-0 overflow-hidden"
+      >
+        <IoStarSharp style={{ width: `${starSize}px`, height: `${starSize}px` }} className="absolute top-0" />
       </span>
     </span>
   );
