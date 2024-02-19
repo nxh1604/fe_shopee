@@ -68,9 +68,9 @@ const SidebarAccount = ({ className }: { className?: string }) => {
                 <div className={clsx(data.subNavigate.length > 0 && "overflow-hidden")}>
                   <ul
                     className={clsx(
-                      "pl-12 space-y-2 transition-all duration-150 ease-linear h-full",
+                      "pl-12 space-y-2 transition-all duration-150 ease-linear",
                       data.subNavigate.map((item) => item.href).includes(pathName)
-                        ? "opacity-100 translate-y-0"
+                        ? "opacity-100 translate-y-0 h-full"
                         : "opacity-0 -translate-y-[100px] h-[0px]"
                     )}
                   >
