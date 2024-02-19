@@ -14,7 +14,7 @@ const Page = ({ params }: { params: { id: string } }) => {
   return (
     <div className="m-and-t:[margin-top:calc(var(--header-mobile-height))] w-full overflow-hidden flex-1 bg-primaryBgColor ">
       <main id="products-page" className="py-8 m-and-t:p-0 h-full w-full">
-        <div className="lg:gridLayout pb-2 m-and-t:pt-2 mobile:hidden lg:relative lg:-left-10 tablet:ml-10 ">
+        <div className="lg:gridLayout pb-2 m-and-t:pt-2 mobile:hidden lg:relative xl:-left-10 tablet:ml-10 lg:left-0 ">
           <BreadCrums productTitle={product.title} />
         </div>
         <div className="gridLayout bg-white lg:p-4">

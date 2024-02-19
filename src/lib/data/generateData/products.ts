@@ -44,6 +44,7 @@ for (let i = 0; i < 100; i++) {
   for (let j = 0; j < faker.number.int({ min: 4, max: 10 }); j++) {
     subPhotos.push(subPickPhotos[faker.number.int({ min: 0, max: 4 })]);
   }
+  const soldPerMonth = faker.number.int({ min: 100, max: 1000 });
 
   productsData.push({
     id: i.toString(),
@@ -54,10 +55,12 @@ for (let i = 0; i < 100; i++) {
     rating: faker.number.float({ min: 1, max: 5, fractionDigits: 1 }),
     discount: faker.number.int({ min: 0, max: 100 }),
     price: Math.round(faker.number.int({ min: 1000, max: 50000000 }) / 1000) * 1000,
-    totalSold: faker.number.int({ min: 0, max: 5000 }),
-    soldPerMonth: faker.number.int({ min: 0, max: 500 }),
+    totalSold: faker.number.int({ min: soldPerMonth, max: 5000 }),
+    soldPerMonth: soldPerMonth,
+    limit: faker.number.int({ min: 1000, max: 20000 }),
     shop: faker.location.state(),
     location: faker.location.city(),
+    liked: faker.datatype.boolean(),
     createdAt: faker.date.recent({ days: 30 }),
   });
 }

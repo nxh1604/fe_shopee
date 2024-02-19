@@ -7,7 +7,7 @@ import { SortbarPagination } from "./components/Pagination";
 import CategoriesMobile from "@/components/CategoriesMobile";
 import { ICategory } from "@/lib/definitions";
 
-const ItemPerPage = 20;
+const ItemPerPage = 10;
 
 export interface IPageSearchParams {
   page: number | string;

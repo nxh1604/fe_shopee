@@ -3,11 +3,14 @@ import { DropdownBox, DropdownBoxHeader } from "@/components/Header/Dropdown/UI"
 import Button from "@/components/Button";
 import { TriangleUp } from "@/components/Triangle";
 import user from "@/lib/data/userData";
-import { IProduct } from "@/lib/definitions";
+import { ICartItem } from "@/lib/definitions";
 import Currency from "@/components/Currency";
 import { useRouter } from "next/navigation";
+import { useContext } from "react";
+import CartContext from "@/context/CartContext";
+import Link from "next/link";
 
-const DropdownCartContent = ({ cart }: { cart: IProduct[] | null }) => {
+const DropdownCartContent = ({ cart }: { cart: ICartItem[] | null }) => {
   return (
     <DropdownBox isTriangle className="origin-[calc(100%-16px)_top]">
       <TriangleUp className="right-[16px]" />
@@ -22,11 +25,10 @@ const DropdownCartContent = ({ cart }: { cart: IProduct[] | null }) => {
   );
 };
 
-const CartContent = ({ cartItems }: { cartItems: IProduct[] }) => {
+const CartContent = ({ cartItems }: { cartItems: ICartItem[] }) => {
   const router = useRouter();
   const newCartItems = cartItems.length > 5 ? cartItems.slice(0, 5) : cartItems;
   const remainCartItems = -newCartItems.length + cartItems.length;
-
   return (
     <>
       <DropdownBoxHeader title="Sản phẩm mới thêm" />
@@ -45,20 +47,29 @@ const CartContent = ({ cartItems }: { cartItems: IProduct[] }) => {
   );
 };
 
-const CartItem = ({ item }: { item: IProduct }) => {
+const CartItem = ({ item }: { item: ICartItem }) => {
+  const { DeleteOneProduct } = useContext(CartContext);
   return (
     <li className="flex justify-between hover:bg-slate-300 py-3 px-2">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img width={40} height={40} src={item.photo} className="object-contain w-[50px] h-[50px]" alt="" />
-      <div className="flex-1 px-2 flex flex-col gap-2">
-        <p className={`${item.liked ? "line-clamp-1" : "line-clamp-2"}`}>{item.title}</p>
-        {item.liked && <p className="text-red-500 border-[1px] rounded-xl border-red-500 text-xs mr-1 w-fit tracking-tighter px-1">{item.liked}</p>}
-      </div>
+      <Link className="flex flex-1" href={"/cart"}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img width={40} height={40} src={item.photo} className="object-contain w-[50px] h-[50px]" alt="" />
+        <div className="flex-1 px-2 flex flex-col gap-2">
+          <p className={`${item.liked ? "line-clamp-1" : "line-clamp-2"}`}>{item.title}</p>
+          {item.liked && (
+            <p className="text-red-500 border-[1px] rounded-xl border-red-500 text-xs mr-1 w-fit tracking-tighter px-1">
+              yêu thích
+            </p>
+          )}
+        </div>
+      </Link>
       <div className="flex flex-col gap-2 items-end ">
         <span className="text-red-500 text-xs self-center flex gap-1">
-          {<Currency price={item.price} />} <span className="text-textColor text-xs">x 2</span>
+          {<Currency price={item.price} />} <span className="text-textColor text-xs">x {item.quantities}</span>
         </span>
-        <Button className="text-xs py-0 px-2">Xóa</Button>
+        <Button onClick={() => DeleteOneProduct(item.id)} className="text-xs py-0 px-2">
+          Xóa
+        </Button>
       </div>
     </li>
   );

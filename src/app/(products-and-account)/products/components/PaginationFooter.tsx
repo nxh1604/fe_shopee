@@ -1,6 +1,7 @@
 "use client";
 
 import Button from "@/components/Button";
+import { caculatePagination } from "@/lib/utilies";
 import clsx from "clsx";
 // import clsx from "clsx";
 // import Link from "next/link";
@@ -20,8 +21,6 @@ export default function PaginationFooter({
   const { push, prefetch } = useRouter();
   const pathName = usePathname();
   const searchParams = useSearchParams();
-  const array = new Array(maxPage).fill(0);
-
   const previousNavigateCondition = currentPage <= 1;
   const previousNavigate = currentPage - 1;
 
@@ -66,16 +65,19 @@ export default function PaginationFooter({
         onClick={handlePreviousPage}>
         <MdOutlineKeyboardArrowLeft className="w-8 h-8" />
       </Button>
-      {array.map((_, index) => (
+      {caculatePagination(maxPage, currentPage).map((page, index) => (
         <Button
           variant="unset"
-          onClick={() => handleToPage(index + 1)}
+          onClick={() => {
+            if (typeof page === "number") handleToPage(page);
+          }}
+          disabled={page === "..."}
           key={index}
           className={
-            "w-[40px] h-[30px] text-center leading-[30px]" +
-            ` ${currentPage === index + 1 ? "bg-primary text-white rounded-sm" : ""}`
+            "w-[40px] h-[30px] text-center leading-[30px] disabled:cursor-default" +
+            ` ${currentPage === page ? "bg-primary text-white rounded-sm" : ""}`
           }>
-          {index + 1}
+          {page}
         </Button>
       ))}
       <Button

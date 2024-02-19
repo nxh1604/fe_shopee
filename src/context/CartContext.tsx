@@ -1,5 +1,5 @@
 "use client";
-import { IProduct } from "@/lib/definitions";
+import { ICartItem, IProduct } from "@/lib/definitions";
 import { createContext, useEffect, useState } from "react";
 
 interface ICartContext {
@@ -22,7 +22,7 @@ const CartContext = createContext<ICartContext>({
 
 const CartContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [isMounted, setIsMounted] = useState(false);
-  const [cart, setCart] = useState<Array<IProduct & { quantities: number }> | null>(null);
+  const [cart, setCart] = useState<Array<ICartItem> | null>(null);
 
   useEffect(() => {
     if (!isMounted) {
@@ -42,22 +42,32 @@ const CartContextProvider = ({ children }: { children: React.ReactNode }) => {
       return;
     }
 
-    const existingProduct = cart.find((item) => item.id === product.id);
+    const existingProduct = cart.findIndex((item) => item.id === product.id);
 
-    if (existingProduct) {
-      const newCart = cart.map((item) => (item.id === product.id ? Object.assign(item, { quantities: item.quantities + newQuantities }) : item));
-      setCart(newCart);
-      window.localStorage.setItem("cart", JSON.stringify(newCart));
+    if (existingProduct > -1) {
+      const cartItem = cart[existingProduct];
+      if (cartItem.quantities >= cartItem.limit) {
+        throw new Error("Đã đạt tới giới hạn của số sản phẩm hiện có");
+      }
+      cart[existingProduct].quantities =
+        cartItem.quantities + newQuantities > cartItem.limit ? cartItem.limit : cartItem.quantities + newQuantities;
+      setCart(cart);
+      window.localStorage.setItem("cart", JSON.stringify(cart));
     } else {
       setCart([...cart, Object.assign(product, { quantities: newQuantities })]);
-      window.localStorage.setItem("cart", JSON.stringify([...cart, Object.assign(product, { quantities: newQuantities })]));
+      window.localStorage.setItem(
+        "cart",
+        JSON.stringify([...cart, Object.assign(product, { quantities: newQuantities })])
+      );
     }
   };
 
   const updateProductInCart = (productId: IProduct["id"], quantities: number) => {
     const newQuantities = quantities < 1 ? 1 : quantities;
     if (!cart) return;
-    const newCart = cart.map((item) => (item.id === productId ? Object.assign(item, { quantities: newQuantities }) : item));
+    const newCart = cart.map((item) =>
+      item.id === productId ? Object.assign(item, { quantities: newQuantities }) : item
+    );
     setCart(newCart);
     window.localStorage.setItem("cart", JSON.stringify(newCart));
   };
@@ -90,8 +100,7 @@ const CartContextProvider = ({ children }: { children: React.ReactNode }) => {
         DeleteOneProduct,
         DeleteMultiProduct,
         updateProductInCart,
-      }}
-    >
+      }}>
       {children}
     </CartContext.Provider>
   );

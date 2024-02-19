@@ -19,6 +19,7 @@ const CardProduct = ({
   location,
   rating,
   totalSold,
+  liked,
   soldPerMonth,
   sortBy,
 }: IProduct & { sortBy: "pop" | "ctime" | "sales" | "price" }) => {
@@ -26,8 +27,7 @@ const CardProduct = ({
 
   const priceDiscount = calculatePriceDiscount(price, discount);
 
-  const totalSoldCalculated =
-    totalSold > 1000 ? roundDigitToThousand(totalSold) / 1000 + "k" : totalSold;
+  const totalSoldCalculated = totalSold > 1000 ? roundDigitToThousand(totalSold) / 1000 + "k" : totalSold;
 
   return (
     <li className="pt-[10px] col-5px w-1/5 t-and-pc:w-1/4 tablet:w-1/3 mobile:w-1/2 small-mobile:w-full">
@@ -53,8 +53,10 @@ const CardProduct = ({
             height={200}
           />
           <div className="absolute flex top-2 -left-1 px-1 rounded-r text-xs bg-primary">
-            <span className="text-white">Yêu thích</span>
-            <div className="border-l-[4px] border-t-[6px] absolute border-t-primary brightness-[0.6] border-l-transparent left-0 bottom-[-6px]"></div>
+            {liked && <span className="text-white">Yêu thích</span>}
+            {liked && (
+              <div className="border-l-[4px] border-t-[6px] absolute border-t-primary brightness-[0.6] border-l-transparent left-0 bottom-[-6px]"></div>
+            )}
           </div>
         </div>
         <div className="p-2 flex-1 flex flex-col">
@@ -81,22 +83,13 @@ const CardProduct = ({
 
             {/* star rating */}
 
-            <RatingStar
-              className="ml-auto relative -top-[1px]"
-              starSize={10}
-              starGap={1}
-              ratingStar={rating}
-            />
+            <RatingStar className="ml-auto relative -top-[1px]" starSize={10} starGap={1} ratingStar={rating} />
 
-            {sortBy !== "sales" && totalSold ? (
-              <span className="ml-1">Đã bán {totalSoldCalculated}</span>
-            ) : null}
+            {sortBy !== "sales" && totalSold ? <span className="ml-1">Đã bán {totalSoldCalculated}</span> : null}
           </div>
 
           {sortBy === "sales" &&
-            (soldPerMonth ? (
-              <div className="text-end pb-2">Đã bán {soldPerMonth} / tháng</div>
-            ) : null)}
+            (soldPerMonth ? <div className="text-end pb-2">Đã bán {soldPerMonth} / tháng</div> : null)}
 
           <div className="mt-auto items-center flex-1 gap-1 flex-wrap-reverse flex justify-between text-textColor">
             <span>{shop}</span>

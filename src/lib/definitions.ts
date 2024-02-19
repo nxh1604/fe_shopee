@@ -20,9 +20,14 @@ export interface IProduct {
   price: number;
   rating: number;
   totalSold: number;
+  limit: number;
   soldPerMonth: number;
   shop: string;
   liked: boolean;
   location: string;
   createdAt: Date;
+}
+
+export interface ICartItem extends IProduct {
+  quantities: number;
 }
