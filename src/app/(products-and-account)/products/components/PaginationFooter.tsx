@@ -13,10 +13,12 @@ export default function PaginationFooter({
   className,
   currentPage,
   maxPage,
+  scrollToElementId = "",
 }: {
   className?: string;
   currentPage: number;
   maxPage: number;
+  scrollToElementId?: string;
 }): JSX.Element {
   const { push, prefetch } = useRouter();
   const pathName = usePathname();
@@ -28,7 +30,7 @@ export default function PaginationFooter({
   const nextNavigate = currentPage + 1;
 
   const handleToPage = (toPage: number) => {
-    document.getElementById("products-page")?.scrollIntoView({ behavior: "smooth" });
+    document.getElementById(scrollToElementId)?.scrollIntoView({ behavior: "smooth" });
     const params = new URLSearchParams(searchParams);
     params.set("page", `${toPage}`);
     push(`${pathName}?${params.toString()}`, { scroll: false });
@@ -36,7 +38,7 @@ export default function PaginationFooter({
 
   const handleNextPage = () => {
     if (!nextNavigateCondition) {
-      document.getElementById("products-page")?.scrollIntoView({ behavior: "smooth" });
+      document.getElementById(scrollToElementId)?.scrollIntoView({ behavior: "smooth" });
       const params = new URLSearchParams(searchParams);
       params.set("page", `${nextNavigate}`);
       push(`${pathName}?${params.toString()}`, { scroll: false });
@@ -45,7 +47,7 @@ export default function PaginationFooter({
 
   const handlePreviousPage = () => {
     if (!previousNavigateCondition) {
-      document.getElementById("products-page")?.scrollIntoView({ behavior: "smooth" });
+      document.getElementById(scrollToElementId)?.scrollIntoView({ behavior: "smooth" });
       const params = new URLSearchParams(searchParams);
       params.set("page", `${previousNavigate}`);
       push(`${pathName}?${params.toString()}`, { scroll: false });

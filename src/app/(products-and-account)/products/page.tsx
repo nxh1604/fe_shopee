@@ -28,9 +28,7 @@ export default function Page({ searchParams }: { searchParams: ISearchParams }) 
 
   // filteredData
   const currentCategory =
-    !category || !categoriesList.filter((categoryItem) => categoryItem.category === category).length
-      ? "all"
-      : category;
+    !category || !categoriesList.filter((categoryItem) => categoryItem.category === category).length ? "all" : category;
 
   const filteredData = productsData.filter((product) => {
     if (currentCategory === "all") return true;
@@ -48,13 +46,11 @@ export default function Page({ searchParams }: { searchParams: ISearchParams }) 
       {
         if (order === "asc") {
           filteredData.sort(
-            (a, b) =>
-              a.price - (a.price * a.discount) / 100 - (b.price - (b.price * b.discount) / 100)
+            (a, b) => a.price - (a.price * a.discount) / 100 - (b.price - (b.price * b.discount) / 100)
           );
         } else {
           filteredData.sort(
-            (a, b) =>
-              -(a.price - (a.price * a.discount) / 100) + (b.price - (b.price * b.discount) / 100)
+            (a, b) => -(a.price - (a.price * a.discount) / 100) + (b.price - (b.price * b.discount) / 100)
           );
         }
       }
@@ -84,8 +80,7 @@ export default function Page({ searchParams }: { searchParams: ISearchParams }) 
   const newProductsData = filteredData.filter((_, index) => {
     if (currentPage <= 1) return index + 1 <= ItemPerPage;
     if (currentPage >= maxPage) return index + 1 > (maxPage - 1) * ItemPerPage;
-    else
-      return index + 1 < ItemPerPage * currentPage && index + 1 >= ItemPerPage * (currentPage - 1);
+    else return index + 1 < ItemPerPage * currentPage && index + 1 >= ItemPerPage * (currentPage - 1);
   });
 
   return (
@@ -104,6 +99,7 @@ export default function Page({ searchParams }: { searchParams: ISearchParams }) 
           className="hidden m-and-t:block"
         />
         <PaginationFooter
+          scrollToElementId="products-page"
           className="hidden mobile:flex pb-4 pt-4"
           currentPage={currentPage}
           maxPage={maxPage}
@@ -131,7 +127,7 @@ export default function Page({ searchParams }: { searchParams: ISearchParams }) 
                   return <CardProduct key={product.id} {...product} sortBy={sortBy} />;
                 })}
               </ul>
-              <PaginationFooter currentPage={currentPage} maxPage={maxPage} />
+              <PaginationFooter scrollToElementId="products-page" currentPage={currentPage} maxPage={maxPage} />
             </div>
           </div>
         </div>
