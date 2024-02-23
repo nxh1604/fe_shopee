@@ -5,7 +5,7 @@ import ImageModal from "@/components/Modal/ImageModal";
 import ImageContext from "@/context/ImageModalContext";
 import { IProduct } from "@/lib/definitions";
 import clsx from "clsx";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { FaFacebook, FaFacebookMessenger, FaHeart, FaPinterest, FaRegHeart, FaTwitter } from "react-icons/fa";
 import { MdOutlineKeyboardArrowLeft, MdOutlineKeyboardArrowRight } from "react-icons/md";
 
@@ -14,16 +14,18 @@ export default function ProductImageSection({ product }: { product: IProduct }):
   const [showingPhotoIndexed, setShowingPhotoIndexed] = useState(0);
   const [transSlateX, setTranSlateX] = useState(0);
   const productPhotos = [product.photo, ...product.subPhotos];
-
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const carouselImageRef = useRef<HTMLImageElement>(null);
+  const imageWidth = carouselImageRef.current?.width;
   const handleTranslateRight = () => {
-    if (transSlateX < 100 * (productPhotos.length - 4)) {
-      setTranSlateX((prev) => prev + 100);
+    if (imageWidth && transSlateX < imageWidth * (productPhotos.length - 3)) {
+      setTranSlateX((prev) => prev + imageWidth + 16);
     }
   };
 
   const handleTranslateLeft = () => {
-    if (transSlateX > 0) {
-      setTranSlateX((prev) => prev - 100);
+    if (imageWidth && transSlateX > 0) {
+      setTranSlateX((prev) => prev - imageWidth - 16);
     }
   };
 
@@ -32,7 +34,7 @@ export default function ProductImageSection({ product }: { product: IProduct }):
   };
 
   return (
-    <section className="lg:col-12px lg:w-[500px] w-full">
+    <section className="lg:col-12px lg:w-[400px] xl:w-[500px] w-full">
       <ImageModal title={product.title} productPhotos={productPhotos} />
       <h2 className="sr-only">Product Image Section</h2>
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -55,7 +57,7 @@ export default function ProductImageSection({ product }: { product: IProduct }):
           data={productPhotos}
         />
       </div>
-      <div className="relative mt-4 m-and-t:hidden">
+      <div ref={carouselRef} className="relative mt-4 m-and-t:hidden">
         <button
           onClick={handleTranslateLeft}
           aria-label="previous image"
@@ -67,20 +69,17 @@ export default function ProductImageSection({ product }: { product: IProduct }):
             style={{
               transform: `translateX(-${transSlateX}px)`,
             }}
-            className="flex min-w-max -mx-1">
+            className="flex min-w-max gap-2">
             {productPhotos.map((photo, index) => (
-              <li
-                onMouseEnter={() => handleShowClickedPhoto(index)}
-                onClick={handleOpen}
-                key={index}
-                className={clsx("px-1")}>
+              <li onMouseEnter={() => handleShowClickedPhoto(index)} onClick={handleOpen} key={index}>
                 <img
+                  ref={carouselImageRef}
                   src={photo}
                   alt=""
                   width={150}
                   height={150}
                   className={clsx(
-                    "w-[100px] object-contain hover:cursor-pointer",
+                    "max-w-[100px] object-contain hover:cursor-pointer",
                     showingPhotoIndexed === index && "border-2 border-red-500"
                   )}
                 />
