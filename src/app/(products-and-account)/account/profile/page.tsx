@@ -1,6 +1,7 @@
 import Button from "@/components/Button";
+import Input from "@/components/Input";
 import Image from "next/image";
-import { ReactNode } from "react";
+import { ComponentPropsWithoutRef } from "react";
 
 const Page = () => {
   return (
@@ -11,18 +12,10 @@ const Page = () => {
       </div>
       <div className="flex mt-8 ">
         <form className="flex-1 pr-12 text-sm flex flex-col gap-8">
-          <FormLabelInput label="Tên Đăng Nhập">
-            <input type="text" className="flex-[3] border-black/30 border-[1px] px-3 py-2 outline-none rounded-sm" />
-          </FormLabelInput>
-          <FormLabelInput label="Tên Đăng Nhập">
-            <input type="text" className="flex-[3] border-black/30 border-[1px] px-3 py-2 outline-none rounded-sm" />
-          </FormLabelInput>
-          <FormLabelInput label="Tên Đăng Nhập">
-            <input type="text" className="flex-[3] border-black/30 border-[1px] px-3 py-2 outline-none rounded-sm" />
-          </FormLabelInput>
-          <FormLabelInput label="Tên Đăng Nhập">
-            <input type="text" className="flex-[3] border-black/30 border-[1px] px-3 py-2 outline-none rounded-sm" />
-          </FormLabelInput>
+          <FormLabelInput autoFocus label="Tên Đăng Nhập" type="text" />
+          <FormLabelInput label="Tên Đăng Nhập" type="text" />
+          <FormLabelInput label="Tên Đăng Nhập" type="text" />
+          <FormLabelInput label="Tên Đăng Nhập" type="text" />
           <Button variant="primary" size="medium" className="px-3 self-end">
             Save
           </Button>
@@ -40,13 +33,13 @@ const Page = () => {
   );
 };
 
-const FormLabelInput = ({ label, children }: { label: string; children: ReactNode }) => {
+const FormLabelInput = ({ label, ...rest }: { label: string } & ComponentPropsWithoutRef<"input">) => {
   return (
     <div className="flex items-center gap-4">
-      <label htmlFor="label" className="flex-1 text-end capitalize text-[#888]">
+      <label htmlFor={label} className="flex-1 text-end capitalize text-[#888]">
         {label}
       </label>
-      {children}
+      <Input id={label} {...rest} />
     </div>
   );
 };
