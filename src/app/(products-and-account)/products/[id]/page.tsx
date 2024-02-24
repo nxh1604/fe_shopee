@@ -20,14 +20,14 @@ const Page = ({ params, searchParams }: { params: { id: string }; searchParams: 
   return (
     <div className="m-and-t:[margin-top:calc(var(--header-mobile-height))] w-full overflow-hidden flex-1 bg-primaryBgColor ">
       <main id="products-page" className="pt-8 pb-4 m-and-t:p-2 h-full w-full space-y-4">
-        <div className="gridLayout pb-4 m-and-t:pb-2 m-and-t:pt-2 mobile:hidden lg:relative  mx-auto  ">
+        <div className="gridLayout pb-4 m-and-t:pb-2 m-and-t:pt-2 mobile:hidden lg:relative mx-auto">
           <BreadCrums productTitle={product.title} />
         </div>
-        <div className="gridLayout bg-white lg:p-4 rounded-md">
-          <section className="lg:row-12px">
+        <div className="gridLayout bg-white p-4 rounded-md">
+          <section className="lg:gap-4 lg:flex">
             <h1 className="sr-only">{product.title}</h1>
-            <ProductImageSection product={product} />
-            <ProductInfoSection product={product} />
+            <ProductImageSection className="xl:w-[500px] lg:w-[450px] tablet:w-[550px] w-full mx-auto" product={product} />
+            <ProductInfoSection className="flex-1 flex flex-col justify-start gap-8" product={product} />
           </section>
         </div>
         <div className="gridLayout bg-white lg:p-4  rounded-md">
@@ -45,20 +45,17 @@ const Page = ({ params, searchParams }: { params: { id: string }; searchParams: 
           <section className="p-2">
             <h2 className="text-lg py-2 px-4 uppercase bg-primaryBgColor">MÔ TẢ SẢN PHẨM</h2>
             <p className="px-4 mt-6 leading-7">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus dolor aspernatur sapiente neque
-              earum! Quas, velit laudantium neque aut molestias eum asperiores cumque repudiandae in aliquam nostrum.
-              Enim optio exercitationem accusantium qui amet, hic suscipit quasi architecto quod debitis voluptate quam
-              rem, minus est quia perferendis eum assumenda obcaecati earum fugit repellat consectetur autem! Quos esse,
-              id exercitationem sunt laboriosam autem sit fugiat reiciendis a minima facere qui, tenetur distinctio
-              itaque repellat veniam quam. Natus, nostrum optio sit sapiente, cumque amet sunt, illo similique fugit
-              dolor incidunt sequi esse reprehenderit velit maxime aliquam? Atque reprehenderit facere excepturi
-              perferendis in voluptate totam doloremque tempora neque, incidunt iusto beatae error veritatis nostrum
-              nisi vitae vel consequatur placeat optio similique dolore maxime. Laudantium enim perferendis, odio minus
-              dignissimos quaerat molestiae, officiis consequuntur assumenda veniam voluptatem, quis ratione aspernatur
-              totam! Deserunt aliquam voluptates sed doloremque consequatur nobis suscipit ipsa illo amet praesentium
-              blanditiis, placeat labore atque hic id corporis molestias dolor earum! Delectus cum iusto corrupti quod
-              eligendi architecto pariatur qui commodi impedit, maxime provident! Explicabo necessitatibus corporis
-              quidem maiores animi impedit tempora soluta fuga quia, error officia possimus sunt, tenetur harum odio
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus dolor aspernatur sapiente neque earum! Quas, velit laudantium
+              neque aut molestias eum asperiores cumque repudiandae in aliquam nostrum. Enim optio exercitationem accusantium qui amet, hic suscipit
+              quasi architecto quod debitis voluptate quam rem, minus est quia perferendis eum assumenda obcaecati earum fugit repellat consectetur
+              autem! Quos esse, id exercitationem sunt laboriosam autem sit fugiat reiciendis a minima facere qui, tenetur distinctio itaque repellat
+              veniam quam. Natus, nostrum optio sit sapiente, cumque amet sunt, illo similique fugit dolor incidunt sequi esse reprehenderit velit
+              maxime aliquam? Atque reprehenderit facere excepturi perferendis in voluptate totam doloremque tempora neque, incidunt iusto beatae
+              error veritatis nostrum nisi vitae vel consequatur placeat optio similique dolore maxime. Laudantium enim perferendis, odio minus
+              dignissimos quaerat molestiae, officiis consequuntur assumenda veniam voluptatem, quis ratione aspernatur totam! Deserunt aliquam
+              voluptates sed doloremque consequatur nobis suscipit ipsa illo amet praesentium blanditiis, placeat labore atque hic id corporis
+              molestias dolor earum! Delectus cum iusto corrupti quod eligendi architecto pariatur qui commodi impedit, maxime provident! Explicabo
+              necessitatibus corporis quidem maiores animi impedit tempora soluta fuga quia, error officia possimus sunt, tenetur harum odio
               voluptate. Hic rerum deserunt commodi atque esse id delectus saepe officiis.
             </p>
           </section>
@@ -81,12 +78,7 @@ const Page = ({ params, searchParams }: { params: { id: string }; searchParams: 
             <Comment />
             <Comment />
             <Comment />
-            <PaginationFooter
-              scrollToElementId="comments-section"
-              className="pt-4 pb-01"
-              maxPage={10}
-              currentPage={currentPage}
-            />
+            <PaginationFooter scrollToElementId="comments-section" className="pt-4 pb-01" maxPage={10} currentPage={currentPage} />
           </section>
         </div>
       </main>
@@ -97,13 +89,7 @@ const Page = ({ params, searchParams }: { params: { id: string }; searchParams: 
 const Comment = () => {
   return (
     <div className="flex gap-3 pb-4 border-b-2 border-b-black/10 mt-4">
-      <Image
-        className="rounded-full w-[50px] h-[50px] object-cover"
-        src={"/img/avatar.jpg"}
-        height={100}
-        width={100}
-        alt=""
-      />
+      <Image className="rounded-full w-[50px] h-[50px] object-cover" src={"/img/avatar.jpg"} height={100} width={100} alt="" />
       <div className="space-y-4">
         <div className="space-y-1 ">
           <p>Account Name</p>

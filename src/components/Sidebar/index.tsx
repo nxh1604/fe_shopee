@@ -37,7 +37,7 @@ const Sidebar = ({
   };
 
   return (
-    <aside className={twMerge("w-[16.667%]", className)}>
+    <aside className={className}>
       <div className="bg-white h-full">
         <h1 className="gap-2 items-center pl-2 flex text-base font-bold py-3 border-b-[1px] border-[#e9e9e9] mb-2">
           <IoIosList />
@@ -49,20 +49,15 @@ const Sidebar = ({
               <li
                 onClick={() => handleCategories(categoryItem.category)}
                 key={categoryItem.id}
-                className={clsx(
-                  "flex items-center group relative left-1",
-                  categoryItem.category === "all" && "-order-1"
-                )}>
+                className={clsx("flex items-center group relative left-1", categoryItem.category === "all" && "-order-1")}
+              >
                 <IoMdArrowDropright
                   className={clsx(
                     `fill-primary group-hover:opacity-100 mr-1 group-hover:mr-2 transition-[margin-right] ease-linear duration-100 `,
                     `${getCategory === categoryItem.category ? "opacity-100 mr-2" : "opacity-0"}`
                   )}
                 />
-                <span
-                  className={`group-hover:text-primary capitalize ${
-                    getCategory === categoryItem.category && "text-primary"
-                  }`}>
+                <span className={`group-hover:text-primary capitalize ${getCategory === categoryItem.category && "text-primary"}`}>
                   {categoryItem.category}
                 </span>
               </li>

@@ -4,8 +4,8 @@ import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="border-t-4 border-t-primary h-[200px]">
-      <div className="flex flex-wrap gap-10 gridLayout justify-between mx-auto pt-10 pb-20 mobile:mx-8">
+    <footer className="border-t-4 border-t-primary min-h-[200px]">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-y-8 gap-x-4 pt-10 pb-20 px-8 xl:px-0 max-w-[1200px] mx-auto">
         {footer.map((item) => {
           return (
             <div key={item.title} className="text-xs space-y-5">

@@ -30,11 +30,12 @@ const CardProduct = ({
   const totalSoldCalculated = totalSold > 1000 ? roundDigitToThousand(totalSold) / 1000 + "k" : totalSold;
 
   return (
-    <li className="pt-[10px] col-5px w-1/5 t-and-pc:w-1/4 tablet:w-1/3 mobile:w-1/2 small-mobile:w-full">
+    <li>
       <Link
         className="text-sm h-full flex bg-white flex-col cursor-pointer translate-x-0 transition-[transform] rounded-t-[3px] duration-100 ease-linear hover:-translate-y-[2px] shadow hover:shadow-xl rounded-b-[2px]"
         scroll={false}
-        href={`/products/${id}`}>
+        href={`/products/${id}`}
+      >
         <div className="relative block text-center">
           {discount ? (
             <div className="absolute w-[36px] right-0 bg-yellow-500 rounded-tr-[3px]">
@@ -72,11 +73,7 @@ const CardProduct = ({
               </del>
             ) : null}
           </div>
-          <div
-            className={clsx(
-              "flex mt-auto justify-between items-center flex-wrap",
-              sortBy === "sales" ? "pb-2" : "pb-4"
-            )}>
+          <div className={clsx("flex mt-auto justify-between items-center flex-wrap", sortBy === "sales" ? "pb-2" : "pb-4")}>
             <Button aria-label="like" onClick={() => setIsLike((prev) => !prev)} size="icon">
               {isLike ? <FaHeart className="fill-red-500" /> : <FaRegHeart />}
             </Button>
@@ -88,8 +85,7 @@ const CardProduct = ({
             {sortBy !== "sales" && totalSold ? <span className="ml-1">Đã bán {totalSoldCalculated}</span> : null}
           </div>
 
-          {sortBy === "sales" &&
-            (soldPerMonth ? <div className="text-end pb-2">Đã bán {soldPerMonth} / tháng</div> : null)}
+          {sortBy === "sales" && (soldPerMonth ? <div className="text-end pb-2">Đã bán {soldPerMonth} / tháng</div> : null)}
 
           <div className="mt-auto items-center flex-1 gap-1 flex-wrap-reverse flex justify-between text-textColor">
             <span>{shop}</span>
