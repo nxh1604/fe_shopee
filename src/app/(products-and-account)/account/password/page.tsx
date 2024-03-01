@@ -40,15 +40,7 @@ export default function Page() {
   return (
     <div className=" bg-white h-full px-8 py-4">
       <h1 className="text-lg font-500">Đổi Mật Khẩu</h1>
-      <form onSubmit={handleSubmit} className="space-y-4 mt-10 mx-auto w-[600px]">
-        <PassWordInput
-          autoComplete="current-password"
-          input={input1}
-          label="Mật khẩu cũ"
-          value={input1}
-          autoFocus
-          onChange={(e) => handleInput(e.target.value, setInput1)}
-        ></PassWordInput>
+      <form onSubmit={handleSubmit} className="mx-auto w-[600px] h-full flex flex-col justify-center gap-8">
         <PassWordInput
           autoComplete="new-password"
           input={input2}

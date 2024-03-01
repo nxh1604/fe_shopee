@@ -1,19 +1,13 @@
+import { faker } from "@faker-js/faker";
+
 const carouselData = [
-  "https://placewaifu.com/image/100",
-
-  "https://placewaifu.com/image/200",
-
-  "https://placewaifu.com/image/330",
-
-  "https://placewaifu.com/image/400",
-
-  "https://placewaifu.com/image/500",
-
-  "https://placewaifu.com/image/800",
-
-  "https://placewaifu.com/image/1200",
-
-  "https://placewaifu.com/image/1000",
+  faker.image.urlLoremFlickr({ width: 500, height: 500, category: "elephant" }),
+  faker.image.urlLoremFlickr({ width: 500, height: 500, category: "cat" }),
+  faker.image.urlLoremFlickr({ width: 500, height: 500, category: "dog" }),
+  faker.image.urlPicsumPhotos({ width: 500, height: 500, grayscale: true }),
+  faker.image.urlLoremFlickr({ width: 500, height: 500, category: "panda" }),
+  faker.image.urlLoremFlickr({ width: 500, height: 500, category: "animal" }),
+  faker.image.urlLoremFlickr({ width: 500, height: 500, category: "fish" }),
 ];
 
 export default carouselData;

@@ -12,18 +12,13 @@ const CartProducts = () => {
 
   return (
     <>
-      <div className="flex h-[55px] w-full bg-white text-[#888888] px-4">
+      <div className="flex h-[55px] w-full bg-white text-[#888888] px-4 m-and-t:hidden">
         <div className="w-1/12 flex justify-center items-center">
           <input type="checkbox" />
         </div>
         {tableHeadCartData.map((data, index) => {
           return (
-            <div
-              className={
-                "my-auto text-center capitalize" +
-                ` ${index === 0 ? "w-1/2 text-start " : "w-[12.5%]"}`
-              }
-              key={data.name}>
+            <div className={"my-auto text-center capitalize" + ` ${index === 0 ? "w-1/2 text-start " : "w-[12.5%]"}`} key={data.name}>
               {data.name}
             </div>
           );
