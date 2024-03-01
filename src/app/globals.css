@@ -61,22 +61,6 @@
     @apply max-w-[1200px] t-and-pc:max-w-[984px]  m-and-t:max-w-[644px]  mx-auto;
   }
 
-  .row-12px {
-    @apply flex flex-wrap -mx-3 small-mobile:mx-0;
-  }
-
-  .col-12px {
-    @apply px-3 small-mobile:px-0;
-  }
-
-  .row-5px {
-    @apply flex flex-wrap -mx-[5px] small-mobile:mx-0;
-  }
-
-  .col-5px {
-    @apply px-[5px]  small-mobile:px-0;
-  }
-
   /* Fixed */
   .fixed-all {
     top: 0;

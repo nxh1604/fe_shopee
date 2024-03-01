@@ -10,7 +10,7 @@ import { GiShoppingCart } from "react-icons/gi";
 import Delivery from "./Delivery";
 import Amount from "./Amount";
 
-const ProductInfoSection = ({ product }: { product: IProduct }) => {
+const ProductInfoSection = ({ product, className }: { product: IProduct; className: string }) => {
   const { addProductToCart } = useContext(CartContext);
   const [blurValue, setBlurValue] = useState<number>(1);
   const [quantities, setQuantities] = useState<number>(1);
@@ -57,7 +57,7 @@ const ProductInfoSection = ({ product }: { product: IProduct }) => {
   };
 
   return (
-    <section className="col-12px flex-1 flex flex-col justify-start gap-8">
+    <section className={className}>
       <h2 className="sr-only">Product Information Section</h2>
       <div>
         <div className="font-[500] pb-2 mt-[3px]">

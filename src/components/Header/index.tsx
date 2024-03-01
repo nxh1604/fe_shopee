@@ -12,20 +12,16 @@ const Header = (): JSX.Element => {
     <HeaderWrapper>
       <HeaderNavbar className="gridLayout m-and-t:hidden pt-2 pb-2" />
       <div className="lg:gridLayout m-and-t:h-full">
-        <div className="lg:row-12px w-full m-and-t:h-full mobile:flex pt-2 pb-3 tablet:py-4 mobile:pt-5 items-end mobile:items-center mobile:justify-between mobile:px-5">
+        <div className="flex gap-4 w-full m-and-t:h-full pt-2 pb-3 tablet:py-4 mobile:pt-5 items-end mobile:items-center mobile:justify-between mobile:px-5">
           <HeaderMenuBar classNameMenu="text-center mobile:flex-1 mobile:text-start hidden mobile:block" />
-          <Link
-            className="lg:col-12px mobile:relative mobile:-top-[6px] tablet:hidden w-1/6 mobile:w-[150px] pr-6 mobile:pr-0"
-            aria-label="home"
-            href={"/"}
-          >
+          <Link className="lg:flex-1 mobile:relative mobile:-top-[6px] tablet:hidden mobile:w-[150px] " aria-label="home" href={"/"}>
             <ShopeeLogo className="fill-white w-full" />
           </Link>
-          <div className="lg:col-12px flex-1 mobile:justify-end flex items-center mobile:self-stretch mobile:gap-5">
-            <HeaderSearch className="mobile:hidden tablet:flex-[10] flex-1 tablet:w-full tablet:gridLayout" />
+          <div className="flex-[5] mobile:justify-end flex items-center mobile:self-stretch mobile:gap-5">
+            <HeaderSearch className="flex-[5] mobile:hidden tablet:flex-[10] tablet:w-full tablet:gridLayout" />
             <HeaderMenuBar classNameMenu="-order-1 flex-1 text-center hidden tablet:block" />
             <HeaderSearchMobile className="-order-1 hidden mobile:block" />
-            <HeaderCart classNameWrapper="lg:w-1/6 tablet:flex-1 flex justify-center" classNameShoppingCartIcon="mobile:mx-0" />
+            <HeaderCart classNameWrapper="flex-1 mobile:flex-initial flex justify-center" classNameShoppingCartIcon="mobile:mx-0" />
           </div>
         </div>
       </div>

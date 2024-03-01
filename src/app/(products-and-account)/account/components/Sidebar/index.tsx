@@ -35,7 +35,7 @@ const navigateData = [
 const SidebarAccount = ({ className }: { className?: string }) => {
   const pathName = usePathname();
   return (
-    <aside className={clsx("flex flex-col text-sm", className)}>
+    <aside className={className}>
       <div className="flex py-4 items-center border-b-2 gap-3 border-b-slate-200/80">
         <Image
           src={"/img/avatar.jpg"}
