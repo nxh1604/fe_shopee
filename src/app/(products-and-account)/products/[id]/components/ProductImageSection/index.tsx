@@ -15,17 +15,21 @@ export default function ProductImageSection({ product }: { product: IProduct }):
   const [transSlateX, setTranSlateX] = useState(0);
   const productPhotos = [product.photo, ...product.subPhotos];
   const carouselRef = useRef<HTMLDivElement>(null);
-  const carouselImageRef = useRef<HTMLImageElement>(null);
-  const imageWidth = carouselImageRef.current?.width;
+  const carouselImageRef = useRef<HTMLLIElement>(null);
+  const carouselWidth = carouselRef.current?.getBoundingClientRect().width;
+  const imageWidth = carouselImageRef.current?.getBoundingClientRect().width;
   const handleTranslateRight = () => {
-    if (imageWidth && transSlateX < imageWidth * (productPhotos.length - 3)) {
-      setTranSlateX((prev) => prev + imageWidth + 16);
+    if (imageWidth) {
+      console.log(carouselWidth);
+      const show = carouselWidth === 376 ? 3 : 4;
+      if (transSlateX < (imageWidth + 8) * (productPhotos.length - show))
+        setTranSlateX((prev) => prev + imageWidth + 8);
     }
   };
 
   const handleTranslateLeft = () => {
     if (imageWidth && transSlateX > 0) {
-      setTranSlateX((prev) => prev - imageWidth - 16);
+      setTranSlateX((prev) => prev - imageWidth - 8);
     }
   };
 
@@ -71,9 +75,12 @@ export default function ProductImageSection({ product }: { product: IProduct }):
             }}
             className="flex min-w-max gap-2">
             {productPhotos.map((photo, index) => (
-              <li onMouseEnter={() => handleShowClickedPhoto(index)} onClick={handleOpen} key={index}>
+              <li
+                ref={carouselImageRef}
+                onMouseEnter={() => handleShowClickedPhoto(index)}
+                onClick={handleOpen}
+                key={index}>
                 <img
-                  ref={carouselImageRef}
                   src={photo}
                   alt=""
                   width={150}

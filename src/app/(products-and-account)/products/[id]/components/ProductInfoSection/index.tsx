@@ -5,10 +5,10 @@ import RatingStar from "@/components/RatingStar";
 import CartContext from "@/context/CartContext";
 import { IProduct } from "@/lib/definitions";
 import clsx from "clsx";
-import Image from "next/image";
 import { ChangeEvent, useContext, useState } from "react";
-import { FaTruck } from "react-icons/fa";
 import { GiShoppingCart } from "react-icons/gi";
+import Delivery from "./Delivery";
+import Amount from "./Amount";
 
 const ProductInfoSection = ({ product }: { product: IProduct }) => {
   const { addProductToCart } = useContext(CartContext);
@@ -106,68 +106,19 @@ const ProductInfoSection = ({ product }: { product: IProduct }) => {
         </div>
       </div>
 
-      <div
-        className={clsx(
-          "pl-3 flex flex-col gap-6 pb-[15px] text-sm",
-          sections.length < 3 ? "justify-around" : "justify-between"
-        )}>
-        {sections.map((section) => (
-          <section
-            className={clsx("flex", section.section.toLowerCase() !== "vận chuyển" && "items-center")}
-            key={section.section}>
-            <h3 className="w-[110px] capitalize leading-tight text-[#757575]">{section.section}</h3>
-            {section.section.toLowerCase() === "vận chuyển" && (
-              <div className="space-y-2">
-                <div className="flex gap-2 items-center">
-                  <Image
-                    className="w-[30px] h-[30px] object-contain"
-                    width={50}
-                    height={50}
-                    alt=""
-                    src="/img/freeship.png"
-                  />
-                  <p>Miễn phí vận chuyển</p>
-                </div>
-                <div className="flex gap-2 items-center">
-                  <FaTruck className="w-5 h-5" />
-                  <span>Vận chuyển tới</span>
-                  <button>Vị trí</button>
-                </div>
-                <div className="flex gap-2">
-                  <span>Phí vận chuyển</span>
-                  <span>Giá vận chuyển</span>
-                </div>
-              </div>
-            )}
-
-            {section.section.toLowerCase() === "số lượng" && (
-              <div className="flex items-center gap-4">
-                <div className="flex">
-                  <button onClick={handleRemoveOneQuantity} className="w-[30px] border-[1px]">
-                    -
-                  </button>
-                  <input
-                    className="text-center border-[1px] w-[50px] py-2"
-                    type="number"
-                    min={1}
-                    required
-                    max={product.limit}
-                    value={quantities === 0 ? "" : quantities}
-                    onBlur={handleBlurQuantities}
-                    onChange={handleQuantities}
-                  />
-                  <button onClick={handleAddOneQuantity} className="w-[30px] border-[1px]">
-                    +
-                  </button>
-                </div>
-                <span>{product.limit} sản phẩm có sẵn</span>
-              </div>
-            )}
-          </section>
-        ))}
+      <div className={clsx("pl-3 flex flex-col gap-12 pb-[15px] text-sm")}>
+        <Delivery />
+        <Amount
+          limit={product.limit}
+          quantities={quantities}
+          handleAddOneQuantity={handleAddOneQuantity}
+          handleRemoveOneQuantity={handleRemoveOneQuantity}
+          handleBlurQuantities={handleBlurQuantities}
+          handleQuantities={handleQuantities}
+        />
         {handleError?.addError && <p className="text-red-500">{handleError.addError}</p>}
       </div>
-      <div className="pl-3 flex gap-4 text-sm pb-4">
+      <div className="pl-3  gap-4 text-sm pb-4 hidden lg:flex">
         <button
           onClick={handleAddCart}
           className="min-w-fit bg-red-100 capitalize w-[200px] hover:opacity-90 text-red-600 border-[1px] px-4 py-3 flex gap-2 items-center border-red-600">
@@ -184,11 +135,3 @@ const ProductInfoSection = ({ product }: { product: IProduct }) => {
 };
 
 export default ProductInfoSection;
-
-const sections = [
-  // { section: "Mã giảm giá của shop" },
-  // { section: "Combo Khuyến Mãi" },
-  { section: "Vận Chuyển" },
-  // { section: "Màu Sắc" },
-  { section: "Số Lượng" },
-];
