@@ -1,7 +1,7 @@
 import SidebarAccount from "./components/Sidebar";
 import { ReactNode } from "react";
 
-const Layout = ({ children }: { children: ReactNode }) => {
+const Layout = async ({ children }: { children: ReactNode }) => {
   return (
     <div className="m-and-t:[margin-top:calc(var(--header-mobile-height))] w-full overflow-hidden flex-1 bg-primaryBgColor ">
       <main id="products-page" className="py-8 m-and-t:p-0 h-full w-full">
