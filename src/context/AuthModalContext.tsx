@@ -9,19 +9,17 @@ export interface ModalContextProps {
   handleClose: () => void;
 }
 
-const AuthModalContext = createContext<
-  ModalContextProps & { title: "Đăng nhập" | "Đăng ký"; setTitle: Dispatch<SetStateAction<"Đăng nhập" | "Đăng ký">> }
->({
+const AuthModalContext = createContext<ModalContextProps & { title: "login" | "signup"; setTitle: Dispatch<SetStateAction<"login" | "signup">> }>({
   isOpen: true,
   handleClose: () => {},
   handleOpen: () => {},
-  title: "Đăng nhập",
+  title: "login",
   setTitle: () => {},
 });
 
 const AuthModalProvider = ({ children }: PropsWithChildren) => {
   const { isOpen, handleClose, handleOpen } = useModalContext();
-  const [title, setTitle] = useState<"Đăng nhập" | "Đăng ký">("Đăng nhập");
+  const [title, setTitle] = useState<"login" | "signup">("login");
 
   return <AuthModalContext.Provider value={{ isOpen, handleClose, handleOpen, title, setTitle }}>{children}</AuthModalContext.Provider>;
 };

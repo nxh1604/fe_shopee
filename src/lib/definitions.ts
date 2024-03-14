@@ -1,8 +1,3 @@
-export interface ICategory {
-  id: string;
-  category: string;
-}
-
 export interface IHeaderNotifyItem {
   photo: string;
   title: string;
@@ -10,19 +5,33 @@ export interface IHeaderNotifyItem {
   isRead: boolean;
 }
 
+export interface IFakeStoreProducts {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+  rating: IRating;
+}
+
+export interface IRating {
+  rate: number;
+  count: number;
+}
+
 export interface IProduct {
-  id: string;
-  photo: string;
-  subPhotos: IProduct["photo"][];
+  id: number;
+  image: string;
+  subPhotos: string[];
   title: string;
   discount: number;
-  categories: ICategory["category"][];
+  category: string;
   price: number;
-  rating: number;
+  rating: IRating;
   totalSold: number;
   limit: number;
   soldPerMonth: number;
-  shop: string;
   liked: boolean;
   location: string;
   createdAt: Date;

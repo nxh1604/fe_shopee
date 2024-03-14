@@ -1,10 +1,10 @@
 import { IoQrCode } from "react-icons/io5";
 
-const AuthFormHeader = ({ title }: { title: "Đăng nhập" | "Đăng ký" }) => {
+const AuthFormHeader = ({ title }: { title: "login" | "signup" }) => {
   return (
     <header className="flex gap-2 items-center justify-between">
-      <h3 className="text-xl">{title}</h3>
-      {title === "Đăng nhập" && <HeaderSignin />}
+      <h3 className="text-xl first-letter:capitalize">{title === "login" ? "đăng nhập" : "đăng ký"}</h3>
+      {title === "login" && <HeaderSignin />}
     </header>
   );
 };

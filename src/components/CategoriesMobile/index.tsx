@@ -1,5 +1,4 @@
 "use client";
-import { ICategory } from "@/lib/definitions";
 import clsx from "clsx";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
@@ -11,14 +10,14 @@ const CategoriesMobile = ({
   className = "",
 }: {
   className?: string;
-  categoriesList: ICategory[];
-  getCategory: ICategory["category"];
+  categoriesList: Array<string>;
+  getCategory: string;
 }) => {
   const { push, prefetch } = useRouter();
   const pathName = usePathname();
   const searchParams = useSearchParams();
 
-  const handleCategories = (category: ICategory["category"]) => {
+  const handleCategories = (category: string) => {
     const newSearchParams = new URLSearchParams(searchParams);
 
     const page = newSearchParams.get("page");
@@ -41,12 +40,12 @@ const CategoriesMobile = ({
         {categoriesList.map((categoryItem, index) => {
           return (
             <li
-              key={categoryItem.id}
-              onClick={() => handleCategories(categoryItem.category)}
+              key={categoryItem}
+              onClick={() => handleCategories(categoryItem)}
               className={clsx(
                 "shrink-0 text-center text-white min-w-[108px] flex items-center justify-center max-w-[200px] break-all p-2 rounded-2xl",
-                categoryItem.category === "all" && "-order-1",
-                getCategory === categoryItem.category && "brightness-[.85]",
+                categoryItem === "all" && "-order-1",
+                getCategory === categoryItem && "brightness-[.85]",
                 {
                   "bg-[#76C9BD]": index % 3 === 0,
                   "bg-[#88CF81]": index % 3 === 2,
@@ -54,7 +53,7 @@ const CategoriesMobile = ({
                 }
               )}
             >
-              {categoryItem.category}
+              {categoryItem}
             </li>
           );
         })}

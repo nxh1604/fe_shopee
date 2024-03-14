@@ -5,12 +5,12 @@ import SigninFormCotent from "@/components/AuthForm/SigninFormContent";
 import SignupFormCotent from "@/components/AuthForm/SIgnupFormContent";
 import AuthFormFooter from "@/components/AuthForm/AuthFormFooter";
 
-const AuthForm = ({ title }: { title: "Đăng nhập" | "Đăng ký" }) => {
+const AuthForm = ({ title }: { title: "login" | "signup" }) => {
   return (
     <AuthFormWrapper>
       <AuthFormHeader title={title} />
-      {title === "Đăng nhập" && <SigninFormCotent />}
-      {title === "Đăng ký" && <SignupFormCotent />}
+      {title === "login" && <SigninFormCotent />}
+      {title === "signup" && <SignupFormCotent />}
       <AuthFormFooter title={title} />
     </AuthFormWrapper>
   );

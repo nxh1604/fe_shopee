@@ -1,7 +1,6 @@
 import HeaderSearch from "@/components/Header/HeaderSearch";
 import HeaderWrapper from "@/components/Header/HeaderWrapper";
 import HeaderNavbar from "@/components/Header/Navbar";
-import ScrollToTop from "@/components/ScrollToTop";
 import ShopeeLogo from "@/components/ShopeeLogo";
 import Link from "next/link";
 import { ReactNode } from "react";

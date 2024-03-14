@@ -13,7 +13,7 @@ export default function ProductImageSection({ product, className }: { product: I
   const { handleOpen } = useContext(ImageContext);
   const [showingPhotoIndexed, setShowingPhotoIndexed] = useState(0);
   const [transSlateX, setTranSlateX] = useState(0);
-  const productPhotos = [product.photo, ...product.subPhotos];
+  const productPhotos = [product.image, ...product.subPhotos];
   const carouselRef = useRef<HTMLDivElement>(null);
   const carouselImageRef = useRef<HTMLLIElement>(null);
   const carouselWidth = carouselRef.current?.getBoundingClientRect().width;
@@ -22,8 +22,7 @@ export default function ProductImageSection({ product, className }: { product: I
     if (imageWidth) {
       console.log(carouselWidth);
       const show = carouselWidth === 376 ? 3 : 4;
-      if (transSlateX < (imageWidth + 8) * (productPhotos.length - show))
-        setTranSlateX((prev) => prev + imageWidth + 8);
+      if (transSlateX < (imageWidth + 8) * (productPhotos.length - show)) setTranSlateX((prev) => prev + imageWidth + 8);
     }
   };
 
@@ -39,15 +38,15 @@ export default function ProductImageSection({ product, className }: { product: I
 
   return (
     <section className={className}>
-      <ImageModal title={product.title} productPhotos={productPhotos} />
+      <ImageModal title={product.title} productPhotos={productPhotos} selectPhotos={showingPhotoIndexed} />
       <h2 className="sr-only">Product Image Section</h2>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         onClick={handleOpen}
-        className="w-full m-and-t:hidden border-2 hover:cursor-pointer border-primary rounded-sm object-contain"
+        className="w-full h-[400px] m-and-t:hidden border-2 hover:cursor-pointer border-primary rounded-sm object-contain"
         width={400}
         height={400}
-        src={showingPhotoIndexed === 0 ? product.photo : product.subPhotos[showingPhotoIndexed - 1]}
+        src={showingPhotoIndexed === 0 ? product.image : product.subPhotos[showingPhotoIndexed - 1]}
         alt=""
       />
       <div className="flex justify-center">
@@ -77,17 +76,16 @@ export default function ProductImageSection({ product, className }: { product: I
             className="flex min-w-max gap-2"
           >
             {productPhotos.map((photo, index) => (
-              <li
-                ref={carouselImageRef}
-                onMouseEnter={() => handleShowClickedPhoto(index)}
-                onClick={handleOpen}
-                key={index}>
+              <li ref={carouselImageRef} onMouseEnter={() => handleShowClickedPhoto(index)} onClick={handleOpen} key={index}>
                 <img
                   src={photo}
                   alt=""
                   width={150}
                   height={150}
-                  className={clsx("max-w-[100px] object-contain hover:cursor-pointer", showingPhotoIndexed === index && "border-2 border-red-500")}
+                  className={clsx(
+                    "max-w-[100px] h-[100px] object-contain hover:cursor-pointer",
+                    showingPhotoIndexed === index && "border-2 border-red-500"
+                  )}
                 />
               </li>
             ))}

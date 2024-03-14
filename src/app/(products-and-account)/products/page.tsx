@@ -1,11 +1,11 @@
 import Sidebar from "@/components/Sidebar";
 import CardProduct from "@/app/(products-and-account)/products/components/CardProduct";
-import { productsData, categoriesList } from "@/lib/data/productsData";
 import PaginationFooter from "@/app/(products-and-account)/products/components/PaginationFooter";
 import ProductsSortBar, { ProductsSortBarMobileWrapper } from "./components/ProductsSortBar";
 import { SortbarPagination } from "./components/Pagination";
 import CategoriesMobile from "@/components/CategoriesMobile";
-import { ICategory } from "@/lib/definitions";
+import { getAllCategories, getAllProducts, getProductsByLimit } from "@/lib/data";
+import Image from "next/image";
 
 const ItemPerPage = 10;
 
@@ -15,23 +15,24 @@ export interface IPageSearchParams {
 
 export interface ISortSearchParams {
   order?: "asc" | "desc";
-  category?: ICategory["category"];
+  category?: string;
   sortBy: "pop" | "ctime" | "sales" | "price";
 }
 
 interface ISearchParams extends IPageSearchParams, ISortSearchParams {}
 
-export default function Page({ searchParams }: { searchParams: ISearchParams }) {
+export default async function Page({ searchParams }: { searchParams: ISearchParams }) {
   const { page, order, category, sortBy } = searchParams;
-
+  const productsData = await getAllProducts();
+  const categoriesList = await getAllCategories();
   const currentPage = !page || Number(page) <= 1 ? 1 : Number(page);
 
   // filteredData
-  const currentCategory = !category || !categoriesList.filter((categoryItem) => categoryItem.category === category).length ? "all" : category;
+  const currentCategory = !category ? "all" : !categoriesList.filter((categoryItem) => categoryItem === category).length ? "all" : category;
 
   const filteredData = productsData.filter((product) => {
     if (currentCategory === "all") return true;
-    return product.categories.includes(currentCategory);
+    return product.category === currentCategory;
   });
 
   // caculate MaxPage after filteredData
@@ -79,8 +80,8 @@ export default function Page({ searchParams }: { searchParams: ISearchParams }) 
   });
 
   return (
-    <div className="m-and-t:[margin-top:calc(var(--header-mobile-height)_+_var(--products-mobile-sort-bar))] w-full overflow-hidden flex-1 bg-primaryBgColor ">
-      <main id="products-page" className="py-8 m-and-t:p-0 h-full w-full">
+    <div className="m-and-t:[margin-top:calc(var(--header-mobile-height)_+_var(--products-mobile-sort-bar))] w-full overflow-hidden flex-1 bg-primaryBgColor flex items-stretch">
+      <main id="products-page" className="py-8 m-and-t:p-0 min-h-full w-full">
         <ProductsSortBarMobileWrapper>
           <ProductsSortBar
             order={order}
@@ -88,13 +89,17 @@ export default function Page({ searchParams }: { searchParams: ISearchParams }) 
             className="gridLayout items-stretch h-full justify-between flex gap-0 *:border-l-[1px] *:border-black/20 *:flex-1"
           />
         </ProductsSortBarMobileWrapper>
-        <CategoriesMobile categoriesList={categoriesList} getCategory={currentCategory} className="hidden m-and-t:block" />
-        <PaginationFooter scrollToElementId="products-page" className="hidden mobile:flex pb-4 pt-4" currentPage={currentPage} maxPage={maxPage} />
+        {!categoriesList.length ? null : (
+          <CategoriesMobile categoriesList={categoriesList} getCategory={currentCategory} className="hidden m-and-t:block" />
+        )}
+        {!newProductsData.length ? null : (
+          <PaginationFooter scrollToElementId="products-page" className="hidden mobile:flex pb-4 pt-4" currentPage={currentPage} maxPage={maxPage} />
+        )}
 
-        <div className="gridLayout mx-auto">
-          <div className="flex gap-4">
+        <div className="gridLayout mx-auto min-h-full mobile:min-h-[200px] flex">
+          <div className="flex gap-4 min-h-full flex-1">
             <Sidebar categoriesList={categoriesList} getCategory={currentCategory} className="self-start flex-1 m-and-t:hidden" />
-            <div className="flex-[5]">
+            <div className="flex-[5] min-h-full">
               <div className="flex justify-between px-5 py-3 rounded items-center text-sm bg-secondaryBgColor m-and-t:hidden">
                 <ProductsSortBar order={order} sortBy={currentSortBy} />
                 <div className="flex gap-4 self-stretch">
@@ -104,12 +109,26 @@ export default function Page({ searchParams }: { searchParams: ISearchParams }) 
                   <SortbarPagination currentPage={currentPage} maxPage={maxPage} />
                 </div>
               </div>
-              <ul className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-x-3 gap-y-4 mobile:px-2 pt-4">
-                {newProductsData.map((product) => {
-                  return <CardProduct key={product.id} {...product} sortBy={sortBy} />;
-                })}
-              </ul>
-              <PaginationFooter scrollToElementId="products-page" currentPage={currentPage} maxPage={maxPage} />
+              {!newProductsData.length ? (
+                <div className="flex items-center justify-center h-full">
+                  <Image
+                    src={"/img/no-products-found.png"}
+                    width={300}
+                    height={300}
+                    alt="no products found"
+                    className="max-w-[300px] max-h-[300px] w-full h-auto  object-contain object-center"
+                  />
+                </div>
+              ) : (
+                <>
+                  <ul className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-x-3 gap-y-4 mobile:px-2 pt-4">
+                    {newProductsData.map((product) => {
+                      return <CardProduct key={product.id} {...product} sortBy={sortBy} />;
+                    })}
+                  </ul>
+                  <PaginationFooter scrollToElementId="products-page" currentPage={currentPage} maxPage={maxPage} />
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -117,5 +136,3 @@ export default function Page({ searchParams }: { searchParams: ISearchParams }) 
     </div>
   );
 }
-
-export { productsData };

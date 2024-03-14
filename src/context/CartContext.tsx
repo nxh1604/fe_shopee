@@ -49,25 +49,19 @@ const CartContextProvider = ({ children }: { children: React.ReactNode }) => {
       if (cartItem.quantities >= cartItem.limit) {
         throw new Error("Đã đạt tới giới hạn của số sản phẩm hiện có");
       }
-      cart[existingProduct].quantities =
-        cartItem.quantities + newQuantities > cartItem.limit ? cartItem.limit : cartItem.quantities + newQuantities;
+      cart[existingProduct].quantities = cartItem.quantities + newQuantities > cartItem.limit ? cartItem.limit : cartItem.quantities + newQuantities;
       setCart(cart);
       window.localStorage.setItem("cart", JSON.stringify(cart));
     } else {
       setCart([...cart, Object.assign(product, { quantities: newQuantities })]);
-      window.localStorage.setItem(
-        "cart",
-        JSON.stringify([...cart, Object.assign(product, { quantities: newQuantities })])
-      );
+      window.localStorage.setItem("cart", JSON.stringify([...cart, Object.assign(product, { quantities: newQuantities })]));
     }
   };
 
   const updateProductInCart = (productId: IProduct["id"], quantities: number) => {
     const newQuantities = quantities < 1 ? 1 : quantities;
     if (!cart) return;
-    const newCart = cart.map((item) =>
-      item.id === productId ? Object.assign(item, { quantities: newQuantities }) : item
-    );
+    const newCart = cart.map((item) => (item.id === productId ? Object.assign(item, { quantities: newQuantities }) : item));
     setCart(newCart);
     window.localStorage.setItem("cart", JSON.stringify(newCart));
   };
@@ -100,7 +94,8 @@ const CartContextProvider = ({ children }: { children: React.ReactNode }) => {
         DeleteOneProduct,
         DeleteMultiProduct,
         updateProductInCart,
-      }}>
+      }}
+    >
       {children}
     </CartContext.Provider>
   );

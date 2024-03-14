@@ -11,11 +11,10 @@ import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 const CardProduct = ({
   id,
-  photo,
+  image,
   title,
   discount,
   price,
-  shop,
   location,
   rating,
   totalSold,
@@ -47,7 +46,7 @@ const CardProduct = ({
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className="w-full h-[200px] small-mobile:h-[300px] rounded-t-[3px] object-cover object-center"
-            src={photo}
+            src={image}
             alt=""
             loading="lazy"
             width={200}
@@ -80,7 +79,7 @@ const CardProduct = ({
 
             {/* star rating */}
 
-            <RatingStar className="ml-auto relative -top-[1px]" starSize={10} starGap={1} ratingStar={rating} />
+            <RatingStar className="ml-auto relative -top-[1px]" starSize={10} starGap={1} ratingStar={rating.rate} />
 
             {sortBy !== "sales" && totalSold ? <span className="ml-1">Đã bán {totalSoldCalculated}</span> : null}
           </div>
@@ -88,7 +87,7 @@ const CardProduct = ({
           {sortBy === "sales" && (soldPerMonth ? <div className="text-end pb-2">Đã bán {soldPerMonth} / tháng</div> : null)}
 
           <div className="mt-auto items-center flex-1 gap-1 flex-wrap-reverse flex justify-between text-textColor">
-            <span>{shop}</span>
+            <span>Shopee</span>
             <span>{location}</span>
           </div>
         </div>

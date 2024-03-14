@@ -22,8 +22,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ImageContextProvider>
             <CartContextProvider>
               <AuthModal />
-              {children}
-              <Footer />
+              <div className="flex flex-col min-h-screen">
+                {children}
+                <Footer />
+              </div>
             </CartContextProvider>
           </ImageContextProvider>
         </AuthModalProvider>

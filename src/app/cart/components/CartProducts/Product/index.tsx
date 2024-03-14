@@ -3,6 +3,7 @@ import ProductInfo from "../ProductInfo";
 import { MdArrowDropDown } from "react-icons/md";
 import { IProduct } from "@/lib/definitions";
 import Button from "@/components/Button";
+import Amount from "@/components/Amount";
 
 const Product = ({
   product,
@@ -13,17 +14,24 @@ const Product = ({
 }) => {
   const priceAfterDiscount = product.price * (1 - product.discount / 100);
   const totalPrice = priceAfterDiscount * product.quantities;
-
   return (
     <li className="flex py-4 items-center border-[2px] border-pink-100">
-      <label className="w-1/12 self-stretch justify-center flex items-center" htmlFor={product.id}>
-        <input id={product.id} type="checkbox" />
+      <label className="w-1/12 self-stretch justify-center flex items-center" htmlFor={product.title}>
+        <input id={product.title} type="checkbox" />
       </label>
-      <ProductInfo title={product.title} photo={product.photo} id={product.id} />
+      <ProductInfo title={product.title} photo={product.image} id={product.id} />
       <div className="w-[12.5%] text-center">
         <Currency className="flex justify-center" price={priceAfterDiscount} />
       </div>
-      <div className="w-[12.5%] text-center">{product.quantities}</div>
+      <div className="w-[12.5%] text-center">
+        <Amount
+          updateProduct={{ id: product.id, state: true }}
+          currentQuantities={product.quantities}
+          showTitle={false}
+          showLimit={false}
+          limit={product.limit}
+        />
+      </div>
       <div className="w-[12.5%] ">
         <Currency className="text-primary flex justify-center" price={totalPrice} />
       </div>
@@ -31,9 +39,7 @@ const Product = ({
         <Button onClick={() => DeleteOneProduct(product.id)} variant="unset">
           Xóa
         </Button>
-        <Button
-          variant="unset"
-          className="text-primary text-center flex items-center gap-1 relative">
+        <Button variant="unset" className="text-primary text-center flex items-center gap-1 relative">
           Tìm sản phẩm <br /> tương tự
           <MdArrowDropDown className="absolute w-5 h-5 -right-[22px] top-[50%] -translate-y-[50%]" />
         </Button>

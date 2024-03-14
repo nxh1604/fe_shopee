@@ -1,16 +1,26 @@
 "use client";
 
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import ImageContext from "@/context/ImageModalContext";
 import Modal from "..";
 import Image from "next/image";
 import { IProduct } from "@/lib/definitions";
 import clsx from "clsx";
 
-const ImageModal = ({ title, productPhotos }: { title: IProduct["title"]; productPhotos: IProduct["subPhotos"] }) => {
+const ImageModal = ({
+  title,
+  productPhotos,
+  selectPhotos,
+}: {
+  selectPhotos: number;
+  title: IProduct["title"];
+  productPhotos: IProduct["subPhotos"];
+}) => {
   const { isOpen, handleClose } = useContext(ImageContext);
-  const [showingIndex, setShowingIndex] = useState(0);
-
+  const [showingIndex, setShowingIndex] = useState(selectPhotos);
+  useEffect(() => {
+    setShowingIndex(selectPhotos);
+  }, [selectPhotos]);
   return (
     <Modal isOpen={isOpen} handleClose={handleClose}>
       <div className="bg-white flex gap-4 items-start p-8">
